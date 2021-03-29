@@ -1,0 +1,32 @@
+version: "3.4"
+services:    
+    mongo:        
+        image: mongo        
+        container_name: mongo          
+        ports:            
+            - 27017:27017        
+        networks:            
+            - webapp-network
+        volumes:
+            - mongo-data:/data/db
+    api:        
+        image: api           
+        ports:            
+            - "9000:9000"           
+        depends_on:            
+            - mongo        
+        networks:            
+            - webapp-network
+    client:        
+        image: client  
+        stdin_open: true        
+        ports:
+            - "3000:3000"
+        networks:            
+            - webapp-network
+networks:    
+    webapp-network:        
+        driver: bridge
+volumes:
+    mongo-data:
+        driver: local
