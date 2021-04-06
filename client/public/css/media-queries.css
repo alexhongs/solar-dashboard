@@ -160,7 +160,7 @@
 	#nav-wrap:target > ul#nav	{
 	   display: block;
       padding: 30px 20px 48px 20px;
-      background: #1f2024;
+      background: #fff;
       margin: 0 30px;
       clear: both;
    }
@@ -252,9 +252,9 @@
    #call-to-action p { font-size: 15px; }
 
 
-   /* Portfolio Section
+   /* solarfit Section
    /* ----------------------------------------------------------------- */
-   #portfolio-wrapper .columns { margin-bottom: 40px; }
+   #solarfit-wrapper .columns { margin-bottom: 40px; }
    .popup-modal {	max-width: 85%; }
 
 
