@@ -12,7 +12,7 @@ class Header extends Component {
           <ul id='nav' className='nav'>
             <li className='current'><a className='smoothscroll' href='#home'>Home</a></li>
             <li><a className='smoothscroll' href='#about'>Facts vs. Fiction</a></li>
-            <li><a className='smoothscroll' href='#solarfit'>Is Solar Right for You?</a></li>
+            <li><a className='smoothscroll' href='#quiz'>Is Solar Right for You?</a></li>
             <li><a className='smoothscroll' href='https://solbridgeea.com/'>Visit Solbridge</a></li>
             <li><a className='smoothscroll' id='login-button' href='#auth'>Log In</a></li>
           </ul>

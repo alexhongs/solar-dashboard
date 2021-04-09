@@ -270,17 +270,40 @@ body {
  #about .solar-facts {
    padding-bottom: 25px;
  }
+
+ #about .scrolldown a {
+  position: absolute;
+  left: 50%;
+  margin-left: -29px;
+  color: #000;
+  display: block;
+  height: 42px;
+  width: 42px;
+  font-size: 42px;
+  line-height: 42px;
+  border-radius: 100%;
+
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+#about .scrolldown a:hover {
+  color: #149414;
+}
+
+ 
  
  /* ------------------------------------------------------------------ */
- /* Solar Fit Section
+ /* Quiz Section
  /* ------------------------------------------------------------------ */
  
- #solarfit {
+ #quiz {
    background: #ebeeee;
    padding-top: 90px;
    padding-bottom: 60px;
  }
- #solarfit h1 {
+ #quiz h1 {
    /* font: 36px/24px "Amatic SC", cursive; */
    text-transform: uppercase;
    letter-spacing: 4px;
@@ -289,11 +312,11 @@ body {
    color: #333333;
  }
  
- /* solarfit Content */
- #solarfit-wrapper .columns {
+ /* quiz Content */
+ #quiz-wrapper .columns {
    margin-bottom: 48px;
  }
- .solarfit-item .item-wrap {
+ .quiz-item .item-wrap {
    background: #fff;
    overflow: hidden;
    position: relative;
@@ -304,13 +327,13 @@ body {
    -ms-transition: all 0.3s ease-in-out;
    transition: all 0.3s ease-in-out;
  }
- .solarfit-item .item-wrap a {
+ .quiz-item .item-wrap a {
    display: block;
    cursor: pointer;
  }
  
  /* overlay */
- .solarfit-item .item-wrap .overlay {
+ .quiz-item .item-wrap .overlay {
    position: absolute;
    left: 0;
    top: 0;
@@ -328,7 +351,7 @@ body {
  
    background: url(../images/overlay-bg.png) repeat;
  }
- .solarfit-item .item-wrap .link-icon {
+ .quiz-item .item-wrap .link-icon {
    display: block;
    color: #fff;
    height: 30px;
@@ -352,29 +375,29 @@ body {
    margin-left: -15px;
    margin-top: -15px;
  }
- .solarfit-item .item-wrap img {
+ .quiz-item .item-wrap img {
    vertical-align: bottom;
  }
- .solarfit-item .solarfit-item-meta {
+ .quiz-item .quiz-item-meta {
    padding: 18px;
  }
- .solarfit-item .solarfit-item-meta h5 {
+ .quiz-item .quiz-item-meta h5 {
    font: 14px/21px "opensans-bold", sans-serif;
    color: #fff;
  }
- .solarfit-item .solarfit-item-meta p {
+ .quiz-item .quiz-item-meta p {
    font: 12px/18px "opensans-light", sans-serif;
    color: #fff;
    margin-bottom: 0;
  }
  
  /* on hover */
- .solarfit-item:hover .overlay {
+ .quiz-item:hover .overlay {
    opacity: 1;
    -moz-opacity: 1;
    filter: alpha(opacity=100);
  }
- .solarfit-item:hover .link-icon {
+ .quiz-item:hover .link-icon {
    opacity: 1;
    -moz-opacity: 1;
    filter: alpha(opacity=100);

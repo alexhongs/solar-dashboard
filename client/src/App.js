@@ -1,24 +1,24 @@
 import React, { Component } from 'react'
 import Header from './Components/Header'
 import About from './Components/About'
-import FlowChart from './Components/FlowChart'
-import './App.css';
+import Quiz from './Components/Quiz'
+import './App.css'
 
 class App extends Component {
-  constructor (props) {
-    super(props);
-    this.state = { apiResponse: '' };
+  constructor(props) {
+    super(props)
+    this.state = { apiResponse: '' }
   }
 
-  render () {
+  render() {
     return (
-      <div className="App">
+      <div className='App'>
         <Header />
         <About />
-        <FlowChart />
+        <Quiz />
       </div>
     );
   }
 }
 
-export default App;
+export default App

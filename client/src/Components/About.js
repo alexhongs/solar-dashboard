@@ -68,6 +68,14 @@ class About extends Component {
 
             <img className='solar-facts' src={solarfactgraph} alt='solarfactgraph' />
           </div>
+
+          <div className='twelve columns main-col'>
+            <p className='scrolldown'>
+              <a className='smoothscroll' href='#quiz'>
+                <i className='icon-down-circle' />
+              </a>
+            </p>
+          </div>
         </div>
       </section>
     )
