@@ -24,7 +24,7 @@ class Quiz extends Component {
           </div>
 
           <div className='nine columns main-col'>
-            <h4> Are you interested in adding solar energy to your home or business? </h4>
+            <h1> Are you interested in adding solar energy to your home or business? </h1>
 
             <div className='quiz-row row'>
               <div className='six columns'>
