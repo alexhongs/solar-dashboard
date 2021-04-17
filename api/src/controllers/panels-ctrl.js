@@ -8,7 +8,7 @@ const UPDATE_INTERVAL_WEEKLY = 1 // days
 const UPDATE_INTERVAL_MONTHLY = 1 // days
 const UPDATE_INTERVAL_YEARLY = 1 // days
 
-createPanel = (req, res) => {
+panelsCtrl_createPanel = (req, res) => {
     const body = req.body
     
     if (!body) {
@@ -49,7 +49,7 @@ createPanel = (req, res) => {
         })
 }
 
-getPanel = async (req, res) => {
+panelsCtrl_getPanel = async (req, res) => {
     console.log('Get Panel Called!');
     // THIS IS ONLY TEMPORARY USE
 
@@ -68,19 +68,28 @@ getPanel = async (req, res) => {
     }).catch(err => console.log(err))
 }
 
-getProduction = async (req, res) => {
+panelsCtrl_getProduction = async (req, res) => {
     try {
+        console.log('\nGet Production very first')
+        // TODO: Need parameter and user_id checking here
+        // TODO: Ideally we want this to be not taking in panel id, but the 
+
+        const tempId = '6075363f5f4ba77cd92828d0'
+        const panel = await Panel.findById(tempId);
+        if(!panel) return res.status(200).json({success: true, data: data})
+
         let data = null;
+
         if(req.headers.period == 'd') {
-            data = await getDailyProduction(req, res)
+            data = await _getProductionHelper(req, panel, panel.daily, 'minutes', UPDATE_INTERVAL_DAILY)
         } else if(req.headers.period == 'w') {
-            data = await getWeeklyProduction(req, res)
+            data = await _getProductionHelper(req, panel, panel.weekly, 'days', UPDATE_INTERVAL_WEEKLY)
         } else if(req.headers.period == 'm') {
-            data = await getMonthlyProduction(req, res)
+            data = await _getProductionHelper(req, panel, panel.monthly, 'days', UPDATE_INTERVAL_MONTHLY)
         } else if(req.headers.period == 'y') {
-            data = await getYearlyProduction(req, res)
+            data = await _getProductionHelper(req, panel, panel.yearly, 'days', UPDATE_INTERVAL_YEARLY)
         } else if(req.headers.period == 't') {
-            data = await getTotalProduction(req, res)
+            // data = await _getProductionHelper(req, panel, panel.daily, 'minutes', UPDATE_INTERVAL_DAILY)
         }
         return res.status(200).json({success: true, data: data})
     } catch (err) {
@@ -95,95 +104,46 @@ getProduction = async (req, res) => {
 // HELPER FUNCTIONS
 //////////////////////////
 
-getDailyProduction = async (req, res) => {
-    console.log('\nGet Daily Production Called!');
-    // TODO: Need parameter and user_id checking here
-    // TODO: Ideally we want this to be not taking in panel id, but the 
-
-    const tempId = '6075363f5f4ba77cd92828d0'
-
-    const panel = await Panel.findById(tempId);
-
+_getProductionHelper = async (req, panel, productionIds, estimateUnit, updateInterval) => {
+    console.log('Get Production Helper');
     // If production data exists in DB
-    if(panel.daily.length != 0 && panel.daily[0]) {
-        let index = panel.daily.findIndex(s => s == null)
-        if (index == -1) index = panel.daily.length
+    if(productionIds.length != 0 && productionIds[0]) {
+        let index = productionIds.findIndex(s => s == null)
+        if (index == -1) index = productionIds.length
 
         // Check Recent
-        const production = await Production.findById(panel.daily[index - 1])
+        const production = await Production.findById(productionIds[index - 1])
         if (production) {
             const recentDate = production.date
             const now = moment(moment.now())
-            var ms = now.diff(recentDate, 'minutes');
-            if (ms < UPDATE_INTERVAL) {
+            var ms = now.diff(recentDate, estimateUnit);
+            if (ms < updateInterval) {
                 // If recent, return the DB data
-                const oldProduction = await ProductionCtrl.getDailyProduction(req, panel)
-                console.log(`\nGET Daily Production: HIT diff=${ms}min \nRecent ${recentDate}\nNow ${now}\nsending DB production ${oldProduction.length}`)
+                const oldProduction = await ProductionCtrl.productionCtrl_getProductionHelper(req, panel)
+                console.log(`GET Production: HIT diff=${ms}min \nRecent ${recentDate}\nNow ${now}\nsending DB production ${oldProduction.length}`)
                 return oldProduction
             }
         }
     }
 
     // If no production data in DB or not recent, fetch
-    const newProduction = await ProductionCtrl.fetchProduction(req, panel)
+    const newProduction = await ProductionCtrl.productionCtrl_fetchProduction(req, panel)
     console.log(`\nGET Daily Production: MISS FETCH production ${newProduction.length}`)
     return newProduction
 }
 
+// getWeeklyProduction = async (req, res) => { 
+//     console.log('\nGet Weekly Production');
+//     return null; 
+// }
 
-getWeeklyProduction = async (req, res) => { 
-    console.log('\nGet Weekly Production');
-    return null; 
-}
-
-getMonthlyProduction = async (req, res) => {
-    console.log('\nGet Monthly Production');
-    // TODO: Need parameter and user_id checking here
-    // TODO: Ideally we want this to be not taking in panel id, but the 
-
-    const tempId = '6075363f5f4ba77cd92828d0'
-
-    const panel = await Panel.findById(tempId);
-
-    // If production data exists in DB
-    if(panel.monthly.length != 0 && panel.monthly[0]) {
-        let index = panel.monthly.findIndex(s => s == null)
-        if (index == -1) index = panel.monthly.length
-
-        // Check Recent
-        const production = await Production.findById(panel.monthly[index - 1])
-        if (production) {
-            const recentDate = production.date
-            const now = moment(moment.now())
-            var ms = now.diff(recentDate, 'days');
-            console.log(`\nGET Monthly Production: HIT diff=${ms}month \nRecent ${recentDate}\nNow ${now}\n`)
-            if (ms < 1) {
-                // If recent, return the DB data
-                const oldProduction = await ProductionCtrl.getMonthlyProduction(req, panel)
-                console.log(`\nGET Monthly Production: HIT diff=${ms}month \nRecent ${recentDate}\nNow ${now}\nsending DB production ${oldProduction.length}`)
-                return oldProduction
-            }
-        }
-    }
-
-    // If no production data in DB or not recent, fetch
-    const newProduction = await ProductionCtrl.fetchProduction(req, panel)
-    console.log(`GET Monthly Production: MISS FETCH production ${newProduction.length}`)
-    return newProduction
-}
-
-getYearlyProduction = async (req, res) => { 
-    console.log('\nGet Yearly Production');
-    return null; 
-}
-
-getTotalProduction = async (req, res) => {
-    console.log('\nGet Total Production');
-    return null;
-}
+// getTotalProduction = async (req, res) => {
+//     console.log('\nGet Total Production');
+//     return null;
+// }
 
 module.exports = {
-    createPanel,
-    getPanel,
-    getProduction,
+    panelsCtrl_createPanel,
+    panelsCtrl_getPanel,
+    panelsCtrl_getProduction,
 }
