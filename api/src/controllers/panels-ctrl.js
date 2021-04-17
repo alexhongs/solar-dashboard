@@ -3,7 +3,10 @@ const Panel = require('../api/models/panels')
 const Production = require('../api/models/productions')
 const ProductionCtrl = require('../controllers/production-ctrl')
 
-const UPDATE_INTERVAL = 20
+const UPDATE_INTERVAL_DAILY = 20 // minutes
+const UPDATE_INTERVAL_WEEKLY = 1 // days
+const UPDATE_INTERVAL_MONTHLY = 1 // days
+const UPDATE_INTERVAL_YEARLY = 1 // days
 
 createPanel = (req, res) => {
     const body = req.body
@@ -73,7 +76,6 @@ getProduction = async (req, res) => {
         } else if(req.headers.period == 'w') {
             data = await getWeeklyProduction(req, res)
         } else if(req.headers.period == 'm') {
-            console.log('\n\n\nMonthly!!');
             data = await getMonthlyProduction(req, res)
         } else if(req.headers.period == 'y') {
             data = await getYearlyProduction(req, res)
@@ -115,7 +117,7 @@ getDailyProduction = async (req, res) => {
             var ms = now.diff(recentDate, 'minutes');
             if (ms < UPDATE_INTERVAL) {
                 // If recent, return the DB data
-                const oldProduction = await ProductionCtrl.getProduction(req, panel)
+                const oldProduction = await ProductionCtrl.getDailyProduction(req, panel)
                 console.log(`\nGET Daily Production: HIT diff=${ms}min \nRecent ${recentDate}\nNow ${now}\nsending DB production ${oldProduction.length}`)
                 return oldProduction
             }
@@ -143,29 +145,30 @@ getMonthlyProduction = async (req, res) => {
 
     const panel = await Panel.findById(tempId);
 
-    // // If production data exists in DB
-    // if(panel.monthly.length != 0 && panel.monthly[0]) {
-    //     let index = panel.monthly.findIndex(s => s == null)
-    //     if (index == -1) index = panel.monthly.length
+    // If production data exists in DB
+    if(panel.monthly.length != 0 && panel.monthly[0]) {
+        let index = panel.monthly.findIndex(s => s == null)
+        if (index == -1) index = panel.monthly.length
 
-    //     // Check Recent
-    //     const production = await Production.findById(panel.monthly[index - 1])
-    //     if (production) {
-    //         const recentDate = production.date
-    //         const now = moment(moment.now())
-    //         var ms = now.diff(recentDate, 'minutes');
-    //         if (ms < UPDATE_INTERVAL) {
-    //             // If recent, return the DB data
-    //             const oldProduction = await ProductionCtrl.getProduction(req, panel)
-    //             console.log(`\nGET Monthly Production: HIT diff=${ms}min \nRecent ${recentDate}\nNow ${now}\nsending DB production ${oldProduction}`)
-    //             return oldProduction
-    //         }
-    //     }
-    // }
+        // Check Recent
+        const production = await Production.findById(panel.monthly[index - 1])
+        if (production) {
+            const recentDate = production.date
+            const now = moment(moment.now())
+            var ms = now.diff(recentDate, 'days');
+            console.log(`\nGET Monthly Production: HIT diff=${ms}month \nRecent ${recentDate}\nNow ${now}\n`)
+            if (ms < 1) {
+                // If recent, return the DB data
+                const oldProduction = await ProductionCtrl.getMonthlyProduction(req, panel)
+                console.log(`\nGET Monthly Production: HIT diff=${ms}month \nRecent ${recentDate}\nNow ${now}\nsending DB production ${oldProduction.length}`)
+                return oldProduction
+            }
+        }
+    }
 
     // If no production data in DB or not recent, fetch
     const newProduction = await ProductionCtrl.fetchProduction(req, panel)
-    console.log(`GET Monthly Production: MISS FETCH production ${newProduction}`)
+    console.log(`GET Monthly Production: MISS FETCH production ${newProduction.length}`)
     return newProduction
 }
 
