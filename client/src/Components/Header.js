@@ -24,7 +24,7 @@ class Header extends Component {
             <h1 className='responsive-headline'>Solar works in Western PA,</h1>
             <h1 className='responsive-headline'>and it can work for you too.</h1>
             <hr />
-            <button type='button' class='btn btn-success'>See If It Does</button>
+            <button type='button' class='btn btn-success'><a href='#quiz'>See If It Does</a></button>
           </div>
         </div>
 
