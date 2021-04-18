@@ -2,6 +2,7 @@ import React from 'react'
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import solarResult from '../images/solar-result.png'
 import solarWorks from '../images/solarworks.png'
+import solarMan from '../images/solarman.png'
 
 function getQuizContent(selected, quizStep, quizResult, setValue, setQuizResult, incrementQuizStep) {
   switch(quizStep) {
@@ -170,6 +171,13 @@ function getQuizContent(selected, quizStep, quizResult, setValue, setQuizResult,
               <h5> Contrary to popular belief, solar works in Western PA! </h5>
               <h5> Let’s get you connected with our team! </h5>
             </div>
+
+            <div class='confirm-button-wrapper twelve columns'>
+                <button type='button' class='selected confirm-button btn bg-transparent'
+                  onClick={() => incrementQuizStep()}> Confirm your contact info 
+                  <span STYLE="font-size:24pt">&#8594;</span>
+                </button>
+              </div>
           </div>
         </>
       )
@@ -179,9 +187,18 @@ function getQuizContent(selected, quizStep, quizResult, setValue, setQuizResult,
           <div className='quiz-row row'>
             <img className='solar-result' src={solarWorks} alt='solarworks' />
             <h1> Fantastic! Please confirm below that this is a good email for you! </h1>
-            <h2>{quizResult[6]}</h2>
+            <h1>{quizResult[6]}</h1>
             <button type='button' class='quiz-button btn bg-transparent'
               onClick={() => incrementQuizStep()}> All set! </button>
+          </div>
+        </>
+      )
+    case 9: 
+      return (
+        <>
+          <div className='quiz-row row'>
+            <img className='solarman' src={solarMan} alt='solarman' />
+            <h1> Huzzah! We got your details, and we’ll be in touch shortly! </h1>
           </div>
         </>
       )
@@ -205,25 +222,28 @@ function Quiz() {
           <h2> How should you decide if solar is right for you? </h2>
         </div>
 
-        <div className='three columns main-col'>
-          <li>
-            <ul className={quizStep === 0 ? 'highlight' : ''}>• Building Type</ul>
-            <ul className={quizStep === 1 ? 'highlight' : ''}>• Location</ul>
-            <ul className={quizStep === 2 ? 'highlight' : ''}>• Time Horizon</ul>
-            <ul className={quizStep === 3 ? 'highlight' : ''}>• Current Energy Use</ul>
-            <ul className={quizStep === 4 ? 'highlight' : ''}>• Roof Age</ul>
-            <ul className={quizStep === 5 ? 'highlight' : ''}>• Solar Motivations</ul>
-            <ul className={quizStep === 6 ? 'highlight' : ''}>• Contact</ul>
-            <ul className={quizStep === 7 ? 'highlight' : ''}>• Result</ul>
-          </li>
-        </div>
+        {[0, 1, 2, 3, 4, 5, 6, 7].includes(quizStep) ?
+          <div className='three columns main-col'>
+            <li>
+              <ul className={quizStep === 0 ? 'highlight' : ''}>• Building Type</ul>
+              <ul className={quizStep === 1 ? 'highlight' : ''}>• Location</ul>
+              <ul className={quizStep === 2 ? 'highlight' : ''}>• Time Horizon</ul>
+              <ul className={quizStep === 3 ? 'highlight' : ''}>• Current Energy Use</ul>
+              <ul className={quizStep === 4 ? 'highlight' : ''}>• Roof Age</ul>
+              <ul className={quizStep === 5 ? 'highlight' : ''}>• Solar Motivations</ul>
+              <ul className={quizStep === 6 ? 'highlight' : ''}>• Contact</ul>
+              <ul className={quizStep === 7 ? 'highlight' : ''}>• Result</ul>
+            </li>
+          </div> :
+          <div></div>
+        }
 
-        <div className='nine columns main-col'>
+        <div className={[8, 9].includes(quizStep) ? 'twelve columns main-col' : 'nine columns main-col'}>
           {getQuizContent(selected, quizStep, quizResult, setValue, setQuizResult, incrementQuizStep)}
         </div>
 
         <div className='quiz-submit-row twelve columns main-col'>
-          {quizStep !== 7 ?
+          {[0, 1, 2, 3, 4, 5, 6].includes(quizStep) ?
             <>
             <button type='button' class='skip-button btn' 
             onClick={() => skipQuizStep()}> Skip </button>
@@ -231,10 +251,7 @@ function Quiz() {
             <button type='button' class='next-button btn' 
             onClick={() => incrementQuizStep()}> <span STYLE="font-size:24pt">&#8594;</span> </button>
             </> :
-            <button type='button' class={'selected confirm-button btn bg-transparent'}
-              onClick={() => incrementQuizStep()}> Confirm your contact info 
-              <span STYLE="font-size:24pt">&#8594;</span>
-            </button>
+            <div></div>
           }
         </div>
       </div>
