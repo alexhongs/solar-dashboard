@@ -313,11 +313,11 @@ color: #ab3b28;
 }
 
 #quiz h1 {
-	/* font: 36px/60px "Amatic SC", cursive; */
-	color: #333333;
-	margin-bottom: 24px;
-	text-align: center;
-	font-size: xx-large;
+  /* font: 36px/60px "Amatic SC", cursive; */
+  color: #333333;
+  margin-bottom: 24px;
+  text-align: center;
+  font-size: xx-large;
 }
 #quiz h2 {
 /* font: 36px/60px "Amatic SC", cursive; */
@@ -456,15 +456,28 @@ filter: alpha(opacity=100);
   padding-top: 48px;
 }
 
+#quiz .selected {
+  background-color: aquamarine;
+}
+
 #quiz .quiz-button {
   padding-left: 42px;
   padding-right: 42px;
 }
 
-#quiz .quiz-submit-row p {
+#quiz .next-button {
+  padding: 5px;
+}
+
+#quiz .quiz-submit-row {
   text-align: right;
   text-decoration: underline;
   color: #696969;
+}
+
+#quiz .skip-button {
+  border: none;
+  text-decoration: underline;
 }
 
 /* fadein/fadeout effect for modal popup
