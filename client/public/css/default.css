@@ -494,7 +494,7 @@ input[type="submit"]:hover,
 input[type="reset"]:hover,
 input[type="button"]:hover {
    background: #fff;
-   color: #fff;
+   color: #000;
 }
 
 .button:active,
