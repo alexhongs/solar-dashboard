@@ -4,8 +4,8 @@ const store = createStore({
   selected: '',
   quizStep: 0,
   quizResult: {
-    0: 'unanswered',
-    1: 'unanswered',
+    0: 'Location',
+    1: 'Allegheny',
     2: 'unanswered',
     3: 'unanswered',
     4: 'unanswered',
@@ -13,6 +13,9 @@ const store = createStore({
     6: 'unanswered',
     7: 'unanswered'
   },
+  setCounty: action((state, payload) => {
+    state.quizResult[1] = payload;
+  }),
   setQuizResult: action((state, payload) => {
     state.selected = payload;
     state.quizResult[state.quizStep] = payload;
@@ -22,7 +25,9 @@ const store = createStore({
     state.quizStep += 1;
   }),
   incrementQuizStep: action((state, payload) => {
-    state.quizStep += 1;
+    if (state.quizResult[state.quizStep] != 'unanswered' || state.quizResult[state.quizStep] != 'Location') {
+      state.quizStep += 1;
+    }
   }),
 })
 

@@ -537,7 +537,7 @@ textarea,
 select {
   display: block;
   padding: 18px 15px;
-  margin: 0 0 24px 0;
+  margin: auto;
   border: 0;
   outline: none;
   vertical-align: middle;
@@ -545,9 +545,10 @@ select {
   max-width: 100%;  
   font-size: 15px;
   line-height: 24px;
-  color: #647373;
+  color: #000;
   background: #D3D9D9;
-
+  text-align: center;
+  border-radius: 20px;
 }
 
 /* select { padding: 0;
@@ -558,7 +559,7 @@ input[type="text"]:focus,
 input[type="password"]:focus,
 input[type="email"]:focus,
 textarea:focus {
-   color: #B3B7BC;
+  color: #fff;
   background-color: #3d4145;
 }
 
