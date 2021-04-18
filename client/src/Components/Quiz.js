@@ -37,7 +37,7 @@ function getQuizContent(selected, quizStep, quizResult, setValue, setQuizResult,
     case 2: 
       return (
         <>
-          <h1> How long do you plan to {quizResult[0] == 'Home' ? 'live' : 'stay'} at your current {quizResult[0]}? </h1>
+          <h1> How long do you plan to {quizResult[0] === 'Home' ? 'live' : 'stay'} at your current {quizResult[0]}? </h1>
 
           <div className='quiz-row row'>
             <div className='four columns'>
@@ -201,6 +201,10 @@ function getQuizContent(selected, quizStep, quizResult, setValue, setQuizResult,
             <h1> Huzzah! We got your details, and we’ll be in touch shortly! </h1>
           </div>
         </>
+      )
+    default: 
+      return (
+        <div></div>
       )
   }
 }

@@ -33,9 +33,9 @@ const store = createStore({
     state.quizStep += 1;
   }),
   incrementQuizStep: action((state) => {
-    if (state.quizResult[state.quizStep] != 'unanswered' 
-      && state.quizResult[state.quizStep] != 'Location'
-      && state.quizResult[state.quizStep] != 'name@email.com') {
+    if (state.quizResult[state.quizStep] !== 'unanswered' 
+      && state.quizResult[state.quizStep] !== 'Location'
+      && state.quizResult[state.quizStep] !== 'name@email.com') {
       state.quizStep += 1;
     }
   }),
