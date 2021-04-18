@@ -1,7 +1,9 @@
 import React from 'react'
 import { useStoreState, useStoreActions } from 'easy-peasy';
+import solarResult from '../images/solar-result.png'
+import solarWorks from '../images/solarworks.png'
 
-function getQuizContent(selected, quizStep, quizResult, setCounty, setQuizResult) {
+function getQuizContent(selected, quizStep, quizResult, setValue, setQuizResult, incrementQuizStep) {
   switch(quizStep) {
     case 0: 
       return (
@@ -27,7 +29,7 @@ function getQuizContent(selected, quizStep, quizResult, setCounty, setQuizResult
           <h1> What county is your {quizResult[0]} in? </h1>
 
           <div className='quiz-row row'>
-            <input type="text" value={quizResult[1]} onChange={event => setCounty(event.target.value)} />
+            <input type="text" value={quizResult[1]} onChange={event => setValue(event.target.value)} />
           </div>
         </>
       )
@@ -143,6 +145,46 @@ function getQuizContent(selected, quizStep, quizResult, setCounty, setQuizResult
           </div>
         </>
       )
+    case 6: 
+      return (
+        <>
+          <h1> What’s a good email address for our team at Solbridge Energy Advisors to reach out to you? </h1>
+          <h4> (Don’t worry, we won’t add you to any mailing lists 😁) </h4>
+
+          <div className='quiz-row row'>
+            <input type="text" value={quizResult[6]} onChange={event => setValue(event.target.value)} />
+          </div>
+        </>
+      )
+    case 7: 
+      return (
+        <>
+          <h1> Ok, we’ve ran the numbers, we think you would be a great fit for solar! </h1>
+        
+          <div className='quiz-row row'>
+            <div className='six columns'>
+              <img className='solar-result' src={solarResult} alt='solar-result' />
+            </div>
+
+            <div className='six columns'>
+              <h5> Contrary to popular belief, solar works in Western PA! </h5>
+              <h5> Let’s get you connected with our team! </h5>
+            </div>
+          </div>
+        </>
+      )
+    case 8: 
+      return (
+        <>
+          <div className='quiz-row row'>
+            <img className='solar-result' src={solarWorks} alt='solarworks' />
+            <h1> Fantastic! Please confirm below that this is a good email for you! </h1>
+            <h2>{quizResult[6]}</h2>
+            <button type='button' class='quiz-button btn bg-transparent'
+              onClick={() => incrementQuizStep()}> All set! </button>
+          </div>
+        </>
+      )
   }
 }
 
@@ -150,7 +192,7 @@ function Quiz() {
   const selected = useStoreState(state => state.selected);
   const quizStep = useStoreState(state => state.quizStep);
   const quizResult = useStoreState(state => state.quizResult);
-  const setCounty = useStoreActions((actions) => actions.setCounty);
+  const setValue = useStoreActions((actions) => actions.setValue);
   const setQuizResult = useStoreActions((actions) => actions.setQuizResult);
   const skipQuizStep = useStoreActions((actions) => actions.skipQuizStep);
   const incrementQuizStep = useStoreActions((actions) => actions.incrementQuizStep);
@@ -168,24 +210,32 @@ function Quiz() {
             <ul className={quizStep === 0 ? 'highlight' : ''}>• Building Type</ul>
             <ul className={quizStep === 1 ? 'highlight' : ''}>• Location</ul>
             <ul className={quizStep === 2 ? 'highlight' : ''}>• Time Horizon</ul>
-            <ul className={quizStep === 3 ? 'highlight' : ''}>• Financial Logistics</ul>
-            <ul className={quizStep === 4 ? 'highlight' : ''}>• Current Energy Use</ul>
-            <ul className={quizStep === 5 ? 'highlight' : ''}>• Roof Age</ul>
-            <ul className={quizStep === 6 ? 'highlight' : ''}>• Solar Motivation</ul>
-            <ul className={quizStep === 7 ? 'highlight' : ''}>• Contact</ul>
+            <ul className={quizStep === 3 ? 'highlight' : ''}>• Current Energy Use</ul>
+            <ul className={quizStep === 4 ? 'highlight' : ''}>• Roof Age</ul>
+            <ul className={quizStep === 5 ? 'highlight' : ''}>• Solar Motivations</ul>
+            <ul className={quizStep === 6 ? 'highlight' : ''}>• Contact</ul>
+            <ul className={quizStep === 7 ? 'highlight' : ''}>• Result</ul>
           </li>
         </div>
 
         <div className='nine columns main-col'>
-          {getQuizContent(selected, quizStep, quizResult, setCounty, setQuizResult)}
+          {getQuizContent(selected, quizStep, quizResult, setValue, setQuizResult, incrementQuizStep)}
         </div>
 
         <div className='quiz-submit-row twelve columns main-col'>
-          <button type='button' class='skip-button btn' 
-          onClick={() => skipQuizStep()}> Skip </button>
+          {quizStep !== 7 ?
+            <>
+            <button type='button' class='skip-button btn' 
+            onClick={() => skipQuizStep()}> Skip </button>
 
-          <button type='button' class='next-button btn' 
-          onClick={() => incrementQuizStep()}> <span STYLE="font-size:24pt">&#8594;</span> </button>
+            <button type='button' class='next-button btn' 
+            onClick={() => incrementQuizStep()}> <span STYLE="font-size:24pt">&#8594;</span> </button>
+            </> :
+            <button type='button' class={'selected confirm-button btn bg-transparent'}
+              onClick={() => incrementQuizStep()}> Confirm your contact info 
+              <span STYLE="font-size:24pt">&#8594;</span>
+            </button>
+          }
         </div>
       </div>
     </section>

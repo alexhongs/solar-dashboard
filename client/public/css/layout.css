@@ -461,7 +461,8 @@ filter: alpha(opacity=100);
 }
 
 #quiz .selected {
-  background-color: aquamarine;
+  color: #fff;
+  background-color: #149414;
 }
 
 #quiz .quiz-button {
@@ -473,6 +474,12 @@ filter: alpha(opacity=100);
   padding: 5px;
 }
 
+#quiz .confirm-button {
+  color: #fff;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 #quiz .quiz-submit-row {
   text-align: right;
   text-decoration: underline;
@@ -482,6 +489,11 @@ filter: alpha(opacity=100);
 #quiz .skip-button {
   border: none;
   text-decoration: underline;
+}
+
+#quiz .solar-result {
+  width: 50%;
+  height: auto;
 }
 
 /* fadein/fadeout effect for modal popup
