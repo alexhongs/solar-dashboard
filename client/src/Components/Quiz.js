@@ -115,6 +115,34 @@ function getQuizContent(selected, quizStep, quizResult, setCounty, setQuizResult
           </div>
         </>
       )
+    case 5: 
+      return (
+        <>
+          <h1> Select all the following motivations that apply for going solar: </h1>
+
+          <div className='quiz-row row'>
+            <div className='six columns'>
+              <button type='button' class={quizResult[5].includes('Environmental Sustainability') ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
+              onClick={() => setQuizResult('Environmental Sustainability')}> Environmental Sustainability </button>
+            </div>
+
+            <div className='six columns'>
+              <button type='button' class={quizResult[5].includes('Energy Savings') ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
+              onClick={() => setQuizResult('Energy Savings')}> Energy Savings </button>
+            </div>
+
+            <div className='six columns'>
+              <button type='button' class={quizResult[5].includes('Energy Independence') ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
+              onClick={() => setQuizResult('Energy Independence')}> Energy Independence </button>
+            </div>
+
+            <div className='six columns'>
+              <button type='button' class={quizResult[5].includes('Price Protection') ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
+              onClick={() => setQuizResult('Price Protection')}> Price Protection </button>
+            </div>
+          </div>
+        </>
+      )
   }
 }
 
@@ -138,13 +166,13 @@ function Quiz() {
         <div className='three columns main-col'>
           <li>
             <ul className={quizStep === 0 ? 'highlight' : ''}>• Building Type</ul>
-            <ul>• Location</ul>
-            <ul>• Time Horizon</ul>
-            <ul>• Financial Logistics</ul>
-            <ul>• Current Energy Use</ul>
-            <ul>• Roof Age</ul>
-            <ul>• Solar Motivation</ul>
-            <ul>• Contact</ul>
+            <ul className={quizStep === 1 ? 'highlight' : ''}>• Location</ul>
+            <ul className={quizStep === 2 ? 'highlight' : ''}>• Time Horizon</ul>
+            <ul className={quizStep === 3 ? 'highlight' : ''}>• Financial Logistics</ul>
+            <ul className={quizStep === 4 ? 'highlight' : ''}>• Current Energy Use</ul>
+            <ul className={quizStep === 5 ? 'highlight' : ''}>• Roof Age</ul>
+            <ul className={quizStep === 6 ? 'highlight' : ''}>• Solar Motivation</ul>
+            <ul className={quizStep === 7 ? 'highlight' : ''}>• Contact</ul>
           </li>
         </div>
 
