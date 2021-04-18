@@ -137,7 +137,7 @@ function Quiz() {
 
         <div className='three columns main-col'>
           <li>
-            <ul>• Building Type</ul>
+            <ul className={quizStep === 0 ? 'highlight' : ''}>• Building Type</ul>
             <ul>• Location</ul>
             <ul>• Time Horizon</ul>
             <ul>• Financial Logistics</ul>
