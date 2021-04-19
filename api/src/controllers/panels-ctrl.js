@@ -114,7 +114,7 @@ _getProductionHelper = async (req, panel, productionIds, estimateUnit, updateInt
         // Check Recent
         const production = await Production.findById(productionIds[index - 1])
         if (production) {
-            const recentDate = period == 't' ? production.updatedAt : production.date
+            const recentDate = (period == 't' || period == 'w') ? production.updatedAt : production.date
             const now = moment(moment.now())
             var ms = now.diff(recentDate, estimateUnit);
             if (ms < updateInterval) {
@@ -129,7 +129,7 @@ _getProductionHelper = async (req, panel, productionIds, estimateUnit, updateInt
 
     // If no production data in DB or not recent, fetch
     const newProduction = await ProductionCtrl.productionCtrl_fetchProduction(req, panel)
-    console.log(`\nGET Daily Production: MISS FETCH production ${newProduction.length}`)
+    console.log(`\nGET Production: MISS FETCH production ${newProduction.length}`)
     return newProduction
 }
 

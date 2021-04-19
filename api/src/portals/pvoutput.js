@@ -12,7 +12,7 @@ pvoutput_getProduction = async (req, numProductions) => {
     const getOutputConfig = {
         params: {
             'sid1': SID1,
-            'a': req.headers.period
+            'a': period
         },
         headers: {
             'X-Pvoutput-Apikey': API_KEY,
@@ -41,10 +41,10 @@ pvoutput_getProduction = async (req, numProductions) => {
 
         const responseHeaders = JSON.stringify(response.headers)
         const data = response.data
-        const status = response.status
-        
+    
         const parsedData = _parseResponse(data)
-        const parsedDataRecent = parsedData.slice(0, Math.min(numProductions, parsedData.length))
+        const numRecent =  req.headers.period == 'w' ? numProductions * 7 : numProductions;
+        const parsedDataRecent = parsedData.slice(0, Math.min(numRecent, parsedData.length))
         const dataFormatted = _formatData(req, parsedDataRecent) // [dict, ... , dict]
 
         // Get Exact Update Time of Today
@@ -58,6 +58,9 @@ pvoutput_getProduction = async (req, numProductions) => {
             parsedDataRecentDay.date = `${recentDataHourly[0]} ${formattedHour}`
         } 
         const dataFormattedSorted = dataFormatted.sort((a,b) => moment(a.date) - moment(b.date)) // [Oldest .... Recent]
+  
+        if(req.headers.period == 'w') return _getWeeklyOutput(req.headers.period, dataFormattedSorted)
+
         return dataFormattedSorted
     } catch (err) {
         console.log(`Error: PVOutput GetDailyProduction error: ${err}`)
@@ -79,15 +82,55 @@ _formatData = (req, parsedDataRecent) => {
 
     // Put params specification into a common structure
     for (i = 0; i < parsedDataRecent.length; i++) {
+        let magnitude = parsedDataRecent[i][2]
+
         const field = {
             date: parsedDataRecent[i][0],
-            magnitude: period == "d" ? parsedDataRecent[i][1] : parsedDataRecent[i][2],
+            magnitude: (period == 'd' || period == 'w') ? parsedDataRecent[i][1] : parsedDataRecent[i][2],
         }
+
         result.push(field)
     }
 
     return result
 }
+
+_getWeeklyOutput = async (period, formattedData) => {
+    if(period != 'w') return null
+    
+    var result = []
+
+    let startDayIndex = 0;
+    for(i = 0; i < formattedData.length; i++) {
+        const day = formattedData[i]
+        const weekDay = moment(day.date).day()
+        if(weekDay == `0`) {
+            startDayIndex =  i;
+            break;
+        }
+    }
+
+    for(i = startDayIndex; i < formattedData.length; i += 7) {
+        // Add 7 day production
+        let weeklyProduction = 0;
+        for(j = i; j < i + 7; j++) {
+            if(j < formattedData.length) {
+                weeklyProduction += parseInt(formattedData[j].magnitude)
+            }
+        }
+
+        // Add to Weekly List
+        const field = {
+            date: formattedData[i].date,
+            magnitude: weeklyProduction,
+        }
+
+        result.push(field)
+    }
+
+    return result
+}
+
 
 _getYearlyOutput = async (period, getOutputConfig) => {
     if(period != 't') return null
@@ -104,9 +147,10 @@ _getYearlyOutput = async (period, getOutputConfig) => {
         date: parsedData[7],
         magnitude: parsedData[0]
     }
-    console.log(`data   ${data} parsed${parsedData}  field${field}`);
+
     return [field]
 }
+
 module.exports = {
     pvoutput_getProduction,
 }

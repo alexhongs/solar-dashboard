@@ -2,11 +2,13 @@ const { min } = require('moment');
 const moment = require('moment');
 const Production = require('../api/models/productions')
 const PVOutput = require('../portals/pvoutput');
+const ObjectId = require('mongodb').ObjectID;
 
+// Number of production data to hold
 const DB_DAILY_PRODUCTIONS = 7
-const DB_WEEKLY_PRODUCTIONS = 4
+const DB_WEEKLY_PRODUCTIONS = 6
 const DB_MONTHLY_PRODUCTIONS = 12
-const DB_YEARLY_PRODUCTIONS = 4
+const DB_YEARLY_PRODUCTIONS = 9
 const DB_TOTAL_PRODUCTION = 1
 
 productionCtrl_fetchProduction = async (req, panel) => {
@@ -28,7 +30,7 @@ productionCtrl_getProductionHelper = async (req, panel) => {
     if(req.headers.period == 'd') {
         return await _getProduction(panel.daily, DB_DAILY_PRODUCTIONS)
     } else if(req.headers.period == 'w') {
-        // return await _getProduction(panel.weekly, DB_WEEKLY_PRODUCTIONS)
+        return await _getProduction(panel.weekly, DB_WEEKLY_PRODUCTIONS)
     } else if(req.headers.period == 'm') {
         return await _getProduction(panel.monthly, DB_MONTHLY_PRODUCTIONS)
     } else if(req.headers.period == 'y') {
@@ -61,9 +63,12 @@ _fetchProduction = async (req, panel, productionIds, db_productions) => {
     if(!panel) return null
     // In an unlikely chance that the panel daily is not filled to DB_DAILY_PRODUCTIONS, fill it up
     // Ensures(panel.daily.length === DB_DAILY_PRODUCTIONS)
-    for (var i = productionIds.length; i > db_productions; i --) {
+    while(productionIds.length > db_productions) {
+        const i = productionIds.length - 1
         const toDelete = await Production.findById(productionIds[i])
-        if(toDelete) toDelete.remove()
+        if(toDelete) {
+            await Production.findOneAndDelete({ _id: toDelete.id})
+        }
         productionIds.pop()
     }
     for (var i = productionIds.length; i < db_productions; i ++) productionIds.push(null)
