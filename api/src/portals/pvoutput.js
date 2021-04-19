@@ -5,6 +5,9 @@ pvoutput_getProduction = async (req, numProductions) => {
     const API_KEY = '7df3ab93a0938d4acd4a261917b392df6915d076'
     const SID1 = 4612
     const SID = 82698
+    let period = req.headers.period
+    if(period == 'w') period = 'd' // Weekly needs to be added from daily
+    if(period == 't') period = 'y' // Total needs to be added from yearly
 
     const getOutputConfig = {
         params: {
@@ -32,6 +35,7 @@ pvoutput_getProduction = async (req, numProductions) => {
     }
 
     try {
+        if(req.headers.period == 't') return _getYearlyOutput(req.headers.period, getOutputConfig)
         // THIS IS FOR GETTING DAILY TOTAL OUTPUT, so update time is always 00:00 of the day
         const response = await axios.get(`https://pvoutput.org/service/r2/getoutput.jsp`, getOutputConfig)
 
@@ -85,6 +89,24 @@ _formatData = (req, parsedDataRecent) => {
     return result
 }
 
+_getYearlyOutput = async (period, getOutputConfig) => {
+    if(period != 't') return null
+
+    const response = await axios.get(`https://pvoutput.org/service/r2/getstatistic.jsp`, getOutputConfig)
+    const responseHeaders = JSON.stringify(response.headers)
+    const data = response.data
+    const status = response.status
+    
+    
+    const parsedData = data.split(',')
+
+    const field = {
+        date: parsedData[7],
+        magnitude: parsedData[0]
+    }
+    console.log(`data   ${data} parsed${parsedData}  field${field}`);
+    return [field]
+}
 module.exports = {
     pvoutput_getProduction,
 }

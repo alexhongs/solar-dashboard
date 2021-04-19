@@ -70,7 +70,7 @@ panelsCtrl_getPanel = async (req, res) => {
 
 panelsCtrl_getProduction = async (req, res) => {
     try {
-        console.log('\nGet Production very first')
+        console.log(`\nGET Production (${req.headers.period})`)
         // TODO: Need parameter and user_id checking here
         // TODO: Ideally we want this to be not taking in panel id, but the 
 
@@ -89,7 +89,7 @@ panelsCtrl_getProduction = async (req, res) => {
         } else if(req.headers.period == 'y') {
             data = await _getProductionHelper(req, panel, panel.yearly, 'days', UPDATE_INTERVAL_YEARLY)
         } else if(req.headers.period == 't') {
-            // data = await _getProductionHelper(req, panel, panel.daily, 'minutes', UPDATE_INTERVAL_DAILY)
+            data = await _getProductionHelper(req, panel, panel.total, 'days', UPDATE_INTERVAL_YEARLY)
         }
         return res.status(200).json({success: true, data: data})
     } catch (err) {
@@ -105,8 +105,8 @@ panelsCtrl_getProduction = async (req, res) => {
 //////////////////////////
 
 _getProductionHelper = async (req, panel, productionIds, estimateUnit, updateInterval) => {
-    console.log('Get Production Helper');
     // If production data exists in DB
+    const period = req.headers.period
     if(productionIds.length != 0 && productionIds[0]) {
         let index = productionIds.findIndex(s => s == null)
         if (index == -1) index = productionIds.length
@@ -114,13 +114,14 @@ _getProductionHelper = async (req, panel, productionIds, estimateUnit, updateInt
         // Check Recent
         const production = await Production.findById(productionIds[index - 1])
         if (production) {
-            const recentDate = production.date
+            const recentDate = period == 't' ? production.updatedAt : production.date
             const now = moment(moment.now())
             var ms = now.diff(recentDate, estimateUnit);
             if (ms < updateInterval) {
+
                 // If recent, return the DB data
                 const oldProduction = await ProductionCtrl.productionCtrl_getProductionHelper(req, panel)
-                console.log(`GET Production: HIT diff=${ms}min \nRecent ${recentDate}\nNow ${now}\nsending DB production ${oldProduction.length}`)
+                console.log(`GET Production: HIT (day ${moment(recentDate).day()}, now ${now.day()}) ${ms} ${estimateUnit}  production ${oldProduction.length}`)
                 return oldProduction
             }
         }
