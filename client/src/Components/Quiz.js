@@ -130,23 +130,43 @@ function getQuizContent(quizStep, quizResult, setValue, setQuizResult, increment
 
           <div className='quiz-row row'>
             <div className='six columns'>
-              <button type='button' class={quizResult[5].includes('Environmental Sustainability') ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
-              onClick={() => setQuizResult('Environmental Sustainability')}> Environmental Sustainability </button>
+              {
+                quizResult[5].includes('Environmental Sustainability') ? 
+                <button type='button' class='selected quiz-button-multi btn bg-transparent'
+                  onClick={() => setQuizResult('Environmental Sustainability')}> &#9635; Environmental Sustainability </button> :
+                <button type='button' class='quiz-button-multi btn bg-transparent'
+                  onClick={() => setQuizResult('Environmental Sustainability')}> &#9634; Environmental Sustainability </button>
+              }
             </div>
 
             <div className='six columns'>
-              <button type='button' class={quizResult[5].includes('Energy Savings') ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
-              onClick={() => setQuizResult('Energy Savings')}> Energy Savings </button>
+              {
+                quizResult[5].includes('Energy Savings') ? 
+                <button type='button' class='selected quiz-button-multi btn bg-transparent'
+                  onClick={() => setQuizResult('Energy Savings')}> &#9635; Energy Savings </button> :
+                <button type='button' class='quiz-button-multi btn bg-transparent'
+                  onClick={() => setQuizResult('Energy Savings')}> &#9634; Energy Savings </button>
+              }
             </div>
 
             <div className='six columns'>
-              <button type='button' class={quizResult[5].includes('Energy Independence') ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
-              onClick={() => setQuizResult('Energy Independence')}> Energy Independence </button>
+              {
+                quizResult[5].includes('Energy Independence') ? 
+                <button type='button' class='selected quiz-button-multi btn bg-transparent'
+                  onClick={() => setQuizResult('Energy Independence')}> &#9635; Energy Independence </button> :
+                <button type='button' class='quiz-button-multi btn bg-transparent'
+                  onClick={() => setQuizResult('Energy Independence')}> &#9634; Energy Independence </button>
+              }
             </div>
 
             <div className='six columns'>
-              <button type='button' class={quizResult[5].includes('Price Protection') ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
-              onClick={() => setQuizResult('Price Protection')}> Price Protection </button>
+              {
+                quizResult[5].includes('Price Protection') ? 
+                <button type='button' class='selected quiz-button-multi btn bg-transparent'
+                  onClick={() => setQuizResult('Price Protection')}> &#9635; Price Protection </button> :
+                <button type='button' class='quiz-button-multi btn bg-transparent'
+                  onClick={() => setQuizResult('Price Protection')}> &#9634; Price Protection </button>
+              }
             </div>
           </div>
         </>

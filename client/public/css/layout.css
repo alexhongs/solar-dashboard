@@ -470,6 +470,10 @@ filter: alpha(opacity=100);
   padding-right: 42px;
 }
 
+#quiz .quiz-button-multi {
+  width: 100%;
+}
+
 #quiz .confirm-button-wrapper {
   padding-top: 48px;
 }
