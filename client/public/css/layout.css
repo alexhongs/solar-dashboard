@@ -1,0 +1,630 @@
+/* Roy Xu 2021 */
+/* Modified from Styleshout.com */
+
+/* ------------------------------------------------------------------ */
+/* General Styles
+/* ------------------------------------------------------------------ */
+
+body {
+background: #fff;
+}
+
+/* ------------------------------------------------------------------ */
+/* Header Styles
+/* ------------------------------------------------------------------ */
+
+header {
+position: relative;
+height: 800px;
+min-height: 500px;
+width: 100%;
+background: url(../images/background.png) no-repeat top center;
+background-size: cover !important;
+-webkit-background-size: cover !important;
+text-align: center;
+overflow: hidden;
+}
+
+/* vertically center banner section */
+header:before {
+content: "";
+display: inline-block;
+vertical-align: middle;
+height: 100%;
+}
+header .banner {
+display: inline-block;
+vertical-align: middle;
+margin: 0 auto;
+width: 85%;
+padding-bottom: 30px;
+text-align: center;
+}
+
+header .banner-text {
+width: 100%;
+}
+header .banner-text h1 {
+font-style: normal;
+color: #000;
+letter-spacing: -1px;
+margin: 0 auto 18px auto;
+text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.8);
+}
+header .banner-text h3 {
+font: 18px/1.9em "Poiret One", cursive;
+color: #000;
+margin: 0 auto;
+width: 70%;
+text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.5);
+}
+header .banner-text h3 span,
+header .banner-text h3 a {
+color: #000;
+}
+header .banner-text hr {
+width: 60%;
+margin: 18px auto 24px auto;
+border-color: #2f2d2e;
+border-color: rgba(150, 150, 150, 0.1);
+}
+
+/* header social links */
+header .social {
+margin: 24px 0;
+padding: 0;
+font-size: 30px;
+text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.8);
+}
+header .social li {
+display: inline-block;
+margin: 0 15px;
+padding: 0;
+}
+header .social li a {
+color: #fff;
+}
+header .social li a:hover {
+color: #149414;
+}
+
+/* scrolldown link */
+header .scrolldown a {
+position: absolute;
+bottom: 30px;
+left: 50%;
+margin-left: -29px;
+color: #000;
+display: block;
+height: 42px;
+width: 42px;
+font-size: 42px;
+line-height: 42px;
+border-radius: 100%;
+
+-webkit-transition: all 0.3s ease-in-out;
+-moz-transition: all 0.3s ease-in-out;
+-o-transition: all 0.3s ease-in-out;
+transition: all 0.3s ease-in-out;
+}
+header .scrolldown a:hover {
+color: #149414;
+}
+
+.tagline {
+padding-top: 75px;
+padding-bottom: 50px;
+}
+
+/* primary navigation
+--------------------------------------------------------------------- */
+#nav-wrap ul,
+#nav-wrap li,
+#nav-wrap a {
+margin: 0;
+padding: 0;
+border: none;
+outline: none;
+}
+
+/* nav-wrap */
+#nav-wrap {
+font: 12px "opensans-bold", sans-serif;
+width: 100%;
+text-transform: none;
+letter-spacing: 1.2px;
+margin: 0 auto;
+z-index: 100;
+position: fixed;
+left: 0;
+top: 0;
+}
+.opaque {
+background-color: #333;
+}
+/* hide toggle button */
+#nav-wrap > a.mobile-btn {
+background-color: #149414;
+display: none;
+}
+
+ul#nav {
+min-height: 48px;
+width: auto;
+text-align: right;
+border-bottom: 1px solid #D3D3D3;
+}
+ul#nav li {
+position: relative;
+list-style: none;
+height: 48px;
+display: inline-block;
+}
+
+/* Nav bar links */
+ul#nav li a {
+/* 8px padding top + 8px padding bottom + 32px line-height = 48px */
+
+display: inline-block;
+padding: 8px 13px;
+line-height: 32px;
+text-decoration: none;
+text-align: left;
+color: #000;
+
+-webkit-transition: color 0.2s ease-in-out;
+-moz-transition: color 0.2s ease-in-out;
+-o-transition: color 0.2s ease-in-out;
+-ms-transition: color 0.2s ease-in-out;
+transition: color 0.2s ease-in-out;
+}
+
+ul#nav li a:active {
+background-color: transparent !important;
+}
+ul#nav li.current a {
+color: #000;
+}
+
+ul#nav li a#login-button {
+border: 1px solid #000;
+border-radius: 25px;
+}
+
+/* ------------------------------------------------------------------ */
+/* About Section
+/* ------------------------------------------------------------------ */
+
+#about {
+background: #fff;
+padding-top: 96px;
+padding-bottom: 66px;
+overflow: hidden;
+}
+
+#about a,
+#about a:visited {
+color: #149414;
+}
+#about a:hover,
+#about a:focus {
+color: #ab3b28;
+}
+
+#about h2 {
+/* font: 36px/60px "Amatic SC", cursive; */
+color: #333333;
+margin-bottom: 42px;
+text-align: left;
+}
+#about h3 {
+font: 18px/1.9em "Poiret One", cursive;
+color: #333333;
+margin: 0 auto;
+text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.5);
+text-align: left;
+}
+#about h5 {
+color: #000;
+margin: 0 auto;
+text-align: left;
+padding-top: 20px;
+}
+#about p {
+/* font-family: "Josefin Sans", sans-serif; */
+font-size: 14px;
+line-height: 30px;
+margin-bottom: 16px;
+color: #000;
+text-align: left;
+padding-top: 10px;
+}
+#about .profile-pic {
+position: relative;
+width: 160px;
+height: 180px;
+border-radius: 100%;
+}
+#about .contact-details {
+width: 41.66667%;
+}
+#about .download {
+width: 58.33333%;
+padding-top: 6px;
+}
+#about .main-col {
+padding-right: 5%;
+}
+#about .download .button {
+margin-top: 6px;
+background: #444;
+}
+#about .download .button:hover {
+background: #fff;
+color: #2b2b2b;
+}
+#about .download .button i {
+margin-right: 15px;
+font-size: 20px;
+}
+#about .solar-facts {
+padding-bottom: 25px;
+}
+
+#about .scrolldown a {
+position: absolute;
+left: 50%;
+margin-left: -29px;
+color: #000;
+display: block;
+height: 42px;
+width: 42px;
+font-size: 42px;
+line-height: 42px;
+border-radius: 100%;
+
+-webkit-transition: all 0.3s ease-in-out;
+-moz-transition: all 0.3s ease-in-out;
+-o-transition: all 0.3s ease-in-out;
+transition: all 0.3s ease-in-out;
+}
+#about .scrolldown a:hover {
+color: #149414;
+}
+
+/* ------------------------------------------------------------------ */
+/* Quiz Section
+/* ------------------------------------------------------------------ */
+
+#quiz {
+background: #fff;
+padding-top: 48px;
+padding-bottom: 66px;
+overflow: hidden;
+}
+
+#quiz a,
+#quiz a:visited {
+color: #149414;
+}
+#quiz a:hover,
+#quiz a:focus {
+color: #ab3b28;
+}
+
+#quiz h1 {
+  /* font: 36px/60px "Amatic SC", cursive; */
+  color: #333333;
+  margin-bottom: 24px;
+  text-align: center;
+  font-size: xx-large;
+}
+#quiz h2 {
+/* font: 36px/60px "Amatic SC", cursive; */
+color: #333333;
+margin-bottom: 42px;
+text-align: left;
+}
+#quiz h3 {
+font: 18px/1.9em "Poiret One", cursive;
+color: #333333;
+margin: 0 auto;
+text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.5);
+text-align: left;
+}
+#quiz h5 {
+color: #000;
+margin: 0 auto;
+text-align: left;
+padding-top: 20px;
+}
+#quiz p {
+/* font-family: "Josefin Sans", sans-serif; */
+font-size: 14px;
+line-height: 30px;
+margin-bottom: 16px;
+color: #000;
+text-align: left;
+padding-top: 10px;
+}
+
+/* quiz Content */
+#quiz-wrapper .columns {
+margin-bottom: 48px;
+}
+.quiz-item .item-wrap {
+background: #fff;
+overflow: hidden;
+position: relative;
+
+-webkit-transition: all 0.3s ease-in-out;
+-moz-transition: all 0.3s ease-in-out;
+-o-transition: all 0.3s ease-in-out;
+-ms-transition: all 0.3s ease-in-out;
+transition: all 0.3s ease-in-out;
+}
+.quiz-item .item-wrap a {
+display: block;
+cursor: pointer;
+}
+
+/* overlay */
+.quiz-item .item-wrap .overlay {
+position: absolute;
+left: 0;
+top: 0;
+width: 100%;
+height: 100%;
+
+opacity: 0;
+-moz-opacity: 0;
+filter: alpha(opacity=0);
+
+-webkit-transition: opacity 0.3s ease-in-out;
+-moz-transition: opacity 0.3s ease-in-out;
+-o-transition: opacity 0.3s ease-in-out;
+transition: opacity 0.3s ease-in-out;
+
+background: url(../images/overlay-bg.png) repeat;
+}
+.quiz-item .item-wrap .link-icon {
+display: block;
+color: #fff;
+height: 30px;
+width: 30px;
+font-size: 18px;
+line-height: 30px;
+text-align: center;
+
+opacity: 0;
+-moz-opacity: 0;
+filter: alpha(opacity=0);
+
+-webkit-transition: opacity 0.3s ease-in-out;
+-moz-transition: opacity 0.3s ease-in-out;
+-o-transition: opacity 0.3s ease-in-out;
+transition: opacity 0.3s ease-in-out;
+
+position: absolute;
+top: 80%;
+left: 50%;
+margin-left: -15px;
+margin-top: -15px;
+}
+.quiz-item .item-wrap img {
+vertical-align: bottom;
+}
+.quiz-item .quiz-item-meta {
+padding: 18px;
+}
+.quiz-item .quiz-item-meta h5 {
+font: 14px/21px "opensans-bold", sans-serif;
+color: #fff;
+}
+.quiz-item .quiz-item-meta p {
+font: 12px/18px "opensans-light", sans-serif;
+color: #fff;
+margin-bottom: 0;
+}
+
+/* on hover */
+.quiz-item:hover .overlay {
+opacity: 1;
+-moz-opacity: 1;
+filter: alpha(opacity=100);
+}
+.quiz-item:hover .link-icon {
+opacity: 1;
+-moz-opacity: 1;
+filter: alpha(opacity=100);
+}
+
+#quiz li {
+  text-align: left;
+  display: inline-block;
+  margin: 0 15px;
+  padding: 0;
+}
+#quiz li a {
+  color: #fff;
+}
+#quiz li a:hover {
+  color: #149414;
+}
+
+#quiz .highlight {
+  color: #000;
+}
+
+#quiz .quiz-row {
+  padding-top: 48px;
+}
+
+#quiz .selected {
+  color: #fff;
+  background-color: #149414;
+}
+
+#quiz .quiz-button {
+  padding-left: 42px;
+  padding-right: 42px;
+}
+
+#quiz .quiz-button-multi {
+  width: 100%;
+}
+
+#quiz .confirm-button-wrapper {
+  padding-top: 48px;
+}
+
+#quiz .confirm-button {
+  color: #fff;
+  padding: 0 20px 0 20px;
+}
+
+#quiz .quiz-submit-row {
+  text-align: right;
+  text-decoration: underline;
+  color: #696969;
+}
+
+#quiz .back-button {
+  border: none;
+  text-decoration: underline;
+}
+
+#quiz .skip-button {
+  border: none;
+  text-decoration: underline;
+  padding-right: 42px;
+}
+
+#quiz .next-button {
+  padding: 5px 7px 1px 7px;
+}
+
+#quiz .incomplete {
+  color: #424242;
+  border: 1px solid #424242;
+}
+
+#quiz .solar-result {
+  width: 50%;
+  height: auto;
+}
+
+/* fadein/fadeout effect for modal popup
+/* ------------------------------------------------------------------ */
+
+/* content at start */
+.mfp-fade.mfp-wrap .mfp-content .popup-modal {
+  opacity: 0;
+  -webkit-transition: all 200ms ease-in-out;
+  -moz-transition: all 200ms ease-in-out;
+  -o-transition: all 200ms ease-in-out;
+  -ms-transition: all 200ms ease-in-out;
+  transition: all 200ms ease-in-out;
+}
+/* content fadein */
+.mfp-fade.mfp-wrap.mfp-ready .mfp-content .popup-modal {
+  opacity: 1;
+}
+/* content fadeout */
+.mfp-fade.mfp-wrap.mfp-removing .mfp-content .popup-modal {
+  opacity: 0;
+}
+
+/* ------------------------------------------------------------------ */
+/* Footer
+/* ------------------------------------------------------------------ */
+
+footer {
+  padding-top: 48px;
+  margin-bottom: 48px;
+  color: #696969;
+  font-size: 14px;
+  text-align: center;
+  position: relative;
+}
+
+footer a,
+footer a:visited {
+  color: #c0c0c0;
+}
+footer a:hover,
+footer a:focus {
+  color: #fff;
+}
+
+/* copyright */
+footer .copyright {
+  margin: 0;
+  padding: 0;
+}
+footer .copyright li {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  line-height: 24px;
+}
+.ie footer .copyright li {
+  display: inline;
+}
+footer .copyright li:before {
+  content: "\2022";
+  padding-left: 10px;
+  padding-right: 10px;
+  color: #c0c0c0;
+}
+footer .copyright li:first-child:before {
+  display: none;
+}
+
+/* social links */
+footer .social-links {
+  margin: 18px 0 30px 0;
+  padding: 0;
+  font-size: 30px;
+}
+footer .social-links li {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  margin-left: 42px;
+  color: #149414;
+}
+
+footer .social-links li:first-child {
+  margin-left: 0;
+}
+
+/* Go To Top Button */
+#go-top {
+  position: absolute;
+  top: -24px;
+  left: 50%;
+  margin-left: -20px;
+}
+#go-top a {
+  text-decoration: none;
+  border: 0 none;
+  display: block;
+  width: 42px;
+  height: 42px;
+  background-color: #000;
+
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  -ms-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+
+  color: #fff;
+  font-size: 17px;
+  line-height: 42px;
+  border-radius: 100%;
+}
+#go-top a:hover {
+  background-color: #149414;
+}
