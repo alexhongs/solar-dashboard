@@ -7,7 +7,7 @@ const DB_DAILY_PRODUCTIONS = 7
 const DB_WEEKLY_PRODUCTIONS = 4
 const DB_MONTHLY_PRODUCTIONS = 12
 const DB_YEARLY_PRODUCTIONS = 4
-
+const DB_TOTAL_PRODUCTION = 1
 
 productionCtrl_fetchProduction = async (req, panel) => {
     if(req.headers.period == 'd') {
@@ -19,7 +19,7 @@ productionCtrl_fetchProduction = async (req, panel) => {
     } else if(req.headers.period == 'y') {
         return await _fetchProduction(req, panel, panel.yearly, DB_YEARLY_PRODUCTIONS)
     } else if(req.headers.period == 't') {
-        // return await _fetchProduction(panel, panel.weekly, DB_WEEKLY_PRODUCTIONS)
+        return await _fetchProduction(req, panel, panel.total, DB_TOTAL_PRODUCTION)
     }
     return null;
 }
@@ -32,9 +32,9 @@ productionCtrl_getProductionHelper = async (req, panel) => {
     } else if(req.headers.period == 'm') {
         return await _getProduction(panel.monthly, DB_MONTHLY_PRODUCTIONS)
     } else if(req.headers.period == 'y') {
-        // return await _getProduction(panel.yearly, DB_YEARLY_PRODUCTIONS)
+        return await _getProduction(panel.yearly, DB_YEARLY_PRODUCTIONS)
     } else if(req.headers.period == 't') {
-        // return await getDailyProduction(req, panel)
+        return await _getProduction(panel.total, DB_TOTAL_PRODUCTION)
     }
     return null
 }
@@ -61,17 +61,20 @@ _fetchProduction = async (req, panel, productionIds, db_productions) => {
     if(!panel) return null
     // In an unlikely chance that the panel daily is not filled to DB_DAILY_PRODUCTIONS, fill it up
     // Ensures(panel.daily.length === DB_DAILY_PRODUCTIONS)
-    for (var i = productionIds.length; i < db_productions; i ++) {
-        // console.log(`FETCH: Nulling Empty Productions ${i}/${DB_DAILY_PRODUCTIONS}`)
-        productionIds.push(null)
+    for (var i = productionIds.length; i > db_productions; i --) {
+        const toDelete = await Production.findById(productionIds[i])
+        if(toDelete) toDelete.remove()
+        productionIds.pop()
     }
+    for (var i = productionIds.length; i < db_productions; i ++) productionIds.push(null)
 
     // Make API Get request
-    const dailyProductions = await PVOutput.pvoutput_getProduction(req, db_productions) // [oldest .... recent]
+    let dailyProductions = await PVOutput.pvoutput_getProduction(req, db_productions) // [oldest .... recent]
 
     for (var i = 0; i < dailyProductions.length; i++) {
         // Update the latest 7 production
         const day = dailyProductions[i]
+
         if(i < productionIds.length) {
             let production = productionIds[i] ? await Production.findById(productionIds[i]) : null
             if (!production) {
@@ -83,7 +86,7 @@ _fetchProduction = async (req, panel, productionIds, db_productions) => {
             await production.save()
         }
     }
-    // console.log(`FETCH: Daily Production : ${dailyProductions}`)
+
     // In an unlikely chance that an API requested production changes to less than 7, when it had at least 7 before
     for (var i = dailyProductions.length; i < productionIds.length; i++) {
         const oldProduction = await Production.findById(productionIds[i])
@@ -102,14 +105,20 @@ _fetchWeeklyProduction = async (req, panel) => {
     return null;
 }
 
-_fetchYearlyProduction = async (req, panel) => {
-    console.log(`FETCH: Yearly Production`)
-    return null;
-}
-
 _fetchTotalProduction = async (req, panel) => {
     console.log(`FETCH: Total Production`)
-    return null;
+    const productions = PanelsCtrl.panelsCtrl_getProduction(req, null)
+    const totalProduction = 0
+
+    productions.forEach(production => {
+        totalProduction += production.magnitude
+    });
+
+    const total = {
+        magnitude: production[0].magnitude,
+        date: productions[0].date,
+    }
+    return [total];
 }
 
 module.exports = {
