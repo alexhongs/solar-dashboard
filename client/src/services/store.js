@@ -1,7 +1,6 @@
 import { createStore, action } from 'easy-peasy';
 
 const store = createStore({
-  selected: '',
   quizStep: 0,
   quizResult: {
     0: 'Location',
@@ -10,7 +9,7 @@ const store = createStore({
     3: 'unanswered',
     4: 'unanswered',
     5: '',
-    6: 'name@email.com',
+    6: '',
   },
   setValue: action((state, payload) => {
     state.quizResult[state.quizStep] = payload;
@@ -32,10 +31,12 @@ const store = createStore({
     state.quizResult[state.quizStep] = 'unanswered';
     state.quizStep += 1;
   }),
+  decrementQuizStep: action((state) => {
+    state.quizStep = Math.max(0, state.quizStep - 1)
+  }),
   incrementQuizStep: action((state) => {
     if (state.quizResult[state.quizStep] !== 'unanswered' 
-      && state.quizResult[state.quizStep] !== 'Location'
-      && state.quizResult[state.quizStep] !== 'name@email.com') {
+      && state.quizResult[state.quizStep] !== 'Location') {
       state.quizStep += 1;
     }
   }),

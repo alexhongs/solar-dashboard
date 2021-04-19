@@ -470,10 +470,6 @@ filter: alpha(opacity=100);
   padding-right: 42px;
 }
 
-#quiz .next-button {
-  padding: 5px;
-}
-
 #quiz .confirm-button-wrapper {
   padding-top: 48px;
 }
@@ -489,9 +485,24 @@ filter: alpha(opacity=100);
   color: #696969;
 }
 
+#quiz .back-button {
+  border: none;
+  text-decoration: underline;
+}
+
 #quiz .skip-button {
   border: none;
   text-decoration: underline;
+  padding-right: 42px;
+}
+
+#quiz .next-button {
+  padding: 5px 7px 1px 7px;
+}
+
+#quiz .incomplete {
+  color: #424242;
+  border: 1px solid #424242;
 }
 
 #quiz .solar-result {

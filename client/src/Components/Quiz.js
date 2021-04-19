@@ -4,7 +4,12 @@ import solarResult from '../images/solar-result.png'
 import solarWorks from '../images/solarworks.png'
 import solarMan from '../images/solarman.png'
 
-function getQuizContent(selected, quizStep, quizResult, setValue, setQuizResult, incrementQuizStep) {
+function validEmail(email) {
+  var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(email);
+}
+
+function getQuizContent(quizStep, quizResult, setValue, setQuizResult, incrementQuizStep) {
   switch(quizStep) {
     case 0: 
       return (
@@ -13,12 +18,12 @@ function getQuizContent(selected, quizStep, quizResult, setValue, setQuizResult,
 
           <div className='quiz-row row'>
             <div className='six columns'>
-              <button type='button' class={selected === 'Home' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
+              <button type='button' class={quizResult[0] === 'Home' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
               onClick={() => setQuizResult('Home')}> Home </button>
             </div>
 
             <div className='six columns'>
-              <button type='button' class={selected === 'Business' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
+              <button type='button' class={quizResult[0] === 'Business' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
               onClick={() => setQuizResult('Business')}> Business </button>
             </div>
           </div>
@@ -41,22 +46,22 @@ function getQuizContent(selected, quizStep, quizResult, setValue, setQuizResult,
 
           <div className='quiz-row row'>
             <div className='four columns'>
-              <button type='button' class={selected === '1-7' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
+              <button type='button' class={quizResult[2] === '1-7' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
               onClick={() => setQuizResult('1-7')}> 1-7 Years </button>
             </div>
 
             <div className='four columns'>
-              <button type='button' class={selected === '7-10' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
+              <button type='button' class={quizResult[2] === '7-10' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
               onClick={() => setQuizResult('7-10')}> 7-10 Years </button>
             </div>
 
             <div className='four columns'>
-              <button type='button' class={selected === '10+' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
+              <button type='button' class={quizResult[2] === '10+' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
               onClick={() => setQuizResult('10+')}> 10+ Years </button>
             </div>
 
             <div className='twelve columns'>
-              <button type='button' class={selected === 'unsure' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
+              <button type='button' class={quizResult[2] === 'unsure' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
               onClick={() => setQuizResult('unsure')}> I'm not sure </button>
             </div>
           </div>
@@ -69,22 +74,22 @@ function getQuizContent(selected, quizStep, quizResult, setValue, setQuizResult,
 
           <div className='quiz-row row'>
             <div className='four columns'>
-              <button type='button' class={selected === 'below' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
+              <button type='button' class={quizResult[3] === 'below' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
               onClick={() => setQuizResult('below')}> Below Average </button>
             </div>
 
             <div className='four columns'>
-              <button type='button' class={selected === 'average' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
+              <button type='button' class={quizResult[3] === 'average' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
               onClick={() => setQuizResult('average')}> Average </button>
             </div>
 
             <div className='four columns'>
-              <button type='button' class={selected === 'above' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
+              <button type='button' class={quizResult[3] === 'above' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
               onClick={() => setQuizResult('above')}> Above Average </button>
             </div>
 
             <div className='twelve columns'>
-              <button type='button' class={selected === 'unsure' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
+              <button type='button' class={quizResult[3] === 'unsure' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
               onClick={() => setQuizResult('unsure')}> I'm not sure </button>
             </div>
           </div>
@@ -97,22 +102,22 @@ function getQuizContent(selected, quizStep, quizResult, setValue, setQuizResult,
 
           <div className='quiz-row row'>
             <div className='four columns'>
-              <button type='button' class={selected === 'new' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
+              <button type='button' class={quizResult[4] === 'new' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
               onClick={() => setQuizResult('new')}> Brand New </button>
             </div>
 
             <div className='four columns'>
-              <button type='button' class={selected === 'okay' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
+              <button type='button' class={quizResult[4] === 'okay' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
               onClick={() => setQuizResult('okay')}> Okay Shape </button>
             </div>
 
             <div className='four columns'>
-              <button type='button' class={selected === 'bad' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
+              <button type='button' class={quizResult[4] === 'bad' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
               onClick={() => setQuizResult('bad')}> Bad Shape </button>
             </div>
 
             <div className='twelve columns'>
-              <button type='button' class={selected === 'unsure' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
+              <button type='button' class={quizResult[4] === 'unsure' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
               onClick={() => setQuizResult('unsure')}> I'm not sure </button>
             </div>
           </div>
@@ -209,13 +214,47 @@ function getQuizContent(selected, quizStep, quizResult, setValue, setQuizResult,
   }
 }
 
+function SkipButton(quizStep, skipQuizStep) {
+  return (
+    quizStep !== 6 && 
+    <button type='button' class='skip-button btn' 
+    onClick={() => skipQuizStep()}> Skip </button>
+  )
+} 
+
+function NextButton(quizStep, quizResult, incrementQuizStep) {
+  const ans = quizResult[quizStep]
+
+  if (quizStep !== 6) {
+    if (ans === 'unanswered' || ans === 'Location') {
+      return (
+        <button type='button' disabled class='incomplete next-button btn'> <span STYLE="font-size:24pt; color: #888888">&#8594;</span> </button>
+    )} else {
+      return (
+        <button type='button' class='next-button btn' 
+        onClick={() => incrementQuizStep()}> <span STYLE="font-size:24pt">&#8594;</span> </button>
+      )
+    }
+  } else {
+    if (validEmail(ans)) {
+      return (
+        <button type='button' class='next-button btn' 
+        onClick={() => incrementQuizStep()}> <span STYLE="font-size:24pt">&#8594;</span> </button>
+    )} else {
+      return (
+        <button type='button' disabled class='incomplete next-button btn'> <span STYLE="font-size:24pt; color: #888888">&#8594;</span> </button>
+      )
+    }
+  }
+}
+
 function Quiz() {
-  const selected = useStoreState(state => state.selected);
   const quizStep = useStoreState(state => state.quizStep);
   const quizResult = useStoreState(state => state.quizResult);
   const setValue = useStoreActions((actions) => actions.setValue);
   const setQuizResult = useStoreActions((actions) => actions.setQuizResult);
   const skipQuizStep = useStoreActions((actions) => actions.skipQuizStep);
+  const decrementQuizStep = useStoreActions((actions) => actions.decrementQuizStep);
   const incrementQuizStep = useStoreActions((actions) => actions.incrementQuizStep);
 
   return (
@@ -226,7 +265,7 @@ function Quiz() {
           <h2> How should you decide if solar is right for you? </h2>
         </div>
 
-        {[0, 1, 2, 3, 4, 5, 6, 7].includes(quizStep) ?
+        {[0, 1, 2, 3, 4, 5, 6, 7].includes(quizStep) &&
           <div className='three columns main-col'>
             <li>
               <ul className={quizStep === 0 ? 'highlight' : ''}>• Building Type</ul>
@@ -238,24 +277,23 @@ function Quiz() {
               <ul className={quizStep === 6 ? 'highlight' : ''}>• Contact</ul>
               <ul className={quizStep === 7 ? 'highlight' : ''}>• Result</ul>
             </li>
-          </div> :
-          <div></div>
+          </div>
         }
 
         <div className={[8, 9].includes(quizStep) ? 'twelve columns main-col' : 'nine columns main-col'}>
-          {getQuizContent(selected, quizStep, quizResult, setValue, setQuizResult, incrementQuizStep)}
+          {getQuizContent(quizStep, quizResult, setValue, setQuizResult, incrementQuizStep)}
         </div>
 
         <div className='quiz-submit-row twelve columns main-col'>
-          {[0, 1, 2, 3, 4, 5, 6].includes(quizStep) ?
+          {[0, 1, 2, 3, 4, 5, 6].includes(quizStep) &&
             <>
-            <button type='button' class='skip-button btn' 
-            onClick={() => skipQuizStep()}> Skip </button>
+            <button type='button' class='back-button btn' 
+            onClick={() => decrementQuizStep()}> Back </button>
 
-            <button type='button' class='next-button btn' 
-            onClick={() => incrementQuizStep()}> <span STYLE="font-size:24pt">&#8594;</span> </button>
-            </> :
-            <div></div>
+            {SkipButton(quizStep, skipQuizStep)}
+
+            {NextButton(quizStep, quizResult, incrementQuizStep)}
+            </>
           }
         </div>
       </div>
