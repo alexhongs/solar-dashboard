@@ -5,14 +5,8 @@ import Quiz from './Components/Quiz';
 import Footer from './Components/Footer';
 import './App.css';
 
+// eslint-disable-next-line react/prefer-stateless-function
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      quizStep: 0,
-    };
-  }
-
   render() {
     return (
       <div className="App">
