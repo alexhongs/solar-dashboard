@@ -28,6 +28,7 @@ describe('Customer page', () => {
       </StoreProvider>
     );
 
+    render(app);
     const element = screen.getByText(/Did you know Western PA, there are/i);
 
     expect(element).toBeInTheDocument();
