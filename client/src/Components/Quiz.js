@@ -1,5 +1,6 @@
 import React from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
+
 import solarResult from '../images/solar-result.png';
 import solarWorks from '../images/solarworks.png';
 import solarMan from '../images/solarman.png';
