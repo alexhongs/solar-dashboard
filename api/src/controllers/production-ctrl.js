@@ -88,6 +88,9 @@ _fetchProduction = async (req, panel, productionIds, db_productions) => {
             }
             production.date = moment(day.date)
             production.magnitude = day.magnitude
+            production.efficiency = day.efficiency
+            production.carbon = day.carbon
+            production.money = day.money
             await production.save()
         }
     }
@@ -97,6 +100,9 @@ _fetchProduction = async (req, panel, productionIds, db_productions) => {
         const oldProduction = await Production.findById(productionIds[i])
         oldProduction.magnitude = 0
         oldProduction.date = null
+        oldProduction.efficiency = 0
+        oldProduction.carbon = 0
+        oldProduction.money = 0
         await oldProduction.save()
     }
 
@@ -105,26 +111,29 @@ _fetchProduction = async (req, panel, productionIds, db_productions) => {
     return await _getProduction(productionIds, db_productions)
 }
 
-_fetchWeeklyProduction = async (req, panel) => {
-    console.log(`FETCH: Weekly Production`)
-    return null;
-}
+// _fetchWeeklyProduction = async (req, panel) => {
+//     console.log(`FETCH: Weekly Production`)
+//     return null;
+// }
 
-_fetchTotalProduction = async (req, panel) => {
-    console.log(`FETCH: Total Production`)
-    const productions = PanelsCtrl.panelsCtrl_getProduction(req, null)
-    const totalProduction = 0
+// _fetchTotalProduction = async (req, panel) => {
+//     console.log(`FETCH: Total Production`)
+//     const productions = PanelsCtrl.panelsCtrl_getProduction(req, null)
+//     const totalProduction = 0
 
-    productions.forEach(production => {
-        totalProduction += production.magnitude
-    });
+//     productions.forEach(production => {
+//         totalProduction += production.magnitude
+//     });
 
-    const total = {
-        magnitude: production[0].magnitude,
-        date: productions[0].date,
-    }
-    return [total];
-}
+//     const total = {
+//         magnitude: productions[0].magnitude,
+//         date: productions[0].date,
+//         efficiency: productions[0].efficiency,
+//         carbon: productions[0].carbon,
+//         money: productions[0].money,
+//     }
+//     return [total];
+// }
 
 module.exports = {
     productionCtrl_fetchProduction,

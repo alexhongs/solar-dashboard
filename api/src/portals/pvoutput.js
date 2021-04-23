@@ -1,5 +1,6 @@
 const axios = require('axios')
 const moment = require('moment')
+const util = require('../util/util')
 
 pvoutput_getProduction = async (req, numProductions) => {
     const API_KEY = '7df3ab93a0938d4acd4a261917b392df6915d076'
@@ -82,16 +83,23 @@ _formatData = (req, parsedDataRecent) => {
 
     // Put params specification into a common structure
     for (i = 0; i < parsedDataRecent.length; i++) {
-        let magnitude = parsedDataRecent[i][2]
+        const dailyQuery = period == 'd' || period == 'w'
+        const date = parsedDataRecent[i][0]
+        const magnitude = dailyQuery ? parsedDataRecent[i][1] : parsedDataRecent[i][2]
+        const efficiency = dailyQuery ? parsedDataRecent[i][2] : parsedDataRecent[i][3]
+        const year = moment(date).year()
 
         const field = {
-            date: parsedDataRecent[i][0],
-            magnitude: (period == 'd' || period == 'w') ? parsedDataRecent[i][1] : parsedDataRecent[i][2],
+            date: date,
+            magnitude: magnitude,
+            efficiency: efficiency,
+            carbon: util.getCarbon(magnitude),
+            money: util.getMoney(year, magnitude),
         }
 
         result.push(field)
     }
-
+    
     return result
 }
 
@@ -119,10 +127,25 @@ _getWeeklyOutput = async (period, formattedData) => {
             }
         }
 
+        // Average 7 day efficiency
+        let weeklyEfficiency = 0;
+        let weeklyEfficiencyLength = 0;
+        for(j = i; j < i + 7; j++) {
+            if(j < formattedData.length) {
+                weeklyEfficiency += parseInt(formattedData[j].efficiency)
+                weeklyEfficiencyLength += 1
+            }
+        }
+
+        const year =  moment(formattedData[i].date).year()
+
         // Add to Weekly List
         const field = {
             date: formattedData[i].date,
             magnitude: weeklyProduction,
+            efficiency: (weeklyEfficiency / weeklyEfficiencyLength).toFixed(3),
+            carbon: util.getCarbon(weeklyProduction),
+            money: util.getMoney(year, weeklyProduction),
         }
 
         result.push(field)
@@ -142,10 +165,14 @@ _getYearlyOutput = async (period, getOutputConfig) => {
     
     
     const parsedData = data.split(',')
-
+    const magnitude = Number(parsedData[0])
+    const year =  moment(parsedData[7]).year()
     const field = {
         date: parsedData[7],
-        magnitude: parsedData[0]
+        magnitude: magnitude,
+        efficiency: parsedData[5],
+        carbon: util.getCarbon(magnitude),
+        money: util.getMoney(year, magnitude),
     }
 
     return [field]
