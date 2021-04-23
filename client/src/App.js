@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Header from './Components/Header';
+import Facts from './Components/Facts';
 import About from './Components/About';
 import Quiz from './Components/Quiz';
 import Footer from './Components/Footer';
@@ -11,8 +12,9 @@ class App extends Component {
     return (
       <div className="App">
         <Header />
+		<Facts />
+		<Quiz />
         <About />
-        <Quiz />
         <Footer />
       </div>
     );

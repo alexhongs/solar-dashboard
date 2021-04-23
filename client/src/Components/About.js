@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import solarfact1 from '../images/solar-fact-1.png';
-import solarfact2 from '../images/solar-fact-2.png';
-import solarfactgraph from '../images/solar-fact-graph.png';
 
 // eslint-disable-next-line react/prefer-stateless-function
 class About extends Component {
@@ -12,14 +9,6 @@ class About extends Component {
           <div className="twelve columns main-col">
             <h3> Clean Knowledge </h3>
             <h2> Solar Energy in Western PA: Fact vs. Fiction </h2>
-          </div>
-
-          <div className="six columns main-col">
-            <img className="solar-facts" src={solarfact1} alt="solarfact1" />
-          </div>
-
-          <div className="six columns main-col">
-            <img className="solar-facts" src={solarfact2} alt="solarfact2" />
           </div>
 
           <div className="twelve columns main-col">
@@ -81,16 +70,6 @@ class About extends Component {
               percentage (26% for 2020-2022) of your solar investment cost from your federal taxes. This tax credit applies
               for both residential and commercial structures, and there is no upper limit on its value. These methods can
               help offset the initial cost of installing solar, while also providing solar owners an additional stream of income.
-            </p>
-
-            <img className="solar-facts" src={solarfactgraph} alt="solarfactgraph" />
-          </div>
-
-          <div className="twelve columns main-col">
-            <p className="scrolldown">
-              <a className="smoothscroll" href="#quiz">
-                <i className="icon-down-circle" />
-              </a>
             </p>
           </div>
         </div>
