@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { createStore, StoreProvider } from 'easy-peasy';
 import App from './App';
-import {createStore, StoreProvider} from 'easy-peasy';
 
 const model = {
   quizStep: 0,
@@ -28,9 +28,8 @@ describe('Customer page', () => {
       </StoreProvider>
     );
 
-    const {getByTestId} = render(app);
     const element = screen.getByText(/Did you know Western PA, there are/i);
 
     expect(element).toBeInTheDocument();
   });
-})
+});
