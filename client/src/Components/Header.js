@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import tagline from '../images/tagline.png';
 
+// eslint-disable-next-line react/prefer-stateless-function
 class Header extends Component {
   render() {
     return (

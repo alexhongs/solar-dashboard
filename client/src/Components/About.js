@@ -3,6 +3,7 @@ import solarfact1 from '../images/solar-fact-1.png';
 import solarfact2 from '../images/solar-fact-2.png';
 import solarfactgraph from '../images/solar-fact-graph.png';
 
+// eslint-disable-next-line react/prefer-stateless-function
 class About extends Component {
   render() {
     return (
