@@ -19,7 +19,7 @@ class Facts extends Component {
         </div>
 
         <div className="city">
-            <img className="city" src={city} alt="city" />
+          <img className="city" src={city} alt="city" />
         </div>
       </section>
     );
