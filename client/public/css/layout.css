@@ -233,7 +233,7 @@ padding-top: 20px;
 #about p {
 /* font-family: "Josefin Sans", sans-serif; */
 font-size: 14px;
-line-height: 30px;
+line-height: 24px;
 margin-bottom: 16px;
 color: #000;
 text-align: left;
@@ -268,6 +268,7 @@ margin-right: 15px;
 font-size: 20px;
 }
 #about .solar-facts {
+padding-top: 50px;
 padding-bottom: 25px;
 }
 
