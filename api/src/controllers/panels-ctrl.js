@@ -133,16 +133,6 @@ _getProductionHelper = async (req, panel, productionIds, estimateUnit, updateInt
     return newProduction
 }
 
-// getWeeklyProduction = async (req, res) => { 
-//     console.log('\nGet Weekly Production');
-//     return null; 
-// }
-
-// getTotalProduction = async (req, res) => {
-//     console.log('\nGet Total Production');
-//     return null;
-// }
-
 module.exports = {
     panelsCtrl_createPanel,
     panelsCtrl_getPanel,

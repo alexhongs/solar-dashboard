@@ -5,6 +5,9 @@ const Production = new Schema(
     {
         magnitude: { type: Number, default: 0 },
         date: { type: Date, default: null },
+        efficiency: { type: Number, default: 0},
+        carbon: {type: Number, default: 0},
+        money: {type: Number, default: 0},
     },
     { timestamps: true },
 )
