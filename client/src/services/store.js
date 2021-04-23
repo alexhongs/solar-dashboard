@@ -19,7 +19,7 @@ const store = createStore({
       if (state.quizResult[5].includes(payload)) {
         state.quizResult[5] = state.quizResult[5].replace(payload, '');
       } else {
-        state.quizResult[5] += " ";
+        state.quizResult[5] += ' ';
         state.quizResult[5] += payload;
       }
     } else {
@@ -32,15 +32,14 @@ const store = createStore({
     state.quizStep += 1;
   }),
   decrementQuizStep: action((state) => {
-    state.quizStep = Math.max(0, state.quizStep - 1)
+    state.quizStep = Math.max(0, state.quizStep - 1);
   }),
   incrementQuizStep: action((state) => {
-    if (state.quizResult[state.quizStep] !== 'unanswered' 
+    if (state.quizResult[state.quizStep] !== 'unanswered'
       && state.quizResult[state.quizStep] !== 'Location') {
       state.quizStep += 1;
     }
   }),
-})
+});
 
-
-export default store
+export default store;
