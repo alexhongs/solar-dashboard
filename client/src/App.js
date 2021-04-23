@@ -12,8 +12,8 @@ class App extends Component {
     return (
       <div className="App">
         <Header />
-		<Facts />
-		<Quiz />
+        <Facts />
+        <Quiz />
         <About />
         <Footer />
       </div>

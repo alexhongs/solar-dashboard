@@ -16,15 +16,15 @@ class Header extends Component {
             <li><a className="smoothscroll" href="#about">Facts vs. Fiction</a></li>
             <li><a className="smoothscroll" href="#quiz">Is Solar Right for You?</a></li>
             <li><a className="smoothscroll" href="https://solbridgeea.com/">Visit Solbridge</a></li>
-            <li><button className='btn btn-warning' id="login-button">Log In</button></li>
+            <li><button type="button" className="btn btn-warning" id="login-button">Log In</button></li>
           </ul>
         </nav>
 
         <div className="row banner">
           <div className="banner-text">
-		  	<h2 className="responsive-headline">Did you know Western PA, there are</h2>
+            <h2 className="responsive-headline">Did you know Western PA, there are</h2>
             <img className="tagline" src={tagline} alt="tagline" />
-			<img className="tagline2" src={tagline2} alt="tagline" />
+            <img className="tagline2" src={tagline2} alt="tagline" />
           </div>
         </div>
 
