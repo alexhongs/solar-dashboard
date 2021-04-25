@@ -11,21 +11,27 @@ const store = createStore({
     5: '',
     6: '',
   },
+  quizScore: 50,
   setValue: action((state, payload) => {
     state.quizResult[state.quizStep] = payload;
   }),
   setQuizResult: action((state, payload) => {
+    const ans = payload;
+    const score = payload[1];
+
     if (state.quizStep === 5) {
-      if (state.quizResult[5].includes(payload)) {
-        state.quizResult[5] = state.quizResult[5].replace(payload, '');
+      if (state.quizResult[5].includes(ans)) {
+        state.quizResult[5] = state.quizResult[5].replace(ans, '');
       } else {
         state.quizResult[5] += ' ';
-        state.quizResult[5] += payload;
+        state.quizResult[5] += ans;
       }
     } else {
-      state.selected = payload;
-      state.quizResult[state.quizStep] = payload;
+      state.selected = ans;
+      state.quizResult[state.quizStep] = ans;
     }
+
+    state.quizScore += score;
   }),
   skipQuizStep: action((state) => {
     state.quizResult[state.quizStep] = 'unanswered';

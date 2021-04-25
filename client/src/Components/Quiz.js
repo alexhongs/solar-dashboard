@@ -1,16 +1,67 @@
 import React from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 
+import { withStyles } from '@material-ui/core/styles';
+import Slider from '@material-ui/core/Slider';
+
 import solarResult from '../images/solar-result.png';
 import solarWorks from '../images/solarworks.png';
 import solarMan from '../images/solarman.png';
+
+const CustomSlider = withStyles({
+  root: {
+    color: '#A5D4B4',
+    height: 10,
+    padding: '2px 0 42px',
+  },
+  thumb: {
+    height: 24,
+    width: 2,
+    backgroundColor: 'currentColor',
+    border: '1px solid currentColor',
+    marginTop: -5,
+    marginLeft: -1,
+    boxShadow: '#ebebeb 0 2px 2px',
+    '&:focus, &:hover, &$active': {
+      boxShadow: '#ccc 0 2px 3px 1px',
+    },
+    '& .bar': {
+      // display: inline-block !important;
+      height: 9,
+      width: 1,
+      backgroundColor: 'currentColor',
+      marginLeft: 1,
+      marginRight: 1,
+    },
+  },
+  active: {},
+  track: {
+    height: 12,
+  },
+  rail: {
+    border: '1px solid #999999',
+    color: '#fff',
+    opacity: 1,
+    height: 12,
+    borderRadius: '20px',
+  },
+})(Slider);
+
+function CustomThumbComponent(props) {
+  return (
+    /* eslint-disable react/jsx-props-no-spreading */
+    <span {...props}>
+      <i className="bi bi-arrow-bar-up" />
+    </span>
+  );
+}
 
 function validEmail(email) {
   const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(email);
 }
 
-function getQuizContent(quizStep, quizResult, setValue, setQuizResult, incrementQuizStep) {
+function getQuizContent(quizStep, quizResult, quizScore, setValue, setQuizResult, incrementQuizStep) {
   switch (quizStep) {
     case 0:
       return (
@@ -22,7 +73,7 @@ function getQuizContent(quizStep, quizResult, setValue, setQuizResult, increment
               <button
                 type="button"
                 className={quizResult[0] === 'Home' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
-                onClick={() => setQuizResult('Home')}
+                onClick={() => setQuizResult(['Home', 0])}
               >
                 {' '}
                 Home
@@ -33,7 +84,7 @@ function getQuizContent(quizStep, quizResult, setValue, setQuizResult, increment
               <button
                 type="button"
                 className={quizResult[0] === 'Business' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
-                onClick={() => setQuizResult('Business')}
+                onClick={() => setQuizResult(['Business', 0])}
               >
                 {' '}
                 Business
@@ -78,7 +129,7 @@ function getQuizContent(quizStep, quizResult, setValue, setQuizResult, increment
               <button
                 type="button"
                 className={quizResult[2] === '1-7' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
-                onClick={() => setQuizResult('1-7')}
+                onClick={() => setQuizResult(['1-7', -10])}
               >
                 {' '}
                 1-7 Years
@@ -89,7 +140,7 @@ function getQuizContent(quizStep, quizResult, setValue, setQuizResult, increment
               <button
                 type="button"
                 className={quizResult[2] === '7-10' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
-                onClick={() => setQuizResult('7-10')}
+                onClick={() => setQuizResult(['7-10', 0])}
               >
                 {' '}
                 7-10 Years
@@ -100,7 +151,7 @@ function getQuizContent(quizStep, quizResult, setValue, setQuizResult, increment
               <button
                 type="button"
                 className={quizResult[2] === '10+' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
-                onClick={() => setQuizResult('10+')}
+                onClick={() => setQuizResult(['10+', 10])}
               >
                 {' '}
                 10+ Years
@@ -111,7 +162,7 @@ function getQuizContent(quizStep, quizResult, setValue, setQuizResult, increment
               <button
                 type="button"
                 className={quizResult[2] === 'unsure' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
-                onClick={() => setQuizResult('unsure')}
+                onClick={() => setQuizResult(['unsure', 0])}
               >
                 {' '}
                 I&apos;m not sure
@@ -130,7 +181,7 @@ function getQuizContent(quizStep, quizResult, setValue, setQuizResult, increment
               <button
                 type="button"
                 className={quizResult[3] === 'below' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
-                onClick={() => setQuizResult('below')}
+                onClick={() => setQuizResult(['below', -10])}
               >
                 {' '}
                 Below Average
@@ -141,7 +192,7 @@ function getQuizContent(quizStep, quizResult, setValue, setQuizResult, increment
               <button
                 type="button"
                 className={quizResult[3] === 'average' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
-                onClick={() => setQuizResult('average')}
+                onClick={() => setQuizResult(['average', 5])}
               >
                 {' '}
                 Average
@@ -152,7 +203,7 @@ function getQuizContent(quizStep, quizResult, setValue, setQuizResult, increment
               <button
                 type="button"
                 className={quizResult[3] === 'above' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
-                onClick={() => setQuizResult('above')}
+                onClick={() => setQuizResult(['above', 10])}
               >
                 {' '}
                 Above Average
@@ -182,7 +233,7 @@ function getQuizContent(quizStep, quizResult, setValue, setQuizResult, increment
               <button
                 type="button"
                 className={quizResult[4] === 'new' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
-                onClick={() => setQuizResult('new')}
+                onClick={() => setQuizResult(['new', 20])}
               >
                 {' '}
                 Brand New
@@ -193,7 +244,7 @@ function getQuizContent(quizStep, quizResult, setValue, setQuizResult, increment
               <button
                 type="button"
                 className={quizResult[4] === 'okay' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
-                onClick={() => setQuizResult('okay')}
+                onClick={() => setQuizResult(['okay', 10])}
               >
                 {' '}
                 Okay Shape
@@ -204,7 +255,7 @@ function getQuizContent(quizStep, quizResult, setValue, setQuizResult, increment
               <button
                 type="button"
                 className={quizResult[4] === 'bad' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
-                onClick={() => setQuizResult('bad')}
+                onClick={() => setQuizResult(['bad', -10])}
               >
                 {' '}
                 Bad Shape
@@ -215,7 +266,7 @@ function getQuizContent(quizStep, quizResult, setValue, setQuizResult, increment
               <button
                 type="button"
                 className={quizResult[4] === 'unsure' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
-                onClick={() => setQuizResult('unsure')}
+                onClick={() => setQuizResult(['unsure', 10])}
               >
                 {' '}
                 I&apos;m not sure
@@ -237,7 +288,7 @@ function getQuizContent(quizStep, quizResult, setValue, setQuizResult, increment
                     <button
                       type="button"
                       className="selected quiz-button-multi btn bg-transparent"
-                      onClick={() => setQuizResult('Environmental Sustainability')}
+                      onClick={() => setQuizResult(['Environmental Sustainability', 5])}
                     >
                       {' '}
                       &#9635; Environmental Sustainability
@@ -247,7 +298,7 @@ function getQuizContent(quizStep, quizResult, setValue, setQuizResult, increment
                     <button
                       type="button"
                       className="quiz-button-multi btn bg-transparent"
-                      onClick={() => setQuizResult('Environmental Sustainability')}
+                      onClick={() => setQuizResult(['Environmental Sustainability', 5])}
                     >
                       {' '}
                       &#9634; Environmental Sustainability
@@ -263,7 +314,7 @@ function getQuizContent(quizStep, quizResult, setValue, setQuizResult, increment
                     <button
                       type="button"
                       className="selected quiz-button-multi btn bg-transparent"
-                      onClick={() => setQuizResult('Energy Savings')}
+                      onClick={() => setQuizResult(['Energy Savings', 5])}
                     >
                       {' '}
                       &#9635; Energy Savings
@@ -273,7 +324,7 @@ function getQuizContent(quizStep, quizResult, setValue, setQuizResult, increment
                     <button
                       type="button"
                       className="quiz-button-multi btn bg-transparent"
-                      onClick={() => setQuizResult('Energy Savings')}
+                      onClick={() => setQuizResult(['Energy Savings', 5])}
                     >
                       {' '}
                       &#9634; Energy Savings
@@ -289,7 +340,7 @@ function getQuizContent(quizStep, quizResult, setValue, setQuizResult, increment
                     <button
                       type="button"
                       className="selected quiz-button-multi btn bg-transparent"
-                      onClick={() => setQuizResult('Energy Independence')}
+                      onClick={() => setQuizResult(['Energy Independence', 5])}
                     >
                       {' '}
                       &#9635; Energy Independence
@@ -299,7 +350,7 @@ function getQuizContent(quizStep, quizResult, setValue, setQuizResult, increment
                     <button
                       type="button"
                       className="quiz-button-multi btn bg-transparent"
-                      onClick={() => setQuizResult('Energy Independence')}
+                      onClick={() => setQuizResult(['Energy Independence', 5])}
                     >
                       {' '}
                       &#9634; Energy Independence
@@ -315,7 +366,7 @@ function getQuizContent(quizStep, quizResult, setValue, setQuizResult, increment
                     <button
                       type="button"
                       className="selected quiz-button-multi btn bg-transparent"
-                      onClick={() => setQuizResult('Price Protection')}
+                      onClick={() => setQuizResult(['Price Protection', 5])}
                     >
                       {' '}
                       &#9635; Price Protection
@@ -325,7 +376,7 @@ function getQuizContent(quizStep, quizResult, setValue, setQuizResult, increment
                     <button
                       type="button"
                       className="quiz-button-multi btn bg-transparent"
-                      onClick={() => setQuizResult('Price Protection')}
+                      onClick={() => setQuizResult(['Price Protection', 5])}
                     >
                       {' '}
                       &#9634; Price Protection
@@ -478,6 +529,7 @@ function NextButton(quizStep, quizResult, incrementQuizStep) {
 function Quiz() {
   const quizStep = useStoreState((state) => state.quizStep);
   const quizResult = useStoreState((state) => state.quizResult);
+  const quizScore = useStoreState((state) => state.quizScore);
   const setValue = useStoreActions((actions) => actions.setValue);
   const setQuizResult = useStoreActions((actions) => actions.setQuizResult);
   const skipQuizStep = useStoreActions((actions) => actions.skipQuizStep);
@@ -489,12 +541,12 @@ function Quiz() {
       <div className="row">
         <div className="twelve columns main-col">
           <h3> Clean Actions </h3>
-          <h2> How should you decide if solar is right for you? </h2>
+          <h2> Is Solar Right for You? </h2>
         </div>
 
         {[0, 1, 2, 3, 4, 5, 6, 7].includes(quizStep)
           && (
-          <div className="three columns main-col">
+          <div className="three columns main-col question-list">
             <li>
               <ul className={quizStep === 0 ? 'highlight' : ''}>• Building Type</ul>
               <ul className={quizStep === 1 ? 'highlight' : ''}>• Location</ul>
@@ -509,7 +561,23 @@ function Quiz() {
           )}
 
         <div className={[8, 9].includes(quizStep) ? 'twelve columns main-col' : 'nine columns main-col'}>
-          {getQuizContent(quizStep, quizResult, setValue, setQuizResult, incrementQuizStep)}
+          <div className="row">
+            <div className="six columns more-suitable">
+              <h7>More Suitable &#x2190;</h7>
+            </div>
+            <div className="six columns less-suitable">
+              <h7>&#x2192; Less Suitable</h7>
+            </div>
+          </div>
+
+          <CustomSlider
+            ThumbComponent={CustomThumbComponent}
+            getAriaLabel={(index) => (index === 0 ? 'Minimum price' : 'Maximum price')}
+            defaultValue={[50, quizScore]}
+            value={[50, quizScore]}
+          />
+
+          {getQuizContent(quizStep, quizResult, quizScore, setValue, setQuizResult, incrementQuizStep)}
         </div>
 
         <div className="quiz-submit-row twelve columns main-col">
