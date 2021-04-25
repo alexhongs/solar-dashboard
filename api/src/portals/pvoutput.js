@@ -69,6 +69,29 @@ pvoutput_getProduction = async (req, numProductions) => {
     }
 }
 
+pvoutput_validatePanel = async (apikey, sid) => {
+    try {
+        const SID_SAMPLE = 4612
+        const getStatusConfig = {
+            params: {
+                'sid1': SID_SAMPLE,
+                'h': '1',
+                'limit': '288',
+            },
+            headers: {
+                'X-Pvoutput-Apikey': apikey,
+                'X-Pvoutput-SystemId': sid,
+                'X-Rate-Limit': 1
+            }
+        }
+        await axios.get('https://pvoutput.org/service/r2/getstatus.jsp', getStatusConfig)
+        return {error: '', isValid: true}
+    } catch(e) {
+        return {error: 'apikey or sid 401', isValid: false}
+    }
+
+}
+
 //////////////////////////
 // HELPER FUNCTIONS
 //////////////////////////
@@ -180,4 +203,5 @@ _getYearlyOutput = async (period, getOutputConfig) => {
 
 module.exports = {
     pvoutput_getProduction,
+    pvoutput_validatePanel,
 }
