@@ -2,51 +2,26 @@ const moment = require('moment')
 const Panel = require('../api/models/panels')
 const Production = require('../api/models/productions')
 const ProductionCtrl = require('../controllers/production-ctrl')
+const Validate = require('../util/validate')
 
 const UPDATE_INTERVAL_DAILY = 20 // minutes
 const UPDATE_INTERVAL_WEEKLY = 1 // days
 const UPDATE_INTERVAL_MONTHLY = 1 // days
 const UPDATE_INTERVAL_YEARLY = 1 // days
 
-panelsCtrl_createPanel = (req, res) => {
-    const body = req.body
-    
-    if (!body) {
-        return res.status(400).json({
-            success: false,
-            error: 'You must provide a panel',
-        })
-    }
-    const tempBody = {
-        daily: [],
-        weekly: [],
-        monthly: [],
-        yearly: [],
-        zipcode: 15213,
-        weather: ['Sunny', '23.0', 'F'],
-        timezone: 'EST',
+panel = async (data) => {
+    if(!data) return null
+
+    const checkValid = await Validate.validatePanel(data)
+    if(!checkValid.isValid) return checkValid
+
+    const params = {
+        cost: parseInt(data.cos ?? 0),
+        sid: parseInt(data.sid),
+        apikey: data.apikey,
     };
-    const panel = new Panel(tempBody)
-
-    if (!panel) {
-        return res.status(400).json({success: false, error: err})
-    }
-
-    panel
-        .save()
-        .then(() => {
-            return res.status(201).json({
-                success: true,
-                id: panel._id,
-                message: 'Panel Created!',
-            })
-        })
-        .catch(error => {
-            return res.status(400).json({
-                error,
-                message: 'Panel not created!',
-            })
-        })
+    const panel = new Panel(params)
+    return {panel: panel}
 }
 
 panelsCtrl_getPanel = async (req, res) => {
@@ -134,7 +109,7 @@ _getProductionHelper = async (req, panel, productionIds, estimateUnit, updateInt
 }
 
 module.exports = {
-    panelsCtrl_createPanel,
+    panel,
     panelsCtrl_getPanel,
     panelsCtrl_getProduction,
 }

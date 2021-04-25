@@ -4,8 +4,9 @@ const cors = require('cors')
 
 const db = require('./db')
 const panelsRouter = require('./src/routes/panels-router')
+const usersRouter = require('./src/routes/users-router')
 
-const PVOutput = require('./src/portals/pvoutput')
+const PVOutputScraper = require('./src/portals/pvoutput_scraper')
 
 const app = express()
 const apiPort = 9000
@@ -21,10 +22,11 @@ app.get('/', (req, res) => {
 })
 
 app.get('/testAPI', (req, res) => {
-    PVOutput.getDailyProduction()
+    PVOutputScraper.pvoutput_region_ids('Pennsylvania')
     res.send('Test API')
 })
 
 app.use('/panels', panelsRouter)
+app.use('/users', usersRouter)
 
 app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`))

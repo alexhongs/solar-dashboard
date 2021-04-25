@@ -1,4 +1,3 @@
-const { min } = require('moment');
 const moment = require('moment');
 const Production = require('../api/models/productions')
 const PVOutput = require('../portals/pvoutput');
@@ -111,34 +110,9 @@ _fetchProduction = async (req, panel, productionIds, db_productions) => {
     return await _getProduction(productionIds, db_productions)
 }
 
-// _fetchWeeklyProduction = async (req, panel) => {
-//     console.log(`FETCH: Weekly Production`)
-//     return null;
-// }
-
-// _fetchTotalProduction = async (req, panel) => {
-//     console.log(`FETCH: Total Production`)
-//     const productions = PanelsCtrl.panelsCtrl_getProduction(req, null)
-//     const totalProduction = 0
-
-//     productions.forEach(production => {
-//         totalProduction += production.magnitude
-//     });
-
-//     const total = {
-//         magnitude: productions[0].magnitude,
-//         date: productions[0].date,
-//         efficiency: productions[0].efficiency,
-//         carbon: productions[0].carbon,
-//         money: productions[0].money,
-//     }
-//     return [total];
-// }
-
 module.exports = {
     productionCtrl_fetchProduction,
     productionCtrl_getProductionHelper,
 }
-
 
 // TODO: Figure out a way to export with custom schema
