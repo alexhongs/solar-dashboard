@@ -1,11 +1,16 @@
 import React from 'react';
 
-// eslint-disable-next-line react/prefer-stateless-function
 function Dashboard() {
   return (
     <section id="dashboard">
       <div className="row">
-        <p>Dashboard</p>
+        <div className="two columns">
+          <h1>Nav</h1>
+        </div>
+
+        <div className="ten columns">
+          <h1>Solar</h1>
+        </div>
       </div>
     </section>
   );

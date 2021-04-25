@@ -183,10 +183,10 @@ transition: color 0.2s ease-in-out;
 }
 
 ul#nav li a:active {
-background-color: #fff !important;
+  background-color: #fff !important;
 }
 ul#nav li.current a {
-color: #000;
+  color: #000;
 }
 
 ul#nav li #login-button {
@@ -207,7 +207,6 @@ ul#nav li #logout-button {
   border-radius: 25px;
   margin-right: 25px;
 }
-
 
 /* ------------------------------------------------------------------ */
 /* About Section
