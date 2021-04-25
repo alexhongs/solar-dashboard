@@ -194,7 +194,20 @@ ul#nav li #login-button {
   padding: 2px 24px 2px 24px;
   background-color: #FFD600;
   border: none;
+  border-radius: 25px;
+  margin-right: 25px;
 }
+
+ul#nav li #logout-button {
+  font-size: small;
+  padding: 2px 24px 2px 24px;
+  color: #fff;
+  background-color: #696969;
+  border: none;
+  border-radius: 25px;
+  margin-right: 25px;
+}
+
 
 /* ------------------------------------------------------------------ */
 /* About Section
