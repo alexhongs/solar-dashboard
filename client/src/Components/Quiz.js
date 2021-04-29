@@ -66,7 +66,7 @@ function getQuizContent(quizStep, quizResult, quizScore, setValue, setQuizResult
     case 0:
       return (
         <>
-          <h1 className="pad-top-70"> Are you interested in adding solar energy to your home or business? </h1>
+          <h1 className="pad-top-120"> Are you interested in adding solar energy to your home or business? </h1>
 
           <div className="quiz-row row">
             <div className="six columns">
@@ -96,7 +96,7 @@ function getQuizContent(quizStep, quizResult, quizScore, setValue, setQuizResult
     case 1:
       return (
         <>
-          <h1 className="pad-top-70">
+          <h1 className="pad-top-120">
             {' '}
             What county is your
             {' '}

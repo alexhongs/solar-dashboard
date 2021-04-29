@@ -1,6 +1,7 @@
 import { createStore, action } from 'easy-peasy';
 
 const store = createStore({
+  // Quiz
   quizStep: 0,
   quizResult: {
     0: 'Home',
@@ -45,6 +46,18 @@ const store = createStore({
       && state.quizResult[state.quizStep] !== 'Location') {
       state.quizStep += 1;
     }
+  }),
+
+  // Auth
+  loginInfo: {
+    email: '',
+    password: '',
+  },
+  setLoginEmail: action((state, payload) => {
+    state.loginInfo.email = payload;
+  }),
+  setLoginPassword: action((state, payload) => {
+    state.loginInfo.password = payload;
   }),
 });
 
