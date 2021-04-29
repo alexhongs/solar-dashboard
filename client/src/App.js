@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import NavBar from './Components/NavBar';
 import Home from './Components/Home';
-import CreateAccount from './Components/CreateAccount';
+import Signup from './Components/SignUp';
 import Login from './Components/LogIn';
 import Dashboard from './Components/Dashboard';
 import './App.css';
@@ -18,7 +18,7 @@ class App extends Component {
             <Route path="/" exact component={Home} />
             <Route path="/home" component={Home} />
             <Route path="/login" component={Login} />
-            <Route path="/createaccount" component={CreateAccount} />
+            <Route path="/signup" component={Signup} />
             <Route path="/dashboard" component={Dashboard} />
           </Switch>
         </Router>

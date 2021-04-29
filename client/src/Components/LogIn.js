@@ -142,7 +142,11 @@ function Login() {
             </Button>
 
             <Grid container>
-              <Grid item xs />
+              <Grid item xs>
+                <Link href="/signup" variant="body2">
+                  Sign Up
+                </Link>
+              </Grid>
               <Grid item>
                 <Link href="/signin" variant="body2">
                   If you need help, Contact Us
