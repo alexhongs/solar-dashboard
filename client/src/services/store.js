@@ -3,7 +3,7 @@ import { createStore, action } from 'easy-peasy';
 const store = createStore({
   quizStep: 0,
   quizResult: {
-    0: 'Location',
+    0: 'Home',
     1: 'Allegheny',
     2: 'unanswered',
     3: 'unanswered',
@@ -16,7 +16,7 @@ const store = createStore({
     state.quizResult[state.quizStep] = payload;
   }),
   setQuizResult: action((state, payload) => {
-    const ans = payload;
+    const ans = payload[0];
     const score = payload[1];
 
     if (state.quizStep === 5) {

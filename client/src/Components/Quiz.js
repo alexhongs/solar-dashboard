@@ -4,13 +4,12 @@ import { useStoreState, useStoreActions } from 'easy-peasy';
 import { withStyles } from '@material-ui/core/styles';
 import Slider from '@material-ui/core/Slider';
 
-import solarResult from '../images/solar-result.png';
 import solarWorks from '../images/solarworks.png';
 import solarMan from '../images/solarman.png';
 
 const CustomSlider = withStyles({
   root: {
-    color: '#A5D4B4',
+    color: '#47AA24',
     height: 10,
     padding: '2px 0 42px',
   },
@@ -66,7 +65,7 @@ function getQuizContent(quizStep, quizResult, quizScore, setValue, setQuizResult
     case 0:
       return (
         <>
-          <h1> Are you interested in adding solar energy to your home or business? </h1>
+          <h1 className="pad-top-70"> Are you interested in adding solar energy to your home or business? </h1>
 
           <div className="quiz-row row">
             <div className="six columns">
@@ -96,9 +95,10 @@ function getQuizContent(quizStep, quizResult, quizScore, setValue, setQuizResult
     case 1:
       return (
         <>
-          <h1>
+          <h1 className="pad-top-70">
             {' '}
             What county is your
+            {' '}
             {quizResult[0]}
             {' '}
             in?
@@ -116,9 +116,11 @@ function getQuizContent(quizStep, quizResult, quizScore, setValue, setQuizResult
           <h1>
             {' '}
             How long do you plan to
+            {' '}
             {quizResult[0] === 'Home' ? 'live' : 'stay'}
             {' '}
             at your current
+            {' '}
             {quizResult[0]}
             ?
             {' '}
@@ -404,25 +406,45 @@ function getQuizContent(quizStep, quizResult, quizScore, setValue, setQuizResult
           <h1> Ok, we’ve ran the numbers, we think you would be a great fit for solar! </h1>
 
           <div className="quiz-row row">
-            <div className="six columns">
-              <img className="solar-result" src={solarResult} alt="solar-result" />
+            <>
+              <div className="row">
+                <div className="six columns more-suitable">
+                  <h7>Less Suitable &#x2190;</h7>
+                </div>
+                <div className="six columns less-suitable">
+                  <h7>&#x2192; More Suitable</h7>
+                </div>
+              </div>
+
+              <CustomSlider
+                ThumbComponent={CustomThumbComponent}
+                defaultValue={[50, quizScore]}
+                value={[50, quizScore]}
+              />
+            </>
+
+            <div className="row">
+              <div className="six columns">
+                <h5> Contrary to popular belief, solar works in Western PA! </h5>
+              </div>
             </div>
 
-            <div className="six columns">
-              <h5> Contrary to popular belief, solar works in Western PA! </h5>
-              <h5> Let’s get you connected with our team! </h5>
-            </div>
+            <div className="row">
+              <div className="six columns">
+                <h5> Let’s get you connected with our team! </h5>
+              </div>
 
-            <div className="confirm-button-wrapper twelve columns">
-              <button
-                type="button"
-                className="selected confirm-button btn bg-transparent"
-                onClick={() => incrementQuizStep()}
-              >
-                {' '}
-                Confirm your contact info
-                <span STYLE="font-size:24pt">&#8594;</span>
-              </button>
+              <div className="six columns confirm-button-wrapper">
+                <button
+                  type="button"
+                  className="selected confirm-button btn bg-transparent"
+                  onClick={() => incrementQuizStep()}
+                >
+                  {' '}
+                  Confirm your contact info
+                  <span STYLE="font-size:24pt">&#8594;</span>
+                </button>
+              </div>
             </div>
           </div>
         </>
@@ -561,21 +583,27 @@ function Quiz() {
           )}
 
         <div className={[8, 9].includes(quizStep) ? 'twelve columns main-col' : 'nine columns main-col'}>
-          <div className="row">
-            <div className="six columns more-suitable">
-              <h7>More Suitable &#x2190;</h7>
-            </div>
-            <div className="six columns less-suitable">
-              <h7>&#x2192; Less Suitable</h7>
-            </div>
-          </div>
+          {
+            [2, 3, 4, 5, 6].includes(quizStep)
+              && (
+              <>
+                <div className="row">
+                  <div className="six columns more-suitable">
+                    <h7>Less Suitable &#x2190;</h7>
+                  </div>
+                  <div className="six columns less-suitable">
+                    <h7>&#x2192; More Suitable</h7>
+                  </div>
+                </div>
 
-          <CustomSlider
-            ThumbComponent={CustomThumbComponent}
-            getAriaLabel={(index) => (index === 0 ? 'Minimum price' : 'Maximum price')}
-            defaultValue={[50, quizScore]}
-            value={[50, quizScore]}
-          />
+                <CustomSlider
+                  ThumbComponent={CustomThumbComponent}
+                  defaultValue={[50, quizScore]}
+                  value={[50, quizScore]}
+                />
+              </>
+              )
+          }
 
           {getQuizContent(quizStep, quizResult, quizScore, setValue, setQuizResult, incrementQuizStep)}
         </div>

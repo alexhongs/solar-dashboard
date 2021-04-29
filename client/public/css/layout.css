@@ -329,6 +329,13 @@ color: #149414;
   padding-top: 142px;
   padding-bottom: 142px;
 }
+
+#facts .city {
+  width: 75vw;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
   
 
 /* ------------------------------------------------------------------ */
@@ -514,7 +521,7 @@ filter: alpha(opacity=100);
 }
 
 #quiz .confirm-button-wrapper {
-  padding-top: 48px;
+  padding-top: 24px;
 }
 
 #quiz .confirm-button {

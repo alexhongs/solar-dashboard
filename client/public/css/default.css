@@ -803,3 +803,7 @@ properly.
   margin-right: auto !important;
   text-align: center !important;
 }
+
+.pad-top-70 {
+   padding-top: 70px;
+}
