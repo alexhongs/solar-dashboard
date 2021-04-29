@@ -49,6 +49,38 @@ const store = createStore({
   }),
 
   // Auth
+  registerStep: 0,
+  registerInfo: {
+    APICode: '',
+    systemId: '',
+    moneyInvested: '',
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  },
+  incrementRegisterStep: action((state) => {
+    state.registerStep += 1;
+  }),
+  setAPICode: action((state, payload) => {
+    state.registerInfo.APICode = payload;
+  }),
+  setSystemId: action((state, payload) => {
+    state.registerInfo.systemId = payload;
+  }),
+  setMoneyInvested: action((state, payload) => {
+    state.registerInfo.moneyInvested = payload;
+  }),
+  setEmail: action((state, payload) => {
+    state.registerInfo.email = payload;
+  }),
+  setPassword: action((state, payload) => {
+    state.registerInfo.password = payload;
+  }),
+  setConfirmPassword: action((state, payload) => {
+    state.registerInfo.confirmPassword = payload;
+  }),
+
   loginInfo: {
     email: '',
     password: '',

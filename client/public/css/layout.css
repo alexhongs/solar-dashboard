@@ -706,3 +706,74 @@ footer .social-links li:first-child {
 #go-top a:hover {
   background-color: #149414;
 }
+
+/* ------------------------------------------------------------------ */
+/* MISC
+/* ------------------------------------------------------------------ */
+
+.pad-top-24 {
+  padding-top: 24px;
+}
+
+.pad-top-42 {
+  padding-top: 42px;
+}
+
+.pad-top-120 {
+  padding-top: 120px;
+}
+
+.city {
+  margin-top: 25px;
+  width: 25vw;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.provider-button {
+  margin-top: 25px;
+  border: 1px solid black;
+  padding: 5px 10px 5px 10px;
+  border-radius: 10px;
+}
+
+.active-provider-button {
+  background-color: #5F7E69;
+  color: #fff;
+  margin-top: 25px;
+  border: 1px solid #fff;
+  padding: 5px 10px 5px 10px;
+  border-radius: 10px;
+}
+
+.next-button {
+  background-color: #253A2C;
+  color: #fff;
+  margin-top: 70px;
+  border: 1px solid #fff;
+  padding: 5px 25px 5px 25px;
+  border-radius: 10px;
+}
+
+.skip-button {
+  background-color: #96CCA8;
+  color: #fff;
+  margin-top: 70px;
+  border: 1px solid #fff;
+  padding: 5px 25px 5px 25px;
+  border-radius: 10px;
+}
+
+.center-text {
+  text-align: center;
+}
+
+.left-text {
+  text-align: left !important;
+}
+
+.register-img {
+  width: 50px;
+  height: auto;
+}

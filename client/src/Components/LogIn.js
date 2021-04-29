@@ -133,7 +133,7 @@ function Login() {
             <DividerWithText>or</DividerWithText>
 
             <Button
-              type="submit"
+              type="button"
               fullWidth
               variant="contained"
               className={classes.solaredge}
@@ -148,7 +148,7 @@ function Login() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="/signin" variant="body2">
+                <Link href="https://solbridgeea.com/" variant="body2">
                   If you need help, Contact Us
                 </Link>
               </Grid>
