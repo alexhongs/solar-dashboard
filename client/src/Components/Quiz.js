@@ -3,6 +3,7 @@ import { useStoreState, useStoreActions } from 'easy-peasy';
 
 import { withStyles } from '@material-ui/core/styles';
 import Slider from '@material-ui/core/Slider';
+import TextField from '@material-ui/core/TextField';
 
 import solarWorks from '../images/solarworks.png';
 import solarMan from '../images/solarman.png';
@@ -105,8 +106,18 @@ function getQuizContent(quizStep, quizResult, quizScore, setValue, setQuizResult
             {' '}
           </h1>
 
-          <div className="quiz-row row">
-            <input type="text" value={quizResult[1]} onChange={(event) => setValue(event.target.value)} />
+          <div className="county-row">
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="county"
+              label=""
+              id="county"
+              value={quizResult[1]}
+              onChange={(event) => setValue(event.target.value)}
+            />
           </div>
         </>
       );
@@ -234,11 +245,11 @@ function getQuizContent(quizStep, quizResult, quizScore, setValue, setQuizResult
             <div className="four columns">
               <button
                 type="button"
-                className={quizResult[4] === 'new' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
-                onClick={() => setQuizResult(['new', 20])}
+                className={quizResult[4] === 'bad' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
+                onClick={() => setQuizResult(['bad', -10])}
               >
                 {' '}
-                Brand New
+                Bad Shape
               </button>
             </div>
 
@@ -256,11 +267,11 @@ function getQuizContent(quizStep, quizResult, quizScore, setValue, setQuizResult
             <div className="four columns">
               <button
                 type="button"
-                className={quizResult[4] === 'bad' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
-                onClick={() => setQuizResult(['bad', -10])}
+                className={quizResult[4] === 'new' ? 'selected quiz-button btn bg-transparent' : 'quiz-button btn bg-transparent'}
+                onClick={() => setQuizResult(['new', 20])}
               >
                 {' '}
-                Bad Shape
+                Brand New
               </button>
             </div>
 

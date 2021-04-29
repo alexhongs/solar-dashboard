@@ -118,6 +118,11 @@ padding-bottom: 50px;
 
 /* primary navigation
 --------------------------------------------------------------------- */
+#nav-wrap {
+  background-color: #fff;
+  border-bottom: 1px solid #D3D3D3;
+}
+
 #nav-wrap ul,
 #nav-wrap li,
 #nav-wrap a {
@@ -125,6 +130,16 @@ margin: 0;
 padding: 0;
 border: none;
 outline: none;
+}
+
+.logo-img {
+  padding-top: 11px;
+}
+
+.nav-row {
+  width: 96%;
+  max-width: 1024px;
+  margin: 0 auto;
 }
 
 /* nav-wrap */
@@ -152,8 +167,6 @@ ul#nav {
 min-height: 48px;
 width: auto;
 text-align: right;
-border-bottom: 1px solid #D3D3D3;
-background-color: #fff;
 }
 ul#nav li {
 position: relative;
@@ -192,7 +205,8 @@ ul#nav li.current a {
 ul#nav li #login-button {
   font-size: small;
   padding: 2px 24px 2px 24px;
-  background-color: #FFD600;
+  background-color: #EF9F7E;
+  color: #fff;
   border: none;
   border-radius: 25px;
   margin-right: 25px;
@@ -504,6 +518,12 @@ filter: alpha(opacity=100);
 
 #quiz .quiz-row {
   padding-top: 48px;
+}
+
+#quiz .county-row {
+  padding-top: 36px;
+  margin: 0 auto;
+  width: 24vw;
 }
 
 #quiz .selected {
