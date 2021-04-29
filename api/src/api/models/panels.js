@@ -23,9 +23,12 @@ const Panel = new Schema(
 
         // Dashboard analysis
 
-        three_month_peak: { type: Object, default: null},
-        total_peak: {type: Object, default: null},
-        total_average: { type: Object, default: null},
+
+        // All Fetched Together upon GET live or GET production
+        month_peak_power : { type: Object, default: null}, // GET live
+        three_month_peak_production: { type: Object, default: null}, // GET production
+        total_peak_production: {type: Object, default: null}, // GET production
+        total_average_production: { type: Object, default: null}, // GET production
     },
     { timestamps: true },
 )
