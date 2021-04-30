@@ -10,40 +10,60 @@ pvoutput_region_ids = async (region) => {
     try {
         let data = []
         page_number = 0
-        while (page_number < 100) {        
-            const URL = `https://pvoutput.org/ladder.jsp?p=${page_number}&region=${region}&country=244&o=e&d=desc`
+        while (page_number < 3) {        
+            const URL = `https://pvoutput.org/ladder.jsp?p=${page_number}&region=${region}&country=244&seen=1`
             const response = await axios.get(URL)
             const dom = await new JSDOM(response.data)
+
+            const currentPageNumberElement = dom.window.document.querySelector("span[class='active_tnt_link']")
+            const currentPageNumber = currentPageNumberElement ? currentPageNumberElement.textContent : null
+
+            if(currentPageNumber == null || currentPageNumber != `${page_number+1}`) {
+                break
+            }
+
             const a = dom.window.document.querySelectorAll('a[href*="list.jsp"]')
             a.forEach(element => {
-                // console.log(`${element.textContent}    ${element.getAttribute("href")}`)
                 const id_sid_ = element.getAttribute("href").split("?")
                 if (id_sid_[1]) {
                     const id_sid = id_sid_[1].split("&")
                     const id = id_sid[0].split("=")[1]
                     const sid = id_sid[1].split("=")[1]
-                    // console.log(`id: ${id}     sid: ${sid}`)
                     data.push({id: id, sid: sid})
                 }
+                // console.log(`Hi ${id_sid_[1]}`)
             });
             page_number += 1
         }
-        // console.log(dom.window.document.querySelectorAll('a'))
-        // console.log(dom.window.document.getElementsByTagName('a'))
-        
-        // console.log(dom.window.textContent)
 
-        // const query = jquery.querySelector("a[href*=list.jsp]")
-        // console.log(query)
         return data
     } catch (e) {
         console.log(`Error: Scraping by Region Id ${e}`)
     }
+                // const b = dom.window.document.querySelectorAll('tr')
+            // b.forEach(element => {
+            //     const s = element.firstChild.textContent
+            //     if(s && !isNaN(parseInt(s))) {
+            //         const activity = element.children[10].textContent
+
+            //         console.log(element.children[2].innerHTML)
+
+            //         // const id_sid_ = element.children[2].getAttribute("href").split("?")
+            //         // console.log(`${element.textContent} ${id_sid_[1]} ${activity}`)
+            //         // if (id_sid_[1]) {
+            //         //     const id_sid = id_sid_[1].split("&")
+            //         //     const id = id_sid[0].split("=")[1]
+            //         //     const sid = id_sid[1].split("=")[1]
+            //         //     data.push({id: id, sid: sid})
+            //         // }
+            //     }
+            // })
+
 }
 
 pvoutput_getAllStatistic = async (region) => {
     const panels = await pvoutput_region_ids(region)
-    const num_panels = 20
+    const num_panels = 5
 
     let data = {
         dayProduction: 0,
@@ -64,23 +84,27 @@ pvoutput_getAllStatistic = async (region) => {
     }
 
     for (i = 0; i < num_panels; i++) {
+        console.log(`${panels[i].id} ${panels[i].sid}`)
         const statistic = await pvoutput_getStatistic(region, panels[i])
-        
-        data.dayProduction += statistic.dayProduction
-        data.dayEfficiency += statistic.dayEfficiency
-        data.dayCarbonSaved += statistic.dayCarbonSaved
-        data.dayMoneySaved += statistic.dayMoneySaved
-
-        data.lifetimeProduction += statistic.lifetimeProduction
-        data.lifetimeEfficiency += statistic.lifetimeEfficiency
-        data.lifetimeCarbonSaved += statistic.lifetimeCarbonSaved
-        data.lifetimeMoneySaved += statistic.lifetimeMoneySaved
-
-        data.averageLiveProduction += statistic.averageLiveProduction
-        data.averageDailyProduction += statistic.averageDailyProduction
-        data.averageWeeklyProduction += statistic.averageWeeklyProduction
-        data.averageMonthlyProduction += statistic.averageMonthlyProduction
-        data.averageYearlyProduction += statistic.averageYearlyProduction
+        if(statistic) {
+            data.dayProduction += statistic.dayProduction
+            data.dayEfficiency += statistic.dayEfficiency
+            data.dayCarbonSaved += statistic.dayCarbonSaved
+            data.dayMoneySaved += statistic.dayMoneySaved
+    
+            data.lifetimeProduction += statistic.lifetimeProduction
+            data.lifetimeEfficiency += statistic.lifetimeEfficiency
+            data.lifetimeCarbonSaved += statistic.lifetimeCarbonSaved
+            data.lifetimeMoneySaved += statistic.lifetimeMoneySaved
+    
+            data.averageLiveProduction += statistic.averageLiveProduction
+            data.averageDailyProduction += statistic.averageDailyProduction
+            data.averageWeeklyProduction += statistic.averageWeeklyProduction
+            data.averageMonthlyProduction += statistic.averageMonthlyProduction
+            data.averageYearlyProduction += statistic.averageYearlyProduction
+        } else {
+            console.log(`bad!`)
+        }
     }
 
     data.dayProduction /= num_panels
@@ -99,7 +123,7 @@ pvoutput_getAllStatistic = async (region) => {
     data.averageMonthlyProduction /= num_panels
     data.averageYearlyProduction /= num_panels
 
-    console.log(`
+    console.log(` RESULT:
     numberOfPanels: ${num_panels}
     dayProduction: ${data.dayProduction}
     dayEfficiency: ${data.dayEfficiency}
@@ -114,6 +138,7 @@ pvoutput_getAllStatistic = async (region) => {
 }
 
 pvoutput_getStatistic = async (region, panel) => {
+    console.log(`id ${panel.id} sid ${panel.sid}`)
 
     let statistic = {
         dayProduction: 0,
@@ -138,9 +163,10 @@ pvoutput_getStatistic = async (region, panel) => {
         let stat = await _getStatistic(panel.id, panel.sid)
         let aggregate = await _getAggregate(panel.id, panel.sid)
         let analyse = await _getAnalyse(panel.id, panel.sid)
-
+        if(dayList && !dayList[0]) return null
+        
         statistic.dayProduction = dayList[0].production
-        statistic.dayEfficiency = _dayEfficiency(dayList[0].production, stat.threeMonthPeak)
+        statistic.dayEfficiency = _dayEfficiency(dayList[0].production, stat.threeMonthAverage)
         statistic.dayCarbonSaved = util.getCarbon(dayList[0].production)
         statistic.dayMoneySaved = util.getMoney(2020, dayList[0].production)
 
@@ -195,13 +221,13 @@ _getStatistic = async (id, sid) => {
         lifetimeEfficiency: 0,
         lifetimeCarbonSaved: 0,
         lifetimeMoneySaved: 0,
-        threeMonthPeak: 0,
+        threeMonthreeMonthAveragethPeak: 0,
     }
 
     let totalProduction = 0
     let averageProduction = 0
     let peakProduction = 0
-    let threeMonthPeak = 0
+    let threeMonthAverage = 0
 
     const URL = `https://pvoutput.org/statistic.jsp?id=${id}&sid=${sid}`
     const response = await axios.get(URL)
@@ -213,9 +239,9 @@ _getStatistic = async (id, sid) => {
             totalProduction = _stringToMagnitude(element.children[1].textContent)
         } else if (element.firstChild.textContent == "Average Generation") {
             averageProduction = _stringToMagnitude(element.children[1].textContent)
+            threeMonthAverage = _stringToMagnitude(element.children[3].textContent)
         } else if (element.firstChild.textContent == "Maximum Generation") {
             peakProduction = _stringToMagnitude(element.children[1].textContent)
-            threeMonthPeak = _stringToMagnitude(element.children[3].textContent)
         }
     });
 
@@ -223,7 +249,7 @@ _getStatistic = async (id, sid) => {
     data.lifetimeEfficiency = averageProduction / peakProduction
     data.lifetimeMoneySaved = util.getMoney(2020, totalProduction)
     data.lifetimeCarbonSaved = util.getCarbon(totalProduction)
-    data.threeMonthPeak = threeMonthPeak
+    data.threeMonthAverage = threeMonthAverage
 
     // console.log(`Get Statistic 
     // Lifetime Production: ${data.lifetimeProduction}
@@ -305,11 +331,16 @@ _dayEfficiency = (production, peak) => {
     return peak == 0 ? -1 : production / peak
 }
 
-_averageDailyProduction = (dailyList) => {
+_averageDailyProduction = async (dailyList) => {
     let production = 0
-    for (i = 1; i < dailyList.length; i++) {
-        production += dailyList[i].production
-    }
+    let first = true
+    dailyList.forEach(day => {
+        if(first) {
+            first = false
+        } else{
+            production += day.production
+        }
+    })
     return dailyList.length == 1 ? production : production / (dailyList.length - 1)
 }
 
@@ -318,27 +349,24 @@ _averageWeeklyProduction = (dailyList) => {
 
     let sum = 0
 
-    let notFullWeek = false
-    for (i = 1; i < length; i += 7) {
-        let weeklyProduction = 0
-        for (j = i; j < i + 7; j ++) {
-            if(j >= length) {
-                notFullWeek = true
-                break
+    let first = true
+    let last = Math.floor(length / 7) * 7
+
+    let i = 0
+    let count = 0
+    dailyList.forEach(day => {
+        if(first) {
+            first = false
+        } else {
+            if (i < last) {
+                sum += day.production
+                count += 1
             }
-            weeklyProduction += dailyList[j].production
         }
-        
-        if(notFullWeek) {
-            if(sum == 0) {
-                return weeklyProduction
-            }
-        } 
-        else {
-            sum += weeklyProduction
-        }
-    }
-    return length == 1 ? sum : sum / (length - 1)
+        i += 1
+    })
+
+    return count == 0 ? 0 : sum / count
 }
 
 _stringToMagnitude = (productionText) => {

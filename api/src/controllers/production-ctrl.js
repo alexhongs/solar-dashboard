@@ -4,7 +4,7 @@ const PVOutput = require('../portals/pvoutput');
 const ObjectId = require('mongodb').ObjectID;
 
 // Number of production data to hold
-const DB_DAILY_PRODUCTIONS = 7
+const DB_DAILY_PRODUCTIONS = 15
 const DB_WEEKLY_PRODUCTIONS = 6
 const DB_MONTHLY_PRODUCTIONS = 12
 const DB_YEARLY_PRODUCTIONS = 9
