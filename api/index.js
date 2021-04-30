@@ -21,9 +21,15 @@ app.get('/', (req, res) => {
     res.send('Solar Dashboard Server. Running')
 })
 
-app.get('/testAPI', (req, res) => {
-    PVOutputScraper.pvoutput_region_ids('Pennsylvania')
-    res.send('Test API')
+app.get('/testAPI', async (req, res) => {
+    // `id=5778&sid=4612`
+    const panel = {id: `5778`, sid: `4612`}
+    // const data = await PVOutputScraper.pvoutput_getStatistic('Pennsylvania', panel)
+    const data = await PVOutputScraper.pvoutput_getAllStatistic('Pennsylvania')
+    
+    // res.send('Test API')
+
+    res.status(200).json({success: true, data: data})
 })
 
 app.use('/panels', panelsRouter)
