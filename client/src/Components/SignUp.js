@@ -15,6 +15,8 @@ import register1 from '../images/register-1.png';
 import register2 from '../images/register-2.png';
 import register3 from '../images/register-3.png';
 
+import NavBar from './NavBar';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     height: '100vh',
@@ -50,7 +52,13 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
   },
   submit: {
+    color: '#fff',
+    backgroundColor: '#253A2C',
     margin: theme.spacing(7, 0, 2),
+    '&:hover': {
+      color: '#fff',
+      background: '#399457',
+    },
   },
   solaredge: {
     margin: theme.spacing(2, 0, 2),
@@ -181,7 +189,7 @@ function RightPanel(classes, registerStep, incrementRegisterStep, setAPICode, se
             Next
           </button>
 
-          <Link className="pad-top-42" href="/signin" variant="body2">
+          <Link className="pad-top-42" href="/login" variant="body2">
             Already have an account? Sign in
           </Link>
         </>
@@ -335,6 +343,7 @@ function SignUp() {
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
+      <NavBar />
       <Grid item xs={false} sm={4} md={3} className={classes.image}>
         <div className={classes.instructions}>
           {LeftPanel(registerStep)}

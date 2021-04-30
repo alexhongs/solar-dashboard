@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import NavBar from './NavBar';
 import Header from './Header';
 import Facts from './Facts';
 import About from './About';
@@ -10,6 +11,7 @@ class Home extends Component {
   render() {
     return (
       <>
+        <NavBar />
         <Header />
         <Facts />
         <Quiz />

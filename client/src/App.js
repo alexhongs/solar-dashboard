@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import NavBar from './Components/NavBar';
 import Home from './Components/Home';
 import Signup from './Components/SignUp';
 import Login from './Components/LogIn';
@@ -13,7 +12,6 @@ class App extends Component {
     return (
       <div className="App">
         <Router>
-          <NavBar />
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/home" component={Home} />

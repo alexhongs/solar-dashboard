@@ -91,6 +91,12 @@ const store = createStore({
   setLoginPassword: action((state, payload) => {
     state.loginInfo.password = payload;
   }),
+
+  // Dashboard
+  selectedTab: 0,
+  setSelectedTab: action((state, payload) => {
+    state.selectedTab = payload;
+  }),
 });
 
 export default store;

@@ -22,32 +22,16 @@ class NavBar extends Component {
                 <li><a className="smoothscroll" href="#quiz">Is Solar Right for You?</a></li>
                 <li><a className="smoothscroll" href="#about">Facts vs. Fiction</a></li>
                 <li><a className="smoothscroll" href="https://solbridgeea.com/">Visit Solbridge</a></li>
-
-                {window.location.href.endsWith('dashboard')
-                  ? (
-                    <li>
-                      <a
-                        type="button"
-                        className="btn btn-warning"
-                        id="logout-button"
-                        href="\home"
-                      >
-                        Log Out
-                      </a>
-                    </li>
-                  )
-                  : (
-                    <li>
-                      <a
-                        type="button"
-                        className="btn btn-warning"
-                        id="login-button"
-                        href="\login"
-                      >
-                        Log In
-                      </a>
-                    </li>
-                  ) }
+                <li>
+                  <a
+                    type="button"
+                    className="btn btn-warning"
+                    id="login-button"
+                    href="\login"
+                  >
+                    Log In
+                  </a>
+                </li>
               </ul>
             </div>
           </div>

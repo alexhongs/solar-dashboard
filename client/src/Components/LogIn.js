@@ -12,6 +12,8 @@ import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 
+import NavBar from './NavBar';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     height: '100vh',
@@ -40,9 +42,18 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
   },
   submit: {
+    color: '#fff',
+    backgroundColor: '#253A2C',
     margin: theme.spacing(3, 0, 2),
+    '&:hover': {
+      color: '#fff',
+      background: '#399457',
+    },
   },
   solaredge: {
+    color: '#000',
+    backgroundColor: '#fff',
+    border: '1px solid black',
     margin: theme.spacing(2, 0, 2),
   },
   container: {
@@ -84,6 +95,7 @@ function Login() {
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
+      <NavBar />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
