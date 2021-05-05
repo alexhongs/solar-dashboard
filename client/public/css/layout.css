@@ -766,6 +766,14 @@ footer .social-links li:first-child {
   background-color: #F5F3F6;
 }
 
+#dashboard h3 {
+  font: 22px 'Nunito', sans-serif;
+  font-weight: bolder;
+}
+#dashboard h6 {
+  font: 17px "Noto Sans", sans-serif;
+}
+
 #dashboard .nav-col {
   background-color: #fff;
 }
@@ -847,6 +855,7 @@ footer .social-links li:first-child {
 #weekly-report h3 {
   color: #333333;
   text-align: left;
+  padding-top: 20px;
 }
 #weekly-report h4 {
   color: #333333;
@@ -890,6 +899,18 @@ footer .social-links li:first-child {
 /* MISC.
 /* ------------------------------------------------------------------ */
 
+.margin-top-neg-20 {
+  margin-top: -20px;
+}
+
+.margin-top-42 {
+  margin-top: 42px;
+}
+
+.pad-top-12 {
+  padding-top: 12px;
+}
+
 .pad-top-24 {
   padding-top: 24px;
 }
@@ -898,16 +919,16 @@ footer .social-links li:first-child {
   padding-top: 42px;
 }
 
-.margin-top-42 {
-  margin-top: 42px;
-}
-
 .pad-top-120 {
   padding-top: 120px;
 }
 
 .no-padding {
   padding: 0;
+}
+
+.align-right {
+  text-align: right;
 }
 
 .center-text {

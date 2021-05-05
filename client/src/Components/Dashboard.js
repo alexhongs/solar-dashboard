@@ -43,10 +43,11 @@ const useStyles = makeStyles((theme) => ({
     color: '#000',
   },
   logoutButton: {
-    marginTop: '60vh',
+    marginTop: '62vh',
     bottom: 0,
     color: '000',
-    // backgroundColor: '#696969',
+    backgroundColor: '#fff',
+    elevation: '0',
   },
   label: {
     // Aligns the content of the button vertically.
@@ -150,7 +151,6 @@ function Dashboard() {
                 <Summary
                   title="Energy Production"
                   value="5.1 kWh"
-                  average="6.2 kWh"
                 />
               </div>
 
@@ -158,7 +158,6 @@ function Dashboard() {
                 <Summary
                   title="Emissions Reduced"
                   value="700 g"
-                  average="6.2 g"
                 />
               </div>
             </div>
@@ -168,7 +167,6 @@ function Dashboard() {
                 <Summary
                   title="Production Efficiency"
                   value="80%"
-                  average="50%"
                 />
               </div>
 
@@ -176,7 +174,6 @@ function Dashboard() {
                 <Summary
                   title="Money Saved"
                   value="$3.50"
-                  average="$2.01"
                 />
               </div>
             </div>

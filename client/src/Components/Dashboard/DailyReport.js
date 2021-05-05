@@ -2,6 +2,7 @@ import React from 'react';
 
 import Button from '@material-ui/core/Button';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
+import Box from '@material-ui/core/Box';
 import {
   ThemeProvider, makeStyles, withStyles, createMuiTheme,
 } from '@material-ui/core/styles';
@@ -18,10 +19,13 @@ const theme = createMuiTheme({
 const useStyles = makeStyles(() => ({
   button: {
     margin: '0 auto',
+    padding: '0',
     width: '100%',
     minWidth: '70px',
     fontSize: '20px',
     textTransform: 'none',
+    backgroundColor: '#F5F3F6',
+    borderRadius: '15px',
   },
   label: {
     // Aligns the content of the button vertically.
@@ -46,13 +50,15 @@ function DailyReport() {
       <div className="row">
         <div className="five columns">
           <h3> Current Output </h3>
-          <h1 className="pad-top-24">5.1</h1>
-          <h3>kW</h3>
+          <h1 className="pad-top-12">5.1</h1>
+          <h3 className="margin-top-neg-20">kW</h3>
           <ThemeProvider theme={theme}>
-            <Button dense disabled color="primary" classes={{ root: classes.button }}>
-              <UpIcon />
-              1.1kW
-            </Button>
+            <Box m={3}>
+              <Button dense disabled color="primary" classes={{ root: classes.button }}>
+                <UpIcon />
+                1.1kW
+              </Button>
+            </Box>
           </ThemeProvider>
         </div>
 

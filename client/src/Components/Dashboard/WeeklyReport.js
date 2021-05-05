@@ -2,6 +2,7 @@ import React from 'react';
 
 import Button from '@material-ui/core/Button';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
+import Box from '@material-ui/core/Box';
 import {
   ThemeProvider, makeStyles, withStyles, createMuiTheme,
 } from '@material-ui/core/styles';
@@ -18,9 +19,12 @@ const theme = createMuiTheme({
 const useStyles = makeStyles(() => ({
   button: {
     margin: '0 auto',
-    minWidth: '70px',
+    padding: '0',
+    width: '100%',
     fontSize: '20px',
     textTransform: 'none',
+    backgroundColor: '#F5F3F6',
+    borderRadius: '15px',
   },
   label: {
     // Aligns the content of the button vertically.
@@ -53,10 +57,12 @@ function WeeklyReport() {
 
             <div className="four columns no-padding">
               <ThemeProvider theme={theme}>
-                <Button dense disabled color="primary" classes={{ root: classes.button }}>
-                  <UpIcon />
-                  $ 2.10
-                </Button>
+                <Box m={0}>
+                  <Button dense disabled color="primary" classes={{ root: classes.button }}>
+                    <UpIcon />
+                    $ 2.10
+                  </Button>
+                </Box>
               </ThemeProvider>
             </div>
           </div>
@@ -68,10 +74,12 @@ function WeeklyReport() {
 
             <div className="four columns no-padding">
               <ThemeProvider theme={theme}>
-                <Button dense disabled color="primary" classes={{ root: classes.button }}>
-                  <UpIcon />
-                  2 g
-                </Button>
+                <Box m={1}>
+                  <Button dense disabled color="primary" m={1} classes={{ root: classes.button }}>
+                    <UpIcon />
+                    2 g
+                  </Button>
+                </Box>
               </ThemeProvider>
             </div>
           </div>
