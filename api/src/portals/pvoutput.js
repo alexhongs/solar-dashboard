@@ -61,12 +61,97 @@ pvoutput_getProduction = async (req, numProductions) => {
         const dataFormattedSorted = dataFormatted.sort((a,b) => moment(a.date) - moment(b.date)) // [Oldest .... Recent]
   
         if(req.headers.period == 'w') return _getWeeklyOutput(req.headers.period, dataFormattedSorted)
-
+        console.log(`gettt length!! ${dataFormattedSorted.length}`)
         return dataFormattedSorted
     } catch (err) {
-        console.log(`Error: PVOutput GetDailyProduction error: ${err}`)
+        console.log(`Error: PVOutput GetDailyProduction ${err}`)
         return null;
     }
+}
+
+pvoutput_getLiveProduction = async (req, panel) => {
+    try {
+        const API_KEY = '7df3ab93a0938d4acd4a261917b392df6915d076'
+        const SID1 = 4612
+        const SID = 82698
+    
+        const getOutputConfig = {
+            params: {
+                'sid1': SID1,
+                'h': 1,
+                'limit': 288,
+            },
+            headers: {
+                'X-Pvoutput-Apikey': API_KEY,
+                'X-Pvoutput-SystemId': SID,
+                'X-Rate-Limit': 1
+            }
+        }
+    
+        const response = await axios.get(`https://pvoutput.org/service/r2/getstatus.jsp`, getOutputConfig)
+        const responseHeaders = JSON.stringify(response.headers)
+        const responseData = _parseResponse(response.data)
+
+        const result = []
+        for (i = 0; i < responseData.length; i++) {
+            const output = responseData[i]
+
+            const year = output[0].substr(0,4)
+            const month = parseInt(output[0].substr(4,2)) - 1
+            const date = output[0].substr(6,2)
+            const time = output[1].split(":")
+            const hour = time[0]
+            const minute = time[1]
+
+            let obj = moment().set({
+                'year': year,
+                'month': month,
+                'date': date,
+                'hour': hour,
+                'minute': minute,
+                'second': 0,
+            })
+
+            const entry = {
+                date: obj.toISOString(),
+                power: output[3] == "NaN" ? 0 : parseInt(output[3]),
+                production: output[2] == "NaN" ? 0 : parseInt(output[2]),
+            }
+            result.push(entry)
+        }
+
+        const dataFormattedSorted = result.sort((a,b) => moment(a.date) - moment(b.date)) // [Oldest .... Recent]
+
+        return dataFormattedSorted
+
+    } catch (e) {
+        console.log(`Error: PVOutput GetLiveProduction ${e}`)
+        return null
+    }
+    
+}
+
+pvoutput_validatePanel = async (apikey, sid) => {
+    try {
+        const SID_SAMPLE = 4612
+        const getStatusConfig = {
+            params: {
+                'sid1': SID_SAMPLE,
+                'h': '1',
+                'limit': '288',
+            },
+            headers: {
+                'X-Pvoutput-Apikey': apikey,
+                'X-Pvoutput-SystemId': sid,
+                'X-Rate-Limit': 1
+            }
+        }
+        await axios.get('https://pvoutput.org/service/r2/getstatus.jsp', getStatusConfig)
+        return {error: '', isValid: true}
+    } catch(e) {
+        return {error: 'apikey or sid 401', isValid: false}
+    }
+
 }
 
 //////////////////////////
@@ -180,4 +265,6 @@ _getYearlyOutput = async (period, getOutputConfig) => {
 
 module.exports = {
     pvoutput_getProduction,
+    pvoutput_getLiveProduction,
+    pvoutput_validatePanel,
 }

@@ -4,8 +4,9 @@ const cors = require('cors')
 
 const db = require('./db')
 const panelsRouter = require('./src/routes/panels-router')
+const usersRouter = require('./src/routes/users-router')
 
-const PVOutput = require('./src/portals/pvoutput')
+const PVOutputScraper = require('./src/portals/pvoutput_scraper')
 
 const app = express()
 const apiPort = 9000
@@ -20,11 +21,18 @@ app.get('/', (req, res) => {
     res.send('Solar Dashboard Server. Running')
 })
 
-app.get('/testAPI', (req, res) => {
-    PVOutput.getDailyProduction()
-    res.send('Test API')
+app.get('/testAPI', async (req, res) => {
+    // `id=5778&sid=4612`
+    const panel = {id: `5778`, sid: `4612`}
+    // const data = await PVOutputScraper.pvoutput_getStatistic('Pennsylvania', panel)
+    const data = await PVOutputScraper.pvoutput_getAllStatistic('Pennsylvania')
+    
+    // res.send('Test API')
+
+    res.status(200).json({success: true, data: data})
 })
 
 app.use('/panels', panelsRouter)
+app.use('/users', usersRouter)
 
 app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`))

@@ -4,14 +4,31 @@ const Schema = mongoose.Schema
 // TODO: make this required and let the middle ware function create the missing fields
 const Panel = new Schema(
     {
-        daily: { type: [Object], default: null },
-        weekly: { type: [Object], default: null },
-        monthly: { type: [Object], default: null },
-        yearly: { type: [Object], default: null },
-        total: { type: [Object], default: null },
-        zipcode: { type: Number, required: true },
-        weather: { type: [String], default: null },
+        // Produciton Data
+        live: { type: [Object], default: []},
+        daily: { type: [Object], default: [] },
+        weekly: { type: [Object], default: [] },
+        monthly: { type: [Object], default: [] },
+        yearly: { type: [Object], default: [] },
+        total: { type: [Object], default: [] },
+        zipcode: { type: Number, default: 0 },
+        weather: { type: [String], default: [] },
         timezone: {type: String, default: 'UT' },
+    
+        // Personal Information
+        cost: {type: Number, default: 0},
+        sid: {type: Number, required: true},
+        apikey: { type: String, required: true },
+        userId: { type: Object, default: '' },
+
+        // Dashboard analysis
+
+
+        // All Fetched Together upon GET live or GET production
+        month_peak_power : { type: Object, default: null}, // GET live
+        three_month_peak_production: { type: Object, default: null}, // GET production
+        total_peak_production: {type: Object, default: null}, // GET production
+        total_average_production: { type: Object, default: null}, // GET production
     },
     { timestamps: true },
 )

@@ -1,11 +1,10 @@
-const { min } = require('moment');
 const moment = require('moment');
 const Production = require('../api/models/productions')
 const PVOutput = require('../portals/pvoutput');
 const ObjectId = require('mongodb').ObjectID;
 
 // Number of production data to hold
-const DB_DAILY_PRODUCTIONS = 7
+const DB_DAILY_PRODUCTIONS = 15
 const DB_WEEKLY_PRODUCTIONS = 6
 const DB_MONTHLY_PRODUCTIONS = 12
 const DB_YEARLY_PRODUCTIONS = 9
@@ -41,6 +40,55 @@ productionCtrl_getProductionHelper = async (req, panel) => {
     return null
 }
 
+productionCtrl_fetchLive = async (req, panel) => {
+    if(!panel) return null
+
+    while(panel.live.length > 0) {
+        panel.live.pop()
+    }
+    
+    // Make API Get request
+    let liveProductions = await PVOutput.pvoutput_getLiveProduction(req, panel) // [oldest .... recent]
+
+    panel.live.push(moment().toISOString())
+    for(i = 0; i < liveProductions.length; i++) {
+        panel.live.push(liveProductions[i])
+    }
+
+    await panel.save()
+
+    return productionCtrl_getLive(req, panel)
+}
+
+productionCtrl_getLive = async (req, panel) => {
+    // Make API Get request
+    let liveProductions = panel.live // [oldest .... recent]
+    
+    let productions = []
+    let peak_power = 0
+    // TODO: might need to make this a 30 minute interval
+    for(i = 1; i < liveProductions.length - 1; i++) {
+        let production = liveProductions[i]
+        const date = moment(production.date)
+        const time = `${date.hour} ${date.minutes}`
+        if(production.power > peak_power) peak_power = production.power
+        productions.push(production)
+    }
+    
+    // TODO: change this to month's peak power
+    const recentPower = productions[productions.length - 1].power
+    const efficiency = recentPower / peak_power
+
+    // TODO: This part is subject to change based on MVP definition
+    // If we keep LIVE data of all, we can calculate these on our own
+    let data = {
+        productions: productions,
+        peak_power: peak_power,
+        efficiency: efficiency,
+    }
+
+    return data
+}
 
 //////////////////////////
 // HELPER FUNCTIONS
@@ -111,34 +159,11 @@ _fetchProduction = async (req, panel, productionIds, db_productions) => {
     return await _getProduction(productionIds, db_productions)
 }
 
-// _fetchWeeklyProduction = async (req, panel) => {
-//     console.log(`FETCH: Weekly Production`)
-//     return null;
-// }
-
-// _fetchTotalProduction = async (req, panel) => {
-//     console.log(`FETCH: Total Production`)
-//     const productions = PanelsCtrl.panelsCtrl_getProduction(req, null)
-//     const totalProduction = 0
-
-//     productions.forEach(production => {
-//         totalProduction += production.magnitude
-//     });
-
-//     const total = {
-//         magnitude: productions[0].magnitude,
-//         date: productions[0].date,
-//         efficiency: productions[0].efficiency,
-//         carbon: productions[0].carbon,
-//         money: productions[0].money,
-//     }
-//     return [total];
-// }
-
 module.exports = {
     productionCtrl_fetchProduction,
     productionCtrl_getProductionHelper,
+    productionCtrl_fetchLive,
+    productionCtrl_getLive,
 }
-
 
 // TODO: Figure out a way to export with custom schema
