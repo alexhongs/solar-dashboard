@@ -763,7 +763,7 @@ footer .social-links li:first-child {
 /* ------------------------------------------------------------------ */
 
 #dashboard {
-  background-color: #F9FAFD;
+  background-color: #F5F3F6;
 }
 
 #dashboard .nav-col {
@@ -780,6 +780,112 @@ footer .social-links li:first-child {
   margin: 0 auto;
 }
 
+#dashboard .weather {
+  position: relative;
+}
+#dashboard .weather img {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+
+#daily-report {
+  margin-top: 42px;
+  padding-top: 24px;
+  width: 48vw;
+  height: 32vh;
+
+  background-color: #fff;
+  overflow: hidden;
+  border-radius: 25px;
+}
+#daily-report h1 {
+  text-align: center;
+}
+
+#daily-report h2 {
+  color: #333333;
+  margin-bottom: 42px;
+  text-align: center;
+}
+#daily-report h3 {
+  color: #333333;
+  text-align: center;
+  padding-top: 20px;
+}
+#daily-report h4 {
+  color: #333333;
+  margin: 0 auto;
+  text-align: center;
+  padding-bottom: 20px;
+}
+#daily-report h5 {
+  color: #000;
+  margin: 0 auto;
+  text-align: center;
+  padding-top: 20px;
+}
+#daily-report p {
+  font-size: 14px;
+  line-height: 20px;
+  margin-bottom: 16px;
+  color: #000;
+  text-align: left;
+}
+
+#weekly-report {
+  margin-top: 42px;
+  padding-top: 24px;
+  width: 32vw;
+  height: 32vh;
+
+  background-color: #fff;
+  overflow: hidden;
+  border-radius: 25px;
+}
+
+#weekly-report h3 {
+  color: #333333;
+  text-align: left;
+}
+#weekly-report h4 {
+  color: #333333;
+  margin: 0 auto;
+  text-align: center;
+  padding-bottom: 20px;
+}
+#weekly-report h5 {
+  color: #000;
+  margin: 0 auto;
+  text-align: left;
+  padding-top: 20px;
+}
+#weekly-report h6 {
+  color: #000;
+  margin: 0 auto;
+  text-align: left;
+  padding-left: 20px;
+}
+
+#summary {
+  margin-top: 12px;
+  padding-top: 24px;
+  width: 40vw;
+  height: 12vh;
+
+  background-color: #fff;
+  overflow: hidden;
+  border-radius: 25px;
+}
+
+#summary p {
+  margin-bottom: 7px;
+}
+
+#summary .averages {
+  border-left: solid 0.5px #999999 !important;
+}
+
 /* ------------------------------------------------------------------ */
 /* MISC.
 /* ------------------------------------------------------------------ */
@@ -792,8 +898,16 @@ footer .social-links li:first-child {
   padding-top: 42px;
 }
 
+.margin-top-42 {
+  margin-top: 42px;
+}
+
 .pad-top-120 {
   padding-top: 120px;
+}
+
+.no-padding {
+  padding: 0;
 }
 
 .center-text {
