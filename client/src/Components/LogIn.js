@@ -11,7 +11,6 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-
 import NavBar from './NavBar';
 
 const useStyles = makeStyles((theme) => ({
@@ -92,6 +91,20 @@ function Login() {
   const setLoginEmail = useStoreActions((actions) => actions.setLoginEmail);
   const setLoginPassword = useStoreActions((actions) => actions.setLoginPassword);
 
+  async function handleLogin(event) {
+    event.preventDefault();
+
+    await fetch('http://localhost:9000/panels/production', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        period: 'd',
+      },
+    })
+      .then((response) => response.json())
+      .then((d) => console.log(d));
+  }
+
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -139,6 +152,7 @@ function Login() {
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick={handleLogin}
               component={RouterLink}
               to="/dashboard"
             >
