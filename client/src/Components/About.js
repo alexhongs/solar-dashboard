@@ -70,17 +70,20 @@ function About() {
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
-              <h4>Solar Energy Overview</h4>
+              <h4>Does solar really make sense in Western PA?</h4>
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
-                SOLAR ENERGY is conducted through a collection of solar panels (called a solar array)
-                and a solar inverter – the former of which captures energy from the sun, and the latter
-                of which converts the electric current from the solar panels into usable electricity for
-                homes and businesses. Solar panels are built to last for decades. Their efficiency will
-                drop over time, but many solar panels are guaranteed to produce over 80% of their original
-                power after 25 years. For more information about the science and technicalities of solar
-                panels, visit: https://solbridgeea.com/basics-of-solar.
+                <b>YES!</b>
+                It is no secret that our region tends to be dreary and overcast,
+                but here’s the good news: solar panels do not require direct sunlight
+                to generate energy! Just as it’s possible to get a sunburn on a cloudy
+                day, solar panels can still produce lots of energy when the sky is overcast.
+                <br />
+                <br />
+                Take Germany as an example- Germany gets significantly less sunlight
+                than our region, yet they are still the highest per-capita solar
+                producer in the world. Facts!
               </Typography>
             </AccordionDetails>
           </Accordion>
@@ -90,21 +93,18 @@ function About() {
               aria-controls="panel2a-content"
               id="panel2a-header"
             >
-              <h4>It’s too cloudy in Pittsburgh. How can solar panels be feasible?</h4>
+              <h4>How does solar work?</h4>
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
-                Solar panels actually work great in Western PA! Solar panels will still work even when the
-                light is reflected or blocked by clouds and can function in both direct and indirect sunlight.
-                Rain actually helps maintain the operations of your panels by washing away any dust or debris.
-                <br />
-                <br />
-                Furthermore, a solar system in a cloudier area may produce less electricity than an otherwise
-                identical solar system in a very sunny area. But if the electricity rates are higher in the cloudier
-                area, that solar system could end up being a better investment than the one in the sunnier area. In
-                Pittsburgh, residential electricity rates tend to be a few percentage points above the national average.
-                That means it may cost you more to power your home in Pittsburgh than it would in other states. Solar
-                can nearly erase that, dramatically reducing your electricity bill.
+                Solar panels work by absorbing sunlight with thin photovoltaic cells.
+                The sun’s rays excite electrons in the solar cells, generating direct
+                current (DC) energy. An inverter is then used to convert this energy
+                into alternating current (AC) electricity that can be used to power
+                your home or office. This electricity is either used immediately by you,
+                or transferred through your meter onto the grid. Excess energy produced
+                by your solar system is exchanged for energy credits through a net
+                metering program with your utility company.
               </Typography>
             </AccordionDetails>
           </Accordion>
@@ -114,15 +114,21 @@ function About() {
               aria-controls="panel2a-content"
               id="panel2a-header"
             >
-              <h4>When can I get a return on my investment?</h4>
+              <h4>What is net metering, and how does it work?</h4>
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
-                This depends on a variety of factors, such as how often your local electric company raises its rates and
-                the growth in value of solar renewable energy credits in future years. Investing into solar energy is much
-                like any other investment you make into your home, except solar panels will actively pay you back its cost
-                many times over. Solar pays for itself, and then continues to deliver valuable electricity for decades. As
-                energy rates go up, so does the value of the electricity you produce.
+                Net metering allows consumers who generate some or all of their
+                own electricity to use that electricity anytime, instead of when
+                it is generated. Over the course of a day, your solar system may
+                overproduce in the afternoon, exporting energy to the grid and
+                generating energy credits to be used at night. Over a year, you
+                may overproduce in the summer months and use those credits in the
+                winter. At the end of the year, you may even receive a check from
+                your utility company for excess power you’ve produced. Net metering
+                essentially allows you to use the grid as a battery for your solar
+                system.
+
               </Typography>
             </AccordionDetails>
           </Accordion>
@@ -132,22 +138,88 @@ function About() {
               aria-controls="panel2a-content"
               id="panel2a-header"
             >
-              <h4>Isn’t solar super expensive?</h4>
+              <h4>Am I still connected to the power grid if I have a solar system?</h4>
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
-                Solar panels actually work great in Western PA! Solar panels will still work even when the
-                light is reflected or blocked by clouds and can function in both direct and indirect sunlight.
-                Rain actually helps maintain the operations of your panels by washing away any dust or debris.
+                Generally, yes. Unless you have a means of storing large amounts
+                of excess energy, it makes the most sense to stay connected to
+                the grid. With the help of net metering, the energy you generate
+                always has a place to go (like a giant battery), and you always
+                have access to that energy at no additional cost.
+
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel2a-content"
+              id="panel2a-header"
+            >
+              <h4>Should I add battery storage to my solar system?</h4>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>
+                Batteries are becoming a more and more affordable and practical
+                solution for energy storage in homes and businesses. Until recently,
+                large-scale batteries have been too expensive to be practical
+                for most applications. However, manufacturing improvements and
+                technical advancements have brought this cost down and batteries
+                have begun to penetrate the mass market. In the current local energy
+                market, batteries are worth considering for solar producers who want
+                an electrical backup system that does not rely on fossil fuels in
+                the event of a power outage.
                 <br />
                 <br />
-                On a state level, Western PA solar owners can make additional income from their solar system through SRECs, or solar
-                renewable energy credits. For every 1,000 kilowatt-hours of solar-generated electricity, the owner of the system
-                will receive one SREC. They can then sell this SREC on the PA SREC market for market price. Furthermore, you may
-                also qualify for the solar investment tax credit (ITC) when you install solar, which will deduct a certain
-                percentage (26% for 2020-2022) of your solar investment cost from your federal taxes. This tax credit applies
-                for both residential and commercial structures, and there is no upper limit on its value. These methods can
-                help offset the initial cost of installing solar, while also providing solar owners an additional stream of income.
+                Some commercial and industrial applications also make batteries profitable,
+                as they allow peak load reduction, which can reduce total energy costs
+                significantly. A thorough analysis of energy usage and billing is required
+                to determine if batteries can provide a financial benefit for your home
+                or business.
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel2a-content"
+              id="panel2a-header"
+            >
+              <h4>Are solar panels fragile?</h4>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>
+                <b>No!</b>
+                In fact, solar panels are one of the most durable and reliable energy
+                technologies in the world. While the solar cells themselves are very fragile,
+                the glass and frame that surround them are incredibly sturdy. From 90+ mph
+                wind, to medium-sized tree limbs, to hail the size of golf balls, solar panels
+                are specifically tested and designed to withstand severe weather events and
+                incidental impacts.
+
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel2a-content"
+              id="panel2a-header"
+            >
+              <h4>How long do solar panels last?</h4>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>
+                All solar panels degrade slightly over time (0.7% per year, on average).
+                Depending on certain environmental conditions, solar panels can remain
+                productive for anywhere from 30-45 years, or even longer in many cases.
+                Inverters need to be replaced more frequently, with a projected lifespan
+                of 20-25 years for current models. Inverter replacement costs are included
+                in most financial models for solar installations, and represent a
+                relatively small expense for decades of continued production from
+                your solar system.
+
               </Typography>
             </AccordionDetails>
           </Accordion>
