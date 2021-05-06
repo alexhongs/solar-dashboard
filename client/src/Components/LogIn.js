@@ -125,7 +125,7 @@ function Login() {
               label=""
               name="username"
               placeholder="email address or phone number"
-              autofocus
+              autoFocus
               onChange={(event) => setLoginEmail(event.target.value)}
             />
             <h4 className="pad-top-24">Password</h4>

@@ -11,9 +11,6 @@ import AssessmentIcon from '@material-ui/icons/Assessment';
 import ShareIcon from '@material-ui/icons/Share';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 
-import DailyReport from './Dashboard/DailyReport';
-import WeeklyReport from './Dashboard/WeeklyReport';
-import Summary from './Dashboard/Summary';
 import weather from '../images/weather.png';
 
 const useStyles = makeStyles((theme) => ({
@@ -81,7 +78,7 @@ const IconDashboard = withStyles(iconStyles)(({ classes }) => <DashboardIcon cla
 const IconAnalytics = withStyles(iconStyles)(({ classes }) => <AssessmentIcon classes={classes} />);
 const IconShare = withStyles(iconStyles)(({ classes }) => <ShareIcon classes={classes} />);
 
-function Dashboard() {
+function Analytics() {
   const classes = useStyles();
   // const selectedTab = useStoreState((state) => state.selectedTab);
   // const setSelectedTab = useStoreActions((actions) => actions.setSelectedTab);
@@ -94,19 +91,15 @@ function Dashboard() {
           <Button
             dense
             color="primary"
-            classes={{ root: classes.selectedButton, label: classes.label }}
+            classes={{ root: classes.button, label: classes.label }}
+            component={RouterLink}
+            to="/dashboard"
           >
             <IconDashboard />
             Dashboard
           </Button>
 
-          <Button
-            dense
-            color="primary"
-            classes={{ root: classes.button, label: classes.label }}
-            component={RouterLink}
-            to="/analytics"
-          >
+          <Button dense color="primary" classes={{ root: classes.selectedButton, label: classes.label }}>
             <IconAnalytics />
             Analytics
           </Button>
@@ -133,60 +126,8 @@ function Dashboard() {
             <div className="weather">
               <img src={weather} alt="weather" />
             </div>
-            <h3>Hello Kristina,</h3>
-            <h1>
-              Solar panels are currently
-              <span style={{ color: '#479D50' }}> active </span>
-            </h1>
-            <h5>Last Updated: 4:01pm</h5>
-
-            <div className="dashboard-row">
-              <div className="six columns no-padding">
-                <DailyReport />
-              </div>
-
-              <div className="four columns no-padding">
-                <WeeklyReport />
-              </div>
-            </div>
-
-            <div className="dashboard-row">
-              <div className="six columns no-padding margin-top-42">
-                <h4>Today</h4>
-              </div>
-            </div>
-
-            <div className="dashboard-row">
-              <div className="six columns no-padding">
-                <Summary
-                  title="Energy Production"
-                  value="5.1 kWh"
-                />
-              </div>
-
-              <div className="six columns no-padding">
-                <Summary
-                  title="Emissions Reduced"
-                  value="700 g"
-                />
-              </div>
-            </div>
-
-            <div className="dashboard-row">
-              <div className="six columns no-padding">
-                <Summary
-                  title="Production Efficiency"
-                  value="80%"
-                />
-              </div>
-
-              <div className="six columns no-padding">
-                <Summary
-                  title="Money Saved"
-                  value="$3.50"
-                />
-              </div>
-            </div>
+            <h1>Your Energy Production</h1>
+            <h5>Last Updated: April 28, 2021</h5>
           </div>
         </Grid>
       </Grid>
@@ -194,4 +135,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default Analytics;

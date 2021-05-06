@@ -163,7 +163,6 @@ function RightPanel(classes, registerStep, incrementRegisterStep, setAPICode, se
             label=""
             name="APICode"
             placeholder="API Code"
-            autofocus
             onChange={(event) => setAPICode(event.target.value)}
           />
 
@@ -177,7 +176,6 @@ function RightPanel(classes, registerStep, incrementRegisterStep, setAPICode, se
             label=""
             name="systemId"
             placeholder="System Id (4 to 5 digit number)"
-            autofocus
             onChange={(event) => setSystemId(event.target.value)}
           />
 
@@ -208,7 +206,7 @@ function RightPanel(classes, registerStep, incrementRegisterStep, setAPICode, se
             label=""
             name="moneyInvested"
             placeholder="$ 0"
-            autofocus
+            autoFocus
             onChange={(event) => setMoneyInvested(event.target.value)}
           />
 
