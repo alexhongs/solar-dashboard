@@ -62,7 +62,7 @@ createUser = async (req, res) => {
         const user = await User.findOne({username:req.headers.username})
         if(user) return res.status(400).json({error: `Username '${req.headers.username}' already exists`});
 
-        const {error, panel} = await PanelsCtrl.panel(req.headers)
+        const {error, panel} = await PanelsCtrl.createPanel(req.headers)
         if (!panel) return res.status(401).json({error: `Invalid panel ${error}`});
 
         const newUser = new User({
@@ -94,7 +94,6 @@ createUser = async (req, res) => {
         console.log(`Error: ${e}`)
         return res.status(400).json({error: e})
     }
-
 }
 
 module.exports = {

@@ -3,6 +3,10 @@ const Panel = require('../api/models/panels')
 const Production = require('../api/models/productions')
 const ProductionCtrl = require('../controllers/production-ctrl')
 const Validate = require('../util/validate')
+const User = require('../api/models/users')
+const ObjectId = require('mongodb').ObjectID
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const UPDATE_INTERVAL_LIVE = 5 // minutes
 const UPDATE_INTERVAL_DAILY = 20 // minutes
@@ -10,19 +14,25 @@ const UPDATE_INTERVAL_WEEKLY = 1 // days
 const UPDATE_INTERVAL_MONTHLY = 1 // days
 const UPDATE_INTERVAL_YEARLY = 1 // days
 
-panel = async (data) => {
-    if(!data) return null
-
-    const checkValid = await Validate.validatePanel(data)
-    if(!checkValid.isValid) return checkValid
-
-    const params = {
-        cost: parseInt(data.cos ?? 0),
-        sid: parseInt(data.sid),
-        apikey: data.apikey,
-    };
-    const panel = new Panel(params)
-    return {panel: panel}
+createPanel = async (data) => {
+    try {
+        if(!data) return null
+        console.log(`panel panel ${data}`)
+        const checkValid = await Validate.validatePanel(data)
+        if(!checkValid.isValid) return checkValid
+        console.log(`panel panel valid ${data}`)
+        const params = {
+            cost: parseInt(data.cost ?? 0),
+            sid: parseInt(data.sid),
+            apikey: data.apikey,
+        };
+        console.log(`panel panel valid panel ${data}`)
+        const panel = new Panel(params)
+        console.log(`panel panel valid panel after ${panel}`)
+        return {panel: panel}
+    } catch (e) {
+        return {error: `Error: ${e}`}
+    }
 }
 
 panelsCtrl_getPanel = async (req, res) => {
@@ -121,6 +131,58 @@ panelsCtrl_getLive = async (req, res) => {
     }
 }
 
+panelsCtrl_testCreatePanel = async (req,res) => {
+    const header = {
+        name: "kristina",
+        username: "kristina123",
+        password: "password",
+        sid: "82698",
+        apikey: "7df3ab93a0938d4acd4a261917b392df6915d076",
+    }
+
+    const cost = "10000"
+    const zipcode = "15213"
+    const object_id = "6075363f5f4ba77cd92828d0"
+
+    try {
+        const user = await User.findOne({username:header.username})
+        if(user) {
+            return res.status(201).json({error: `Username '${header.username}' already exists`})
+        }
+        const {error, panel} = await createPanel(header)
+        if(error || !panel) {
+            return res.status(201).json({error: `Invalid panel ${error}  ${panel}`})
+        }
+        console.log(`panel!!!!`)
+
+        const newUser = new User({
+            name: header.name,
+            username: header.username,
+            password: header.password,
+            panelId: panel._id,
+            sid: panel.sid,
+        });
+        
+        // Hash password before storing in database
+        const rounds  = 10
+        const salt = await bcrypt.genSalt(rounds)
+        const hash = await bcrypt.hash(newUser.password, salt)
+    
+        newUser.password = hash
+        await newUser.save()
+    
+        panel.userId = newUser._id
+        panel._id = ObjectId(object_id)
+        await panel.save()
+
+        return res.status(201).json({success: true, data: {
+            'username': newUser.username,
+            'user_id': newUser._id,
+            'panel_id': panel._id,
+            'api_key': panel.apikey,
+        }})
+    } catch (e) {return res.status(201).json(`Error: ${e}`)}
+}
 
 //////////////////////////
 // HELPER FUNCTIONS
@@ -158,8 +220,9 @@ _getProductionHelper = async (req, panel, productionIds, estimateUnit, updateInt
 }
 
 module.exports = {
-    panel,
+    createPanel,
     panelsCtrl_getPanel,
     panelsCtrl_getProduction,
     panelsCtrl_getLive,
+    panelsCtrl_testCreatePanel,
 }
