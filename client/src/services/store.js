@@ -113,16 +113,23 @@ const store = createStore(
 
     // Dashboard
     panelData: {},
+    liveData: {},
     panelDataFetched: false,
+    liveDataFetched: false,
     weeklyMoneySaved: 0,
     weeklyEmissionsReduced: 0,
 
     setPanelData: action((state, payload) => {
-      console.log(payload);
       state.panelData = payload;
+    }),
+    setLiveData: action((state, payload) => {
+      state.liveData = payload;
     }),
     setPanelDataFetched: action((state, payload) => {
       state.panelDataFetched = payload;
+    }),
+    setLiveDataFetched: action((state, payload) => {
+      state.liveDataFetched = payload;
     }),
     setWeeklyMoneySaved: action((state, payload) => {
       state.weeklyMoneySaved = payload;
@@ -131,6 +138,21 @@ const store = createStore(
       state.weeklyEmissionsReduced = payload;
     }),
     setPanelDataAsync: thunk(async (actions) => {
+      await fetch('http://localhost:9000/panels/live', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then((value) => value.json())
+        .then((response) => {
+          if (response.success === true) {
+            console.log('live');
+            actions.setLiveData(response.data);
+            actions.setLiveDataFetched(true);
+          }
+        });
+
       await fetch('http://localhost:9000/panels/production', {
         method: 'GET',
         headers: {
@@ -140,12 +162,11 @@ const store = createStore(
       })
         .then((value) => value.json())
         .then((response) => {
-          console.log(response);
           if (response.success === true) {
-            console.log(response);
+            console.log('live2');
             actions.setPanelData(response.data);
-            actions.setWeeklyMoneySaved(compareWeeklyData(response.data, 'money'));
-            actions.setWeeklyEmissionReduced(compareWeeklyData(response.data, 'carbon'));
+            actions.setWeeklyMoneySaved(compareWeeklyData(response.data.slice(0, -1), 'money'));
+            actions.setWeeklyEmissionReduced(compareWeeklyData(response.data.slice(0, -1), 'carbon'));
             actions.setPanelDataFetched(true);
           }
         });

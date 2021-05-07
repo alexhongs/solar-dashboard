@@ -89,6 +89,7 @@ function Login() {
   const classes = useStyles();
 
   const panelDataFetched = useStoreState((state) => state.panelDataFetched);
+  const liveDataFetched = useStoreState((state) => state.liveDataFetched);
   const setLoginEmail = useStoreActions((actions) => actions.setLoginEmail);
   const setLoginPassword = useStoreActions((actions) => actions.setLoginPassword);
   const setPanelDataAsync = useStoreActions((actions) => actions.setPanelDataAsync);
@@ -96,25 +97,11 @@ function Login() {
   async function handleLogin(event) {
     event.preventDefault();
 
-    setPanelDataAsync().then(() => {
-      if (panelDataFetched) {
-        window.location.href = '/dashboard';
-      }
-    });
-
-    // await fetch('http://localhost:9000/panels/production', {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     period: 'd',
-    //   },
-    // })
-    //   .then((value) => value.json())
-    //   .then((response) => {
-    //     if (response.success === true) {
-    //       setPanelData(response.data);
-    //       window.location.href = '/dashboard';
-    //   });
+    if (panelDataFetched && liveDataFetched) {
+      window.location.href = '/dashboard';
+    } else {
+      setPanelDataAsync();
+    }
   }
 
   return (
