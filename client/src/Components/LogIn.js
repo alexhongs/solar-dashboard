@@ -1,5 +1,5 @@
 import React from 'react';
-import { useStoreActions } from 'easy-peasy';
+import { useStoreState, useStoreActions } from 'easy-peasy';
 // import { Link as RouterLink } from 'react-router-dom';
 
 import Button from '@material-ui/core/Button';
@@ -88,16 +88,18 @@ const DividerWithText = ({ children }) => {
 function Login() {
   const classes = useStyles();
 
+  const panelDataFetched = useStoreState((state) => state.panelDataFetched);
   const setLoginEmail = useStoreActions((actions) => actions.setLoginEmail);
   const setLoginPassword = useStoreActions((actions) => actions.setLoginPassword);
   const setPanelDataAsync = useStoreActions((actions) => actions.setPanelDataAsync);
-  // const setPanelDataFetched = useStoreActions((actions) => actions.setPanelDataFetched);
 
   async function handleLogin(event) {
     event.preventDefault();
 
     setPanelDataAsync().then(() => {
-      window.location.href = '/dashboard';
+      if (panelDataFetched) {
+        window.location.href = '/dashboard';
+      }
     });
 
     // await fetch('http://localhost:9000/panels/production', {

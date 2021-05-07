@@ -2,6 +2,22 @@ import {
   createStore, action, thunk, persist,
 } from 'easy-peasy';
 
+function compareWeeklyData(data, attribute) {
+  let firstHalfSum = 0;
+  let secondHalfSum = 0;
+  const n = data.length;
+
+  for (let i = 0; i < n; i += 1) {
+    if (i < Number(n / 2)) {
+      firstHalfSum += data[i][attribute];
+    } else {
+      secondHalfSum += data[i][attribute];
+    }
+  }
+
+  return firstHalfSum - secondHalfSum;
+}
+
 const store = createStore(
   persist({
     // Quiz
@@ -98,11 +114,21 @@ const store = createStore(
     // Dashboard
     panelData: {},
     panelDataFetched: false,
+    weeklyMoneySaved: 0,
+    weeklyEmissionsReduced: 0,
+
     setPanelData: action((state, payload) => {
+      console.log(payload);
       state.panelData = payload;
     }),
     setPanelDataFetched: action((state, payload) => {
       state.panelDataFetched = payload;
+    }),
+    setWeeklyMoneySaved: action((state, payload) => {
+      state.weeklyMoneySaved = payload;
+    }),
+    setWeeklyEmissionReduced: action((state, payload) => {
+      state.weeklyEmissionsReduced = payload;
     }),
     setPanelDataAsync: thunk(async (actions) => {
       await fetch('http://localhost:9000/panels/production', {
@@ -114,10 +140,13 @@ const store = createStore(
       })
         .then((value) => value.json())
         .then((response) => {
+          console.log(response);
           if (response.success === true) {
+            console.log(response);
             actions.setPanelData(response.data);
+            actions.setWeeklyMoneySaved(compareWeeklyData(response.data, 'money'));
+            actions.setWeeklyEmissionReduced(compareWeeklyData(response.data, 'carbon'));
             actions.setPanelDataFetched(true);
-            // window.location.href = '/dashboard';
           }
         });
     }),

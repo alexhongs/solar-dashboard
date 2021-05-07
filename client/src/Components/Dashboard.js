@@ -85,10 +85,10 @@ function Dashboard() {
   const classes = useStyles();
   const panelData = useStoreState((state) => state.panelData);
   const panelDataFetched = useStoreState((state) => state.panelDataFetched);
-  console.log(panelData);
+  const weeklyMoneySaved = useStoreState((state) => state.weeklyMoneySaved).toFixed(1);
+  const weeklyEmissionsReduced = useStoreState((state) => state.weeklyEmissionsReduced).toFixed(1);
   // TODO: Today's data?
   const todayData = panelData[panelData.length - 1];
-  console.log(todayData);
 
   return (
     <section id="dashboard">
@@ -152,7 +152,7 @@ function Dashboard() {
               </div>
 
               <div className="four columns no-padding">
-                <WeeklyReport />
+                <WeeklyReport moneySaved={weeklyMoneySaved} emissionsReduced={weeklyEmissionsReduced} />
               </div>
             </div>
 
@@ -182,14 +182,14 @@ function Dashboard() {
               <div className="six columns no-padding">
                 <Summary
                   title="Production Efficiency"
-                  value={`${todayData.efficiency || 0}%`}
+                  value={`${todayData.efficiency || 0} %`}
                 />
               </div>
 
               <div className="six columns no-padding">
                 <Summary
                   title="Money Saved"
-                  value={`$${todayData.money}`}
+                  value={`$ ${todayData.money}`}
                 />
               </div>
             </div>
