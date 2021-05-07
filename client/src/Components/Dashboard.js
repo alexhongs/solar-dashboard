@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     color: '#000',
   },
   logoutButton: {
-    marginTop: '62vh',
+    marginTop: '60vh',
     bottom: 0,
     color: '000',
     backgroundColor: '#fff',

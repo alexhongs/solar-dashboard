@@ -90,6 +90,7 @@ function Login() {
 
   const setLoginEmail = useStoreActions((actions) => actions.setLoginEmail);
   const setLoginPassword = useStoreActions((actions) => actions.setLoginPassword);
+  const setPanelData = useStoreActions((actions) => actions.setPanelData);
 
   async function handleLogin(event) {
     event.preventDefault();
@@ -101,8 +102,15 @@ function Login() {
         period: 'd',
       },
     })
-      .then((response) => response.json())
-      .then((d) => console.log(d));
+      .then((value) => value.json())
+      .then((response) => {
+        if (response.success === true) {
+          setPanelData(response.data);
+          window.location.href = '/dashboard';
+        } else {
+          alert('Unable to retrive panel data.');
+        }
+      });
   }
 
   return (
@@ -125,7 +133,7 @@ function Login() {
                 id="username"
                 label=""
                 name="username"
-                placeholder="email address or phone number"
+                placeholder="Email address or phone number"
                 autoFocus
                 onChange={(event) => setLoginEmail(event.target.value)}
               />
