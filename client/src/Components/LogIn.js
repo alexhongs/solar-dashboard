@@ -90,6 +90,8 @@ function Login() {
 
   const panelDataFetched = useStoreState((state) => state.panelDataFetched);
   const liveDataFetched = useStoreState((state) => state.liveDataFetched);
+  const allDataFetched = useStoreState((state) => state.allDataFetched);
+
   const setLoginEmail = useStoreActions((actions) => actions.setLoginEmail);
   const setLoginPassword = useStoreActions((actions) => actions.setLoginPassword);
   const setPanelDataAsync = useStoreActions((actions) => actions.setPanelDataAsync);
@@ -97,7 +99,7 @@ function Login() {
   async function handleLogin(event) {
     event.preventDefault();
 
-    if (panelDataFetched && liveDataFetched) {
+    if (panelDataFetched && liveDataFetched && allDataFetched) {
       window.location.href = '/dashboard';
     } else {
       setPanelDataAsync();

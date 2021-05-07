@@ -99,7 +99,7 @@ function Summary(props) {
           </div>
         </div>
 
-        <div className="four columns align-right">
+        <div className="eight columns align-right">
           <p>Your Total</p>
           <h3>{value}</h3>
         </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useStoreState } from 'easy-peasy';
+import { useStoreState, useStoreActions } from 'easy-peasy';
 import { Link as RouterLink } from 'react-router-dom';
 
 import Button from '@material-ui/core/Button';
@@ -85,7 +85,6 @@ function Dashboard() {
   const classes = useStyles();
 
   const liveData = useStoreState((state) => state.liveData);
-  console.log(liveData);
   let currentOutput = 0;
   let diffOutput = 0;
   let efficiency = 0;
@@ -101,6 +100,11 @@ function Dashboard() {
   const weeklyEmissionsReduced = useStoreState((state) => state.weeklyEmissionsReduced).toFixed(1);
   // TODO: Today's data?
   const todayData = panelData[panelData.length - 1];
+
+  const showAllTimeData = useStoreState((state) => state.showAllTimeData);
+  const setShowAllTimeData = useStoreActions((actions) => actions.setShowAllTimeData);
+
+  const allTimeData = useStoreState((state) => state.allData)[0];
 
   return (
     <section id="dashboard">
@@ -170,7 +174,8 @@ function Dashboard() {
 
             <div className="dashboard-row">
               <div className="six columns no-padding margin-top-42">
-                <h4>Today</h4>
+                <button type="button" className="toggle-scope-button" onClick={() => setShowAllTimeData(false)}>Today</button>
+                <button type="button" className="toggle-scope-button" onClick={() => setShowAllTimeData(true)}>All Time</button>
               </div>
             </div>
 
@@ -178,14 +183,14 @@ function Dashboard() {
               <div className="six columns no-padding">
                 <Summary
                   title="Energy Production"
-                  value={`${todayData.magnitude || 0} kWh`}
+                  value={showAllTimeData ? `${allTimeData.magnitude || 0} kWh` : `${todayData.magnitude || 0} kWh`}
                 />
               </div>
 
               <div className="six columns no-padding">
                 <Summary
                   title="Emissions Reduced"
-                  value={`${todayData.carbon || 0} g`}
+                  value={showAllTimeData ? `${allTimeData.carbon || 0} g` : `${todayData.carbon || 0} g`}
                 />
               </div>
             </div>
@@ -194,14 +199,14 @@ function Dashboard() {
               <div className="six columns no-padding">
                 <Summary
                   title="Production Efficiency"
-                  value={`${todayData.efficiency || 0} %`}
+                  value={showAllTimeData ? `${allTimeData.efficiency || 0} %` : `${todayData.efficiency || 0} %`}
                 />
               </div>
 
               <div className="six columns no-padding">
                 <Summary
                   title="Money Saved"
-                  value={`$ ${todayData.money}`}
+                  value={showAllTimeData ? `$ ${allTimeData.money || 0}` : `$ ${todayData.money || 0}`}
                 />
               </div>
             </div>

@@ -2,7 +2,7 @@ import {
   createStore, action, thunk, persist,
 } from 'easy-peasy';
 
-function compareWeeklyData(data, attribute) {
+function compareData(data, attribute) {
   let firstHalfSum = 0;
   let secondHalfSum = 0;
   const n = data.length;
@@ -112,24 +112,24 @@ const store = createStore(
     }),
 
     // Dashboard
-    panelData: {},
     liveData: {},
-    panelDataFetched: false,
     liveDataFetched: false,
-    weeklyMoneySaved: 0,
-    weeklyEmissionsReduced: 0,
-
-    setPanelData: action((state, payload) => {
-      state.panelData = payload;
-    }),
     setLiveData: action((state, payload) => {
       state.liveData = payload;
     }),
-    setPanelDataFetched: action((state, payload) => {
-      state.panelDataFetched = payload;
-    }),
     setLiveDataFetched: action((state, payload) => {
       state.liveDataFetched = payload;
+    }),
+
+    panelData: {},
+    panelDataFetched: false,
+    weeklyMoneySaved: 0,
+    weeklyEmissionsReduced: 0,
+    setPanelData: action((state, payload) => {
+      state.panelData = payload;
+    }),
+    setPanelDataFetched: action((state, payload) => {
+      state.panelDataFetched = payload;
     }),
     setWeeklyMoneySaved: action((state, payload) => {
       state.weeklyMoneySaved = payload;
@@ -137,6 +137,21 @@ const store = createStore(
     setWeeklyEmissionReduced: action((state, payload) => {
       state.weeklyEmissionsReduced = payload;
     }),
+
+    showAllTimeData: false,
+    setShowAllTimeData: action((state, payload) => {
+      state.showAllTimeData = payload;
+    }),
+
+    allData: {},
+    allDataFetched: false,
+    setAllData: action((state, payload) => {
+      state.allData = payload;
+    }),
+    setAllDataFetched: action((state, payload) => {
+      state.allDataFetched = payload;
+    }),
+
     setPanelDataAsync: thunk(async (actions) => {
       await fetch('http://localhost:9000/panels/live', {
         method: 'GET',
@@ -147,7 +162,6 @@ const store = createStore(
         .then((value) => value.json())
         .then((response) => {
           if (response.success === true) {
-            console.log('live');
             actions.setLiveData(response.data);
             actions.setLiveDataFetched(true);
           }
@@ -163,11 +177,25 @@ const store = createStore(
         .then((value) => value.json())
         .then((response) => {
           if (response.success === true) {
-            console.log('live2');
             actions.setPanelData(response.data);
-            actions.setWeeklyMoneySaved(compareWeeklyData(response.data.slice(0, -1), 'money'));
-            actions.setWeeklyEmissionReduced(compareWeeklyData(response.data.slice(0, -1), 'carbon'));
+            actions.setWeeklyMoneySaved(compareData(response.data.slice(0, -1), 'money'));
+            actions.setWeeklyEmissionReduced(compareData(response.data.slice(0, -1), 'carbon'));
             actions.setPanelDataFetched(true);
+          }
+        });
+
+      await fetch('http://localhost:9000/panels/production', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          period: 't',
+        },
+      })
+        .then((value) => value.json())
+        .then((response) => {
+          if (response.success === true) {
+            actions.setAllData(response.data);
+            actions.setAllDataFetched(true);
           }
         });
     }),

@@ -789,6 +789,10 @@ footer .social-links li:first-child {
   margin: 0 auto;
 }
 
+#dashboard .toggle-scope-button {
+  border: none;
+}
+
 #dashboard .weather {
   position: relative;
 }
