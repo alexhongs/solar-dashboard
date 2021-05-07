@@ -517,7 +517,8 @@ filter: alpha(opacity=100);
 }
 
 #quiz .quiz-row {
-  padding-top: 48px;
+  padding-top: 24px;
+  text-align: center;
 }
 
 #quiz .county-row {
@@ -711,7 +712,7 @@ footer .social-links li:first-child {
 /* Auth
 /* ------------------------------------------------------------------ */
 
-.city {
+#auth .city {
   margin-top: 25px;
   width: 25vw;
   height: auto;
@@ -719,14 +720,14 @@ footer .social-links li:first-child {
   margin-right: auto;
 }
 
-.provider-button {
+#auth .provider-button {
   margin-top: 25px;
   border: 1px solid black;
   padding: 5px 10px 5px 10px;
   border-radius: 10px;
 }
 
-.active-provider-button {
+#auth .active-provider-button {
   background-color: #5F7E69;
   color: #fff;
   margin-top: 25px;
@@ -735,7 +736,7 @@ footer .social-links li:first-child {
   border-radius: 10px;
 }
 
-.next-button {
+#auth .next-button {
   background-color: #253A2C;
   color: #fff;
   margin-top: 70px;
@@ -744,7 +745,7 @@ footer .social-links li:first-child {
   border-radius: 10px;
 }
 
-.skip-button {
+#auth .skip-button {
   background-color: #96CCA8;
   color: #fff;
   margin-top: 70px;
@@ -753,7 +754,7 @@ footer .social-links li:first-child {
   border-radius: 10px;
 }
 
-.register-img {
+#auth .register-img {
   width: 50px;
   height: auto;
 }
