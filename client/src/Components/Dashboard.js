@@ -1,5 +1,5 @@
 import React from 'react';
-// import { useStoreState, useStoreActions } from 'easy-peasy';
+import { useStoreState } from 'easy-peasy';
 import { Link as RouterLink } from 'react-router-dom';
 
 import Button from '@material-ui/core/Button';
@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
   },
   icon: {
     fontSize: '32px !important',
-    marginBottom: theme.spacing.unit,
+    marginBottom: theme.spacing(1),
   },
   dashboardGrid: {
     backgroundColor:
@@ -83,11 +83,17 @@ const IconShare = withStyles(iconStyles)(({ classes }) => <ShareIcon classes={cl
 
 function Dashboard() {
   const classes = useStyles();
-  // const selectedTab = useStoreState((state) => state.selectedTab);
-  // const setSelectedTab = useStoreActions((actions) => actions.setSelectedTab);
+  const panelData = useStoreState((state) => state.panelData);
+  const panelDataFetched = useStoreState((state) => state.panelDataFetched);
+  console.log(panelData);
+  // TODO: Today's data?
+  const todayData = panelData[panelData.length - 1];
+  console.log(todayData);
 
   return (
     <section id="dashboard">
+      {panelDataFetched
+      && (
       <Grid container component="main" className={classes.root}>
         <CssBaseline />
         <Grid item xs={false} sm={false} md={1} className={classes.nav}>
@@ -160,14 +166,14 @@ function Dashboard() {
               <div className="six columns no-padding">
                 <Summary
                   title="Energy Production"
-                  value="5.1 kWh"
+                  value={`${todayData.magnitude || 0} kWh`}
                 />
               </div>
 
               <div className="six columns no-padding">
                 <Summary
                   title="Emissions Reduced"
-                  value="700 g"
+                  value={`${todayData.carbon || 0} g`}
                 />
               </div>
             </div>
@@ -176,20 +182,21 @@ function Dashboard() {
               <div className="six columns no-padding">
                 <Summary
                   title="Production Efficiency"
-                  value="80%"
+                  value={`${todayData.efficiency || 0}%`}
                 />
               </div>
 
               <div className="six columns no-padding">
                 <Summary
                   title="Money Saved"
-                  value="$3.50"
+                  value={`$${todayData.money}`}
                 />
               </div>
             </div>
           </div>
         </Grid>
       </Grid>
+      )}
     </section>
   );
 }

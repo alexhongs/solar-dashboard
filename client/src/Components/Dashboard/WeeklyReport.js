@@ -7,6 +7,8 @@ import {
   ThemeProvider, makeStyles, withStyles, createMuiTheme,
 } from '@material-ui/core/styles';
 
+// import PanelData from '../../services/panelData';
+
 const theme = createMuiTheme({
   palette: {
     action: {
@@ -43,6 +45,20 @@ const UpIcon = withStyles(iconStyles)(({ classes }) => <ArrowDropUpIcon classes=
 
 function WeeklyReport() {
   const classes = useStyles();
+  // const { panelData } = props;
+
+  // function compareMoneySaved(data) {
+  //   console.log(data);
+  //   const mid = Math.ceil(data.length / 2);
+  //   const firstHalf = data.splice(0, mid);
+  //   const secondHalf = data.splice(-mid);
+
+  //   console.log(firstHalf);
+  //   const firstHalfSum = firstHalf.reduce((a, b) => a + (b.money || 0), 0);
+  //   const secondHalfSum = secondHalf.reduce((a, b) => a + (b.money || 0), 0);
+
+  //   return secondHalfSum - firstHalfSum;
+  // }
 
   return (
     <section id="weekly-report">
@@ -60,7 +76,7 @@ function WeeklyReport() {
                 <Box m={0}>
                   <Button dense disabled color="primary" classes={{ root: classes.button }}>
                     <UpIcon />
-                    $ 2.10
+                    $12
                   </Button>
                 </Box>
               </ThemeProvider>

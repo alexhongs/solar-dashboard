@@ -1,6 +1,6 @@
 import React from 'react';
 import { useStoreActions } from 'easy-peasy';
-import { Link as RouterLink } from 'react-router-dom';
+// import { Link as RouterLink } from 'react-router-dom';
 
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -90,27 +90,29 @@ function Login() {
 
   const setLoginEmail = useStoreActions((actions) => actions.setLoginEmail);
   const setLoginPassword = useStoreActions((actions) => actions.setLoginPassword);
-  const setPanelData = useStoreActions((actions) => actions.setPanelData);
+  const setPanelDataAsync = useStoreActions((actions) => actions.setPanelDataAsync);
+  // const setPanelDataFetched = useStoreActions((actions) => actions.setPanelDataFetched);
 
   async function handleLogin(event) {
     event.preventDefault();
 
-    await fetch('http://localhost:9000/panels/production', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        period: 'd',
-      },
-    })
-      .then((value) => value.json())
-      .then((response) => {
-        if (response.success === true) {
-          setPanelData(response.data);
-          window.location.href = '/dashboard';
-        } else {
-          alert('Unable to retrive panel data.');
-        }
-      });
+    setPanelDataAsync().then(() => {
+      window.location.href = '/dashboard';
+    });
+
+    // await fetch('http://localhost:9000/panels/production', {
+    //   method: 'GET',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     period: 'd',
+    //   },
+    // })
+    //   .then((value) => value.json())
+    //   .then((response) => {
+    //     if (response.success === true) {
+    //       setPanelData(response.data);
+    //       window.location.href = '/dashboard';
+    //   });
   }
 
   return (
@@ -162,8 +164,8 @@ function Login() {
                 color="primary"
                 className={classes.submit}
                 onClick={handleLogin}
-                component={RouterLink}
-                to="/dashboard"
+                // component={RouterLink}
+                // to="/dashboard"
               >
                 Sign In
               </Button>

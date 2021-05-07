@@ -1,4 +1,6 @@
-import { createStore, action, persist } from 'easy-peasy';
+import {
+  createStore, action, thunk, persist,
+} from 'easy-peasy';
 
 const store = createStore(
   persist({
@@ -94,14 +96,30 @@ const store = createStore(
     }),
 
     // Dashboard
-    selectedTab: 0,
-    setSelectedTab: action((state, payload) => {
-      state.selectedTab = payload;
-    }),
-
     panelData: {},
+    panelDataFetched: false,
     setPanelData: action((state, payload) => {
       state.panelData = payload;
+    }),
+    setPanelDataFetched: action((state, payload) => {
+      state.panelDataFetched = payload;
+    }),
+    setPanelDataAsync: thunk(async (actions) => {
+      await fetch('http://localhost:9000/panels/production', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          period: 'd',
+        },
+      })
+        .then((value) => value.json())
+        .then((response) => {
+          if (response.success === true) {
+            actions.setPanelData(response.data);
+            actions.setPanelDataFetched(true);
+            // window.location.href = '/dashboard';
+          }
+        });
     }),
   }),
 );
