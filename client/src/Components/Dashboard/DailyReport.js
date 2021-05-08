@@ -2,6 +2,7 @@ import React from 'react';
 
 import Button from '@material-ui/core/Button';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import Box from '@material-ui/core/Box';
 import {
   ThemeProvider, makeStyles, withStyles, createMuiTheme,
@@ -41,6 +42,7 @@ const iconStyles = {
 };
 
 const UpIcon = withStyles(iconStyles)(({ classes }) => <ArrowDropUpIcon classes={classes} />);
+const DownIcon = withStyles(iconStyles)(({ classes }) => <ArrowDropDownIcon classes={classes} />);
 
 function DailyReport(props) {
   const classes = useStyles();
@@ -57,7 +59,7 @@ function DailyReport(props) {
           <ThemeProvider theme={theme}>
             <Box m={3}>
               <Button dense disabled color="primary" classes={{ root: classes.button }}>
-                <UpIcon />
+                {diffOutput > 0 ? <UpIcon /> : <DownIcon />}
                 {`${diffOutput} kW`}
               </Button>
             </Box>
