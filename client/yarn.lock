@@ -1166,10 +1166,10 @@
   "resolved" "https://registry.npmjs.org/@emotion/hash/-/hash-0.8.0.tgz"
   "version" "0.8.0"
 
-"@eslint/eslintrc@^0.4.0":
-  "integrity" "sha512-2ZPCc+uNbjV5ERJr+aKSPRwZgKd2z11x0EgLvb1PURmUrn9QNRXFqje0Ldq454PfAVyaJYyrDvvIKSFP4NnBog=="
-  "resolved" "https://registry.npmjs.org/@eslint/eslintrc/-/eslintrc-0.4.0.tgz"
-  "version" "0.4.0"
+"@eslint/eslintrc@^0.4.1":
+  "integrity" "sha512-5v7TDE9plVhvxQeWLXDTvFvJBdH6pEsdnl2g/dAptmuFEPedQ4Erq5rsDsX+mvAM610IhNaO2W5V1dOOnDKxkQ=="
+  "resolved" "https://registry.npmjs.org/@eslint/eslintrc/-/eslintrc-0.4.1.tgz"
+  "version" "0.4.1"
   dependencies:
     "ajv" "^6.12.4"
     "debug" "^4.1.1"
@@ -2282,15 +2282,15 @@
   "resolved" "https://registry.npmjs.org/acorn-walk/-/acorn-walk-7.2.0.tgz"
   "version" "7.2.0"
 
+"acorn@^6.0.0 || ^7.0.0 || ^8.0.0", "acorn@^7.1.0", "acorn@^7.1.1", "acorn@^7.4.0":
+  "integrity" "sha512-nQyp0o1/mNdbTO1PO6kHkwSrmgZ0MT/jCCpNiwbUjGoRN4dlBhqJtoQuCnEOKzgTVwg0ZWiCoQy6SxMebQVh8A=="
+  "resolved" "https://registry.npmjs.org/acorn/-/acorn-7.4.1.tgz"
+  "version" "7.4.1"
+
 "acorn@^6.4.1":
   "integrity" "sha512-XtGIhXwF8YM8bJhGxG5kXgjkEuNGLTkoYqVE+KMR+aspr4KGYmKYg7yUe3KghyQ9yheNwLnjmzh/7+gfDBmHCQ=="
   "resolved" "https://registry.npmjs.org/acorn/-/acorn-6.4.2.tgz"
   "version" "6.4.2"
-
-"acorn@^7.1.0", "acorn@^7.1.1", "acorn@^7.4.0":
-  "integrity" "sha512-nQyp0o1/mNdbTO1PO6kHkwSrmgZ0MT/jCCpNiwbUjGoRN4dlBhqJtoQuCnEOKzgTVwg0ZWiCoQy6SxMebQVh8A=="
-  "resolved" "https://registry.npmjs.org/acorn/-/acorn-7.4.1.tgz"
-  "version" "7.4.1"
 
 "acorn@^8.1.0":
   "integrity" "sha512-LWCF/Wn0nfHOmJ9rzQApGnxnvgfROzGilS8936rqN/lfcYkY9MYZzdMqN+2NJ4SlTc+m5HiSa+kNfDtI64dwUA=="
@@ -4894,13 +4894,13 @@
     "micromatch" "^4.0.2"
     "schema-utils" "^3.0.0"
 
-"eslint@^3 || ^4 || ^5 || ^6 || ^7", "eslint@^5.16.0 || ^6.8.0 || ^7.2.0", "eslint@^7.11.0", "eslint@^7.25.0":
-  "integrity" "sha512-TVpSovpvCNpLURIScDRB6g5CYu/ZFq9GfX2hLNIV4dSBKxIWojeDODvYl3t0k0VtMxYeR8OXPCFE5+oHMlGfhw=="
-  "resolved" "https://registry.npmjs.org/eslint/-/eslint-7.25.0.tgz"
-  "version" "7.25.0"
+"eslint@^3 || ^4 || ^5 || ^6 || ^7", "eslint@^5.16.0 || ^6.8.0 || ^7.2.0", "eslint@^7.11.0", "eslint@^7.26.0":
+  "integrity" "sha512-4R1ieRf52/izcZE7AlLy56uIHHDLT74Yzz2Iv2l6kDaYvEu9x+wMB5dZArVL8SYGXSYV2YAg70FcW5Y5nGGNIg=="
+  "resolved" "https://registry.npmjs.org/eslint/-/eslint-7.26.0.tgz"
+  "version" "7.26.0"
   dependencies:
     "@babel/code-frame" "7.12.11"
-    "@eslint/eslintrc" "^0.4.0"
+    "@eslint/eslintrc" "^0.4.1"
     "ajv" "^6.10.0"
     "chalk" "^4.0.0"
     "cross-spawn" "^7.0.2"
