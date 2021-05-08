@@ -139,6 +139,7 @@ _fetchProduction = async (req, panel, productionIds, db_productions) => {
             production.efficiency = day.efficiency
             production.carbon = day.carbon
             production.money = day.money
+            production.peak_power = day.peak_power
             await production.save()
         }
     }
@@ -151,6 +152,7 @@ _fetchProduction = async (req, panel, productionIds, db_productions) => {
         oldProduction.efficiency = 0
         oldProduction.carbon = 0
         oldProduction.money = 0
+        oldProduction.peak_power = 0
         await oldProduction.save()
     }
 
