@@ -37,6 +37,7 @@ const CustomSlider = withStyles({
   active: {},
   track: {
     height: 12,
+    color: '#5F7E69',
   },
   rail: {
     border: '1px solid #999999',
@@ -404,10 +405,19 @@ function getQuizContent(quizStep, quizResult, quizScore, setValue, setQuizResult
       return (
         <>
           <h1> What’s a good email address for our team at Solbridge Energy Advisors to reach out to you? </h1>
-          <h4> (Don’t worry, we won’t add you to any mailing lists 😁) </h4>
+          <h4 className="text-center"> (Don’t worry, we won’t add you to any mailing lists 😁) </h4>
 
           <div className="quiz-row row">
-            <input type="text" value={quizResult[6]} onChange={(event) => setValue(event.target.value)} />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              name="email"
+              label=""
+              id="email"
+              value={quizResult[6]}
+              onChange={(event) => setValue(event.target.value)}
+            />
           </div>
         </>
       );
@@ -453,7 +463,7 @@ function getQuizContent(quizStep, quizResult, quizScore, setValue, setQuizResult
                 >
                   {' '}
                   Confirm your contact info
-                  <span STYLE="font-size:24pt">&#8594;</span>
+                  <span style={{ 'font-size': '24pt' }}>&#8594;</span>
                 </button>
               </div>
             </div>
@@ -518,7 +528,7 @@ function NextButton(quizStep, quizResult, incrementQuizStep) {
       return (
         <button type="button" disabled className="incomplete next-button btn">
           {' '}
-          <span STYLE="font-size:24pt; color: #888888">&#8594;</span>
+          <span style={{ 'font-size': '24pt', color: '#888888' }}>&#8594;</span>
           {' '}
         </button>
       );
@@ -530,7 +540,7 @@ function NextButton(quizStep, quizResult, incrementQuizStep) {
         onClick={() => incrementQuizStep()}
       >
         {' '}
-        <span STYLE="font-size:24pt">&#8594;</span>
+        <span style={{ 'font-size': '24pt' }}>&#8594;</span>
         {' '}
 
       </button>
@@ -544,7 +554,7 @@ function NextButton(quizStep, quizResult, incrementQuizStep) {
         onClick={() => incrementQuizStep()}
       >
         {' '}
-        <span STYLE="font-size:24pt">&#8594;</span>
+        <span style={{ 'font-size': '24pt' }}>&#8594;</span>
         {' '}
 
       </button>
@@ -553,7 +563,7 @@ function NextButton(quizStep, quizResult, incrementQuizStep) {
   return (
     <button type="button" disabled className="incomplete next-button btn">
       {' '}
-      <span STYLE="font-size:24pt; color: #888888">&#8594;</span>
+      <span style={{ 'font-size': '24pt', color: '#888888' }}>&#8594;</span>
       {' '}
     </button>
   );
