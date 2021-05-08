@@ -1,6 +1,6 @@
 import React from 'react';
-import { useStoreActions } from 'easy-peasy';
-import { Link as RouterLink } from 'react-router-dom';
+import { useStoreState, useStoreActions } from 'easy-peasy';
+// import { Link as RouterLink } from 'react-router-dom';
 
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -88,104 +88,107 @@ const DividerWithText = ({ children }) => {
 function Login() {
   const classes = useStyles();
 
+  const panelDataFetched = useStoreState((state) => state.panelDataFetched);
+  const liveDataFetched = useStoreState((state) => state.liveDataFetched);
+  const allDataFetched = useStoreState((state) => state.allDataFetched);
+
   const setLoginEmail = useStoreActions((actions) => actions.setLoginEmail);
   const setLoginPassword = useStoreActions((actions) => actions.setLoginPassword);
+  const setPanelDataAsync = useStoreActions((actions) => actions.setPanelDataAsync);
 
   async function handleLogin(event) {
     event.preventDefault();
 
-    await fetch('http://localhost:9000/panels/production', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        period: 'd',
-      },
-    })
-      .then((response) => response.json())
-      .then((d) => console.log(d));
+    if (panelDataFetched && liveDataFetched && allDataFetched) {
+      window.location.href = '/dashboard';
+    } else {
+      setPanelDataAsync();
+    }
   }
 
   return (
-    <Grid container component="main" className={classes.root}>
-      <CssBaseline />
-      <NavBar />
-      <Grid item xs={false} sm={4} md={7} className={classes.image} />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-        <div className={classes.paper}>
-          <h1>Let’s access your solar data</h1>
-          <h7>Thank you for helping our environment! Please login with the information you were provided with after installing your solar products.</h7>
-          <form className={classes.form} noValidate>
-            <h4 className="pad-top-42">Username</h4>
-            <TextField
-              variant="outlined"
-              margin="dense"
-              required
-              fullWidth
-              id="username"
-              label=""
-              name="username"
-              placeholder="email address or phone number"
-              autoFocus
-              onChange={(event) => setLoginEmail(event.target.value)}
-            />
-            <h4 className="pad-top-24">Password</h4>
-            <TextField
-              variant="outlined"
-              margin="dense"
-              required
-              fullWidth
-              name="password"
-              label=""
-              type="password"
-              id="password"
-              placeholder="Password"
-              autoComplete="current-password"
-              onChange={(event) => setLoginPassword(event.target.value)}
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              onClick={handleLogin}
-              component={RouterLink}
-              to="/dashboard"
-            >
-              Sign In
-            </Button>
+    <section id="auth">
+      <Grid container component="main" className={classes.root}>
+        <CssBaseline />
+        <NavBar />
+        <Grid item xs={false} sm={4} md={7} className={classes.image} />
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+          <div className={classes.paper}>
+            <h1>Let’s access your solar data</h1>
+            <h7>Thank you for helping our environment! Please login with the information you were provided with after installing your solar products.</h7>
+            <form className={classes.form} noValidate>
+              <h4 className="pad-top-42">Username</h4>
+              <TextField
+                variant="outlined"
+                margin="dense"
+                required
+                fullWidth
+                id="username"
+                label=""
+                name="username"
+                placeholder="Email address or phone number"
+                autoFocus
+                onChange={(event) => setLoginEmail(event.target.value)}
+              />
+              <h4 className="pad-top-24">Password</h4>
+              <TextField
+                variant="outlined"
+                margin="dense"
+                required
+                fullWidth
+                name="password"
+                label=""
+                type="password"
+                id="password"
+                placeholder="Password"
+                autoComplete="current-password"
+                onChange={(event) => setLoginPassword(event.target.value)}
+              />
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Remember me"
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                onClick={handleLogin}
+                // component={RouterLink}
+                // to="/dashboard"
+              >
+                Sign In
+              </Button>
 
-            <DividerWithText>or</DividerWithText>
+              <DividerWithText>or</DividerWithText>
 
-            <Button
-              type="button"
-              fullWidth
-              variant="contained"
-              className={classes.solaredge}
-            >
-              SolarEdge
-            </Button>
+              <Button
+                type="button"
+                fullWidth
+                variant="contained"
+                className={classes.solaredge}
+              >
+                SolarEdge
+              </Button>
 
-            <Grid container>
-              <Grid item xs>
-                <Link href="/signup" variant="body2">
-                  Sign Up
-                </Link>
+              <Grid container>
+                <Grid item xs>
+                  <Link href="/signup" variant="body2">
+                    Sign Up
+                  </Link>
+                </Grid>
+                <Grid item>
+                  <Link href="https://solbridgeea.com/" variant="body2">
+                    If you need help, Contact Us
+                  </Link>
+                </Grid>
               </Grid>
-              <Grid item>
-                <Link href="https://solbridgeea.com/" variant="body2">
-                  If you need help, Contact Us
-                </Link>
-              </Grid>
-            </Grid>
-          </form>
-        </div>
+            </form>
+          </div>
+        </Grid>
       </Grid>
-    </Grid>
+    </section>
   );
 }
 

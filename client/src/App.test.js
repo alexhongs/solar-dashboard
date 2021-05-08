@@ -29,7 +29,7 @@ describe('Customer page', () => {
     );
 
     render(app);
-    const element = screen.getByText(/Did you know Western PA, there are/i);
+    const element = screen.getByText(/Did you know in the U.S, there are/i);
 
     expect(element).toBeInTheDocument();
   });

@@ -2,6 +2,7 @@ import React from 'react';
 
 import Button from '@material-ui/core/Button';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import Box from '@material-ui/core/Box';
 import {
   ThemeProvider, makeStyles, withStyles, createMuiTheme,
@@ -41,22 +42,25 @@ const iconStyles = {
 };
 
 const UpIcon = withStyles(iconStyles)(({ classes }) => <ArrowDropUpIcon classes={classes} />);
+const DownIcon = withStyles(iconStyles)(({ classes }) => <ArrowDropDownIcon classes={classes} />);
 
-function DailyReport() {
+function DailyReport(props) {
   const classes = useStyles();
+
+  const { currentOutput, diffOutput, efficiency } = props;
 
   return (
     <section id="daily-report">
       <div className="row">
         <div className="five columns">
           <h3> Current Output </h3>
-          <h1 className="pad-top-12">5.1</h1>
+          <h1 className="pad-top-12">{currentOutput}</h1>
           <h3 className="margin-top-neg-20">kW</h3>
           <ThemeProvider theme={theme}>
             <Box m={3}>
               <Button dense disabled color="primary" classes={{ root: classes.button }}>
-                <UpIcon />
-                1.1kW
+                {diffOutput > 0 ? <UpIcon /> : <DownIcon />}
+                {`${diffOutput} kW`}
               </Button>
             </Box>
           </ThemeProvider>
@@ -64,7 +68,14 @@ function DailyReport() {
 
         <div className="seven columns">
           <h3 className="left-text"> Daily Report </h3>
-          <h6 className="left-text pad-top-24"> Your panels are working 45% of its full capacity   </h6>
+          <h6 className="left-text pad-top-24">
+            {' '}
+            Your panels are working
+            {' '}
+            {efficiency}
+            % of its full capacity
+            {' '}
+          </h6>
           <h6 className="left-text pad-top-24"> This could be attributed to today’s cloudy weather </h6>
         </div>
       </div>

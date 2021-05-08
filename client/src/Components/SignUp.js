@@ -124,36 +124,8 @@ function RightPanel(classes, registerStep, incrementRegisterStep, setAPICode, se
       return (
         <>
           <img className="" src={register1} alt="indicator" />
-          <h5 className="pad-top-42">To get started, select your inverter and enter the API Code you received from Solbridge</h5>
-          <div className="row">
-            <div className="four columns">
-              <button
-                type="button"
-                className="active-provider-button btn"
-              >
-                PVOutput
-              </button>
-            </div>
-
-            <div className="four columns">
-              <button
-                type="button"
-                className="provider-button btn"
-              >
-                SunnyPortal
-              </button>
-            </div>
-
-            <div className="four columns">
-              <button
-                type="button"
-                className="provider-button btn"
-              >
-                SolarEdge
-              </button>
-            </div>
-          </div>
-
+          <h5 className="pad-top-42 center-text">To get started, enter the API Code you received from Solbridge</h5>
+          <h5 className="pad-top-42">PV Output</h5>
           <TextField
             variant="outlined"
             margin="dense"
@@ -165,7 +137,6 @@ function RightPanel(classes, registerStep, incrementRegisterStep, setAPICode, se
             placeholder="API Code"
             onChange={(event) => setAPICode(event.target.value)}
           />
-
           <h5 className="pad-top-42">Enter your System Id</h5>
           <TextField
             variant="outlined"
@@ -178,7 +149,6 @@ function RightPanel(classes, registerStep, incrementRegisterStep, setAPICode, se
             placeholder="System Id (4 to 5 digit number)"
             onChange={(event) => setSystemId(event.target.value)}
           />
-
           <button
             type="button"
             className="next-button btn"
@@ -186,7 +156,6 @@ function RightPanel(classes, registerStep, incrementRegisterStep, setAPICode, se
           >
             Next
           </button>
-
           <Link className="pad-top-42" href="/login" variant="body2">
             Already have an account? Sign in
           </Link>
@@ -339,22 +308,24 @@ function SignUp() {
   const setConfirmPassword = useStoreActions((actions) => actions.setConfirmPassword);
 
   return (
-    <Grid container component="main" className={classes.root}>
-      <CssBaseline />
-      <NavBar />
-      <Grid item xs={false} sm={4} md={3} className={classes.image}>
-        <div className={classes.instructions}>
-          {LeftPanel(registerStep)}
-        </div>
+    <section id="auth">
+      <Grid container component="main" className={classes.root}>
+        <CssBaseline />
+        <NavBar />
+        <Grid item xs={false} sm={4} md={3} className={classes.image}>
+          <div className={classes.instructions}>
+            {LeftPanel(registerStep)}
+          </div>
+        </Grid>
+        <Grid item xs={12} sm={8} md={9} component={Paper} elevation={6} square>
+          <div className={classes.paper}>
+            <h1>Create an Account</h1>
+            {RightPanel(classes, registerStep, incrementRegisterStep, setAPICode, setSystemId,
+              setMoneyInvested, setEmail, setPassword, setConfirmPassword)}
+          </div>
+        </Grid>
       </Grid>
-      <Grid item xs={12} sm={8} md={9} component={Paper} elevation={6} square>
-        <div className={classes.paper}>
-          <h1>Create an Account</h1>
-          {RightPanel(classes, registerStep, incrementRegisterStep, setAPICode, setSystemId,
-            setMoneyInvested, setEmail, setPassword, setConfirmPassword)}
-        </div>
-      </Grid>
-    </Grid>
+    </section>
   );
 }
 

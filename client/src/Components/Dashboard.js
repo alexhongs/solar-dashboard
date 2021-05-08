@@ -1,5 +1,5 @@
 import React from 'react';
-// import { useStoreState, useStoreActions } from 'easy-peasy';
+import { useStoreState, useStoreActions } from 'easy-peasy';
 import { Link as RouterLink } from 'react-router-dom';
 
 import Button from '@material-ui/core/Button';
@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     color: '#000',
   },
   logoutButton: {
-    marginTop: '62vh',
+    marginTop: '60vh',
     bottom: 0,
     color: '000',
     backgroundColor: '#fff',
@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
   },
   icon: {
     fontSize: '32px !important',
-    marginBottom: theme.spacing.unit,
+    marginBottom: theme.spacing(1),
   },
   dashboardGrid: {
     backgroundColor:
@@ -83,11 +83,33 @@ const IconShare = withStyles(iconStyles)(({ classes }) => <ShareIcon classes={cl
 
 function Dashboard() {
   const classes = useStyles();
-  // const selectedTab = useStoreState((state) => state.selectedTab);
-  // const setSelectedTab = useStoreActions((actions) => actions.setSelectedTab);
+
+  const liveData = useStoreState((state) => state.liveData);
+  let currentOutput = 0;
+  let diffOutput = 0;
+  let efficiency = 0;
+  if (Object.keys(liveData).length) {
+    currentOutput = liveData.productions[liveData.productions.length - 1].production;
+    diffOutput = liveData.peak_power - currentOutput;
+    efficiency = liveData.efficiency || 0;
+  }
+
+  const panelData = useStoreState((state) => state.panelData);
+  const panelDataFetched = useStoreState((state) => state.panelDataFetched);
+  const weeklyMoneySaved = useStoreState((state) => state.weeklyMoneySaved).toFixed(1);
+  const weeklyEmissionsReduced = useStoreState((state) => state.weeklyEmissionsReduced).toFixed(1);
+  // TODO: Today's data?
+  const todayData = panelData[panelData.length - 1];
+
+  const showAllTimeData = useStoreState((state) => state.showAllTimeData);
+  const setShowAllTimeData = useStoreActions((actions) => actions.setShowAllTimeData);
+
+  const allTimeData = useStoreState((state) => state.allData)[0];
 
   return (
     <section id="dashboard">
+      {panelDataFetched
+      && (
       <Grid container component="main" className={classes.root}>
         <CssBaseline />
         <Grid item xs={false} sm={false} md={1} className={classes.nav}>
@@ -142,17 +164,18 @@ function Dashboard() {
 
             <div className="dashboard-row">
               <div className="six columns no-padding">
-                <DailyReport />
+                <DailyReport currentOutput={currentOutput} diffOutput={diffOutput} efficiency={efficiency} />
               </div>
 
               <div className="four columns no-padding">
-                <WeeklyReport />
+                <WeeklyReport moneySaved={weeklyMoneySaved} emissionsReduced={weeklyEmissionsReduced} />
               </div>
             </div>
 
             <div className="dashboard-row">
               <div className="six columns no-padding margin-top-42">
-                <h4>Today</h4>
+                <button type="button" className="toggle-scope-button" onClick={() => setShowAllTimeData(false)}>Today</button>
+                <button type="button" className="toggle-scope-button" onClick={() => setShowAllTimeData(true)}>All Time</button>
               </div>
             </div>
 
@@ -160,14 +183,14 @@ function Dashboard() {
               <div className="six columns no-padding">
                 <Summary
                   title="Energy Production"
-                  value="5.1 kWh"
+                  value={showAllTimeData ? `${allTimeData.magnitude || 0} kWh` : `${todayData.magnitude || 0} kWh`}
                 />
               </div>
 
               <div className="six columns no-padding">
                 <Summary
                   title="Emissions Reduced"
-                  value="700 g"
+                  value={showAllTimeData ? `${allTimeData.carbon || 0} g` : `${todayData.carbon || 0} g`}
                 />
               </div>
             </div>
@@ -176,20 +199,21 @@ function Dashboard() {
               <div className="six columns no-padding">
                 <Summary
                   title="Production Efficiency"
-                  value="80%"
+                  value={showAllTimeData ? `${allTimeData.efficiency || 0} %` : `${todayData.efficiency || 0} %`}
                 />
               </div>
 
               <div className="six columns no-padding">
                 <Summary
                   title="Money Saved"
-                  value="$3.50"
+                  value={showAllTimeData ? `$ ${allTimeData.money || 0}` : `$ ${todayData.money || 0}`}
                 />
               </div>
             </div>
           </div>
         </Grid>
       </Grid>
+      )}
     </section>
   );
 }
