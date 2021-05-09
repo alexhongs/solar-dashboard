@@ -789,8 +789,15 @@ footer .social-links li:first-child {
   margin: 0 auto;
 }
 
+#dashboard .toggle-scope-button-selected {
+  border: none;
+  font: 16px/30px 'opensans-bold', sans-serif;
+}
+
 #dashboard .toggle-scope-button {
   border: none;
+  font: 16px/30px 'opensans', sans-serif;
+
 }
 
 #dashboard .weather {

@@ -112,6 +112,18 @@ const store = createStore(
     }),
 
     // Dashboard
+    resetDashboardData: action((state) => {
+      state.liveData = {};
+      state.liveDataFetched = false;
+      state.panelData = {};
+      state.panelDataFetched = false;
+      state.weeklyMoneySaved = 0;
+      state.weeklyEmissionsReduced = 0;
+      state.showAllTimeData = false;
+      state.allData = {};
+      state.allDataFetched = false;
+    }),
+
     liveData: {},
     liveDataFetched: false,
     setLiveData: action((state, payload) => {
