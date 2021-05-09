@@ -1,5 +1,5 @@
 import React from 'react';
-// import { useStoreState, useStoreActions } from 'easy-peasy';
+import { useStoreState } from 'easy-peasy';
 import { Link as RouterLink } from 'react-router-dom';
 
 import Button from '@material-ui/core/Button';
@@ -80,8 +80,7 @@ const IconShare = withStyles(iconStyles)(({ classes }) => <ShareIcon classes={cl
 
 function Analytics() {
   const classes = useStyles();
-  // const selectedTab = useStoreState((state) => state.selectedTab);
-  // const setSelectedTab = useStoreActions((actions) => actions.setSelectedTab);
+  const panelData = useStoreState((state) => state.panelData);
 
   return (
     <section id="dashboard">
@@ -127,7 +126,11 @@ function Analytics() {
               <img src={weather} alt="weather" />
             </div>
             <h1>Your Energy Production</h1>
-            <h5>Last Updated: April 28, 2021</h5>
+            <h5>
+              {' '}
+              Last Updated:&nbsp;
+              {panelData[panelData.length - 1].date}
+            </h5>
           </div>
         </Grid>
       </Grid>

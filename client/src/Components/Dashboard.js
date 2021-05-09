@@ -160,7 +160,10 @@ function Dashboard() {
               Solar panels are currently
               <span style={{ color: '#479D50' }}> active </span>
             </h1>
-            <h5>Last Updated: 4:01pm</h5>
+            <h5>
+              Last Updated:&nbsp;
+              {liveData.productions[liveData.productions.length - 1].date}
+            </h5>
 
             <div className="dashboard-row">
               <div className="six columns no-padding">
