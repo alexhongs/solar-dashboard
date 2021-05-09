@@ -2,13 +2,18 @@ import React from 'react';
 
 import Button from '@material-ui/core/Button';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import Box from '@material-ui/core/Box';
+import red from '@material-ui/core/colors/red';
 import {
   ThemeProvider, makeStyles, withStyles, createMuiTheme,
 } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
   palette: {
+    primary: {
+      main: red[500],
+    },
     action: {
       disabledBackground: '#F5F3F6',
       disabled: '#479D50',
@@ -40,6 +45,7 @@ const iconStyles = {
 };
 
 const UpIcon = withStyles(iconStyles)(({ classes }) => <ArrowDropUpIcon classes={classes} />);
+const DownIcon = withStyles(iconStyles)(({ classes }) => <ArrowDropDownIcon classes={classes} />);
 
 function WeeklyReport(props) {
   const classes = useStyles();
@@ -59,8 +65,8 @@ function WeeklyReport(props) {
             <div className="four columns no-padding">
               <ThemeProvider theme={theme}>
                 <Box m={0}>
-                  <Button dense disabled color="primary" classes={{ root: classes.button }}>
-                    <UpIcon />
+                  <Button dense disabled={moneySaved > 0} color="primary" classes={{ root: classes.button }}>
+                    {moneySaved > 0 ? <UpIcon /> : <DownIcon />}
                     {`$ ${moneySaved}`}
                   </Button>
                 </Box>
@@ -76,8 +82,8 @@ function WeeklyReport(props) {
             <div className="five columns no-padding">
               <ThemeProvider theme={theme}>
                 <Box m={1}>
-                  <Button dense disabled color="primary" m={1} classes={{ root: classes.button }}>
-                    <UpIcon />
+                  <Button dense disabled={emissionsReduced > 0} color="primary" m={1} classes={{ root: classes.button }}>
+                    {emissionsReduced > 0 ? <UpIcon /> : <DownIcon />}
                     {`${emissionsReduced} g`}
                   </Button>
                 </Box>

@@ -32,22 +32,23 @@ const useStyles = makeStyles((theme) => ({
 function Dashboard() {
   const classes = useStyles();
 
-  const liveData = useStoreState((state) => state.liveData);
-  let currentOutput = 0;
-  let diffOutput = 0;
-  let efficiency = 0;
-  if (Object.keys(liveData).length) {
-    currentOutput = liveData.productions[liveData.productions.length - 1].production;
-    diffOutput = liveData.peak_power - currentOutput;
-    efficiency = liveData.efficiency || 0;
-  }
-
   const panelData = useStoreState((state) => state.panelData);
   const panelDataFetched = useStoreState((state) => state.panelDataFetched);
   const weeklyMoneySaved = useStoreState((state) => state.weeklyMoneySaved).toFixed(1);
   const weeklyEmissionsReduced = useStoreState((state) => state.weeklyEmissionsReduced).toFixed(1);
   // TODO: Today's data?
   const todayData = panelData[panelData.length - 1];
+  const yesterdayData = panelData[panelData.length - 2];
+
+  const liveData = useStoreState((state) => state.liveData);
+  let currentOutput = 0;
+  let diffOutput = 0;
+  let efficiency = 0;
+  if (Object.keys(liveData).length) {
+    currentOutput = liveData.productions[liveData.productions.length - 1].production;
+    diffOutput = currentOutput - yesterdayData.magnitude;
+    efficiency = liveData.efficiency || 0;
+  }
 
   const showAllTimeData = useStoreState((state) => state.showAllTimeData);
   const setShowAllTimeData = useStoreActions((actions) => actions.setShowAllTimeData);
