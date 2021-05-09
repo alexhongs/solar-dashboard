@@ -71,7 +71,12 @@ function Icon(title, classes) {
           <SettingsOutlinedIcon />
         </Avatar>
       );
-
+    case 'Max Output':
+      return (
+        <Avatar className={classes.green}>
+          <FlashOnOutlinedIcon />
+        </Avatar>
+      );
     default:
       return (
         <Avatar className={classes.green}>
