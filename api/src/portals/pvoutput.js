@@ -94,6 +94,9 @@ pvoutput_getLiveProduction = async (req, panel) => {
         const responseData = _parseResponse(response.data)
 
         const result = []
+
+        let checkZeros = true
+
         for (i = 0; i < responseData.length; i++) {
             const output = responseData[i]
 
@@ -115,10 +118,13 @@ pvoutput_getLiveProduction = async (req, panel) => {
 
             const entry = {
                 date: obj.toISOString(),
-                power: output[3] == "NaN" ? 0 : parseInt(output[3]),
+                power: output[4] == "NaN" ? 0 : parseInt(output[4]),
                 production: output[2] == "NaN" ? 0 : parseInt(output[2]),
             }
-            result.push(entry)
+
+            if (checkZeros) checkZeros = entry.power === 0
+            // console.log(`Entry ${entry.power}`)
+            if (!checkZeros) result.push(entry)
         }
 
         const dataFormattedSorted = result.sort((a,b) => moment(a.date) - moment(b.date)) // [Oldest .... Recent]
