@@ -43,7 +43,15 @@ const UpIcon = withStyles(iconStyles)(({ classes }) => <ArrowDropUpIcon classes=
 
 function WeeklyReport(props) {
   const classes = useStyles();
-  const { moneySaved, emissionsReduced } = props;
+  const {
+    moneySaved, emissionsReduced, energyProduced, powerOutput,
+  } = props;
+
+  const convertUnit = (value) => {
+    const result = (value < 1000) ? value : value / 1000;
+    const resultString = result.toFixed(1);
+    return (value < 1000) ? `${resultString}` : `${resultString} k`;
+  };
 
   return (
     <section id="weekly-report">
@@ -53,7 +61,7 @@ function WeeklyReport(props) {
 
           <div className="row">
             <div className="eight columns no-padding">
-              <h6 className="left-text pad-top-24">Money Saved</h6>
+              <h6 className="left-text pad-top-24">Energy Produced</h6>
             </div>
 
             <div className="four columns no-padding">
@@ -61,7 +69,7 @@ function WeeklyReport(props) {
                 <Box m={0}>
                   <Button dense disabled color="primary" classes={{ root: classes.button }}>
                     <UpIcon />
-                    {`$ ${moneySaved}`}
+                    {`${convertUnit(energyProduced)}Wh`}
                   </Button>
                 </Box>
               </ThemeProvider>
@@ -78,12 +86,47 @@ function WeeklyReport(props) {
                 <Box m={1}>
                   <Button dense disabled color="primary" m={1} classes={{ root: classes.button }}>
                     <UpIcon />
-                    {`${emissionsReduced} g`}
+                    {`${convertUnit(emissionsReduced)}g`}
                   </Button>
                 </Box>
               </ThemeProvider>
             </div>
           </div>
+
+          <div className="row">
+            <div className="eight columns no-padding">
+              <h6 className="left-text pad-top-24">Max Output</h6>
+            </div>
+
+            <div className="four columns no-padding">
+              <ThemeProvider theme={theme}>
+                <Box m={0}>
+                  <Button dense disabled color="primary" classes={{ root: classes.button }}>
+                    <UpIcon />
+                    {`${powerOutput / 1000} kW`}
+                  </Button>
+                </Box>
+              </ThemeProvider>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="eight columns no-padding">
+              <h6 className="left-text pad-top-24">Estimated Money Saved</h6>
+            </div>
+
+            <div className="four columns no-padding">
+              <ThemeProvider theme={theme}>
+                <Box m={0}>
+                  <Button dense disabled color="primary" classes={{ root: classes.button }}>
+                    <UpIcon />
+                    {`$ ${moneySaved}`}
+                  </Button>
+                </Box>
+              </ThemeProvider>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>

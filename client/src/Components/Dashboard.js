@@ -89,7 +89,7 @@ function Dashboard() {
   let diffOutput = 0;
   let efficiency = 0;
   if (Object.keys(liveData).length) {
-    currentOutput = liveData.productions[liveData.productions.length - 1].production;
+    currentOutput = liveData.productions[liveData.productions.length - 1].power;
     diffOutput = liveData.peak_power - currentOutput;
     efficiency = liveData.efficiency || 0;
   }
@@ -98,6 +98,8 @@ function Dashboard() {
   const panelDataFetched = useStoreState((state) => state.panelDataFetched);
   const weeklyMoneySaved = useStoreState((state) => state.weeklyMoneySaved).toFixed(1);
   const weeklyEmissionsReduced = useStoreState((state) => state.weeklyEmissionsReduced).toFixed(1);
+  const weeklyEnergyProduced = useStoreState((state) => state.weeklyEnergyProduced).toFixed(1);
+  const weeklyPeakPowerOutput = useStoreState((state) => state.weeklyPeakPowerOutput).toFixed(1);
   // TODO: Today's data?
   const todayData = panelData[panelData.length - 1];
 
@@ -105,6 +107,12 @@ function Dashboard() {
   const setShowAllTimeData = useStoreActions((actions) => actions.setShowAllTimeData);
 
   const allTimeData = useStoreState((state) => state.allData)[0];
+
+  const convertUnit = (value) => {
+    const result = (value < 1000) ? value : value / 1000;
+    const resultString = result.toFixed(1);
+    return (value < 1000) ? `${resultString}` : `${resultString} k`;
+  };
 
   return (
     <section id="dashboard">
@@ -168,7 +176,7 @@ function Dashboard() {
               </div>
 
               <div className="four columns no-padding">
-                <WeeklyReport moneySaved={weeklyMoneySaved} emissionsReduced={weeklyEmissionsReduced} />
+                <WeeklyReport moneySaved={weeklyMoneySaved} emissionsReduced={weeklyEmissionsReduced} energyProduced={weeklyEnergyProduced} powerOutput={weeklyPeakPowerOutput} />
               </div>
             </div>
 
@@ -182,15 +190,15 @@ function Dashboard() {
             <div className="dashboard-row">
               <div className="six columns no-padding">
                 <Summary
-                  title="Energy Production"
-                  value={showAllTimeData ? `${allTimeData.magnitude || 0} kWh` : `${todayData.magnitude || 0} kWh`}
+                  title="Max Output"
+                  value={showAllTimeData ? `${allTimeData.peak_power / 1000 || 0} kWh` : `${todayData.peak_power / 1000 || 0} kWh`}
                 />
               </div>
 
               <div className="six columns no-padding">
                 <Summary
-                  title="Emissions Reduced"
-                  value={showAllTimeData ? `${allTimeData.carbon || 0} g` : `${todayData.carbon || 0} g`}
+                  title="Energy Production"
+                  value={`${convertUnit(showAllTimeData ? allTimeData.magnitude || 0 : todayData.magnitude || 0)}Wh`}
                 />
               </div>
             </div>
@@ -205,10 +213,17 @@ function Dashboard() {
 
               <div className="six columns no-padding">
                 <Summary
+                  title="Emissions Reduced"
+                  value={`${convertUnit(showAllTimeData ? allTimeData.carbon || 0 : todayData.carbon || 0)}g`}
+                />
+              </div>
+
+              {/* <div className="six columns no-padding">
+                <Summary
                   title="Money Saved"
                   value={showAllTimeData ? `$ ${allTimeData.money || 0}` : `$ ${todayData.money || 0}`}
                 />
-              </div>
+              </div> */}
             </div>
           </div>
         </Grid>
