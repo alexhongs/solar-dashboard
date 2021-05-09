@@ -1,6 +1,7 @@
 import React from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import { Link as RouterLink } from 'react-router-dom';
+import moment from 'moment';
 
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -91,9 +92,9 @@ function Dashboard() {
   if (Object.keys(liveData).length) {
     currentOutput = liveData.productions[liveData.productions.length - 1].power;
     diffOutput = liveData.peak_power - currentOutput;
-    efficiency = liveData.efficiency || 0;
+    efficiency = liveData.peak_power === 0 ? 0 : ((currentOutput * 100) / liveData.peak_power).toFixed(0);
   }
-
+  const lastUpdated = useStoreState((state) => state.lastUpdated);
   const panelData = useStoreState((state) => state.panelData);
   const panelDataFetched = useStoreState((state) => state.panelDataFetched);
   const weeklyMoneySaved = useStoreState((state) => state.weeklyMoneySaved).toFixed(1);
@@ -112,6 +113,48 @@ function Dashboard() {
     const result = (value < 1000) ? value : value / 1000;
     const resultString = result.toFixed(1);
     return (value < 1000) ? `${resultString}` : `${resultString} k`;
+  };
+
+  const getTodayEfficiency = () => {
+    const todayPeakOutput = panelData[panelData.length - 1].peak_power;
+
+    let maximum = 0;
+    const n = panelData.length;
+    let count = 0;
+    for (let i = n - 1; i > n - 8; i -= 1) {
+      maximum += panelData[i].peak_power;
+      count += 1;
+    }
+    const average = count === 0 ? 0 : maximum / count;
+    return (average === 0 ? 0 : ((100 * todayPeakOutput) / average)).toPrecision(3);
+  };
+
+  const getAllTimeEfficiency = () => {
+    const { averageGeneration, peakGeneration } = allTimeData;
+    if (Number.isNaN(peakGeneration) || peakGeneration === 0) {
+      return 0;
+    }
+    return ((averageGeneration * 100) / peakGeneration).toPrecision(3);
+  };
+
+  const showPanelActivity = () => {
+    const now = moment();
+    const n = liveData.productions.length;
+    const last = moment(liveData.productions[n - 1].date);
+    const diff = now.diff(last, 'hours', true);
+
+    if (diff < 2) {
+      return (
+        <span style={{ color: '#479D50' }}>
+          {' active'}
+        </span>
+      );
+    }
+    return (
+      <span style={{ color: '#EFA245' }}>
+        {' inactive'}
+      </span>
+    );
   };
 
   return (
@@ -166,9 +209,11 @@ function Dashboard() {
             <h3>Hello Kristina,</h3>
             <h1>
               Solar panels are currently
-              <span style={{ color: '#479D50' }}> active </span>
+              {showPanelActivity()}
             </h1>
-            <h5>Last Updated: 4:01pm</h5>
+            <h5>
+              {`Last Updated: ${lastUpdated}`}
+            </h5>
 
             <div className="dashboard-row">
               <div className="six columns no-padding">
@@ -191,7 +236,7 @@ function Dashboard() {
               <div className="six columns no-padding">
                 <Summary
                   title="Max Output"
-                  value={showAllTimeData ? `${allTimeData.peak_power / 1000 || 0} kWh` : `${todayData.peak_power / 1000 || 0} kWh`}
+                  value={showAllTimeData ? `${allTimeData.peak_power / 1000 || 0} kW` : `${todayData.peak_power / 1000 || 0} kW`}
                 />
               </div>
 
@@ -207,7 +252,7 @@ function Dashboard() {
               <div className="six columns no-padding">
                 <Summary
                   title="Production Efficiency"
-                  value={showAllTimeData ? `${allTimeData.efficiency || 0} %` : `${todayData.efficiency || 0} %`}
+                  value={showAllTimeData ? `${getAllTimeEfficiency()} %` : `${getTodayEfficiency()} %`}
                 />
               </div>
 

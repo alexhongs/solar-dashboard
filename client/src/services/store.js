@@ -3,6 +3,8 @@ import {
   createStore, action, thunk, persist,
 } from 'easy-peasy';
 
+const moment = require('moment');
+
 function compareData(data, attribute) {
   let firstHalfSum = 0;
   let secondHalfSum = 0;
@@ -131,6 +133,9 @@ const store = createStore(
     setLiveDataFetched: action((state, payload) => {
       state.liveDataFetched = payload;
     }),
+    setLastUpdated: action((state, payload) => {
+      state.lastUpdated = payload;
+    }),
 
     panelData: {},
     panelDataFetched: false,
@@ -183,6 +188,9 @@ const store = createStore(
           if (response.success === true) {
             actions.setLiveData(response.data);
             actions.setLiveDataFetched(true);
+            const dataLength = response.data.productions.length;
+            const { date } = response.data.productions[dataLength - 1];
+            actions.setLastUpdated(moment(date).local().format('h:mm a z'));
           }
         });
 
