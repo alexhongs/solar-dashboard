@@ -91,7 +91,7 @@ function Dashboard() {
   let efficiency = 0;
   if (Object.keys(liveData).length) {
     currentOutput = liveData.productions[liveData.productions.length - 1].power;
-    diffOutput = liveData.peak_power - currentOutput;
+    diffOutput = currentOutput - liveData.productions[liveData.productions.length - 2].power;
     efficiency = liveData.peak_power === 0 ? 0 : ((currentOutput * 100) / liveData.peak_power).toFixed(0);
   }
   const lastUpdated = useStoreState((state) => state.lastUpdated);
@@ -130,8 +130,9 @@ function Dashboard() {
   };
 
   const getAllTimeEfficiency = () => {
+    // eslint-disable-next-line no-unused-vars
     const { averageGeneration, peakGeneration } = allTimeData;
-    if (Number.isNaN(peakGeneration) || peakGeneration === 0) {
+    if (Number.isNaN(peakGeneration) || Number.isNaN(averageGeneration) || peakGeneration === 0 || !peakGeneration || !averageGeneration) {
       return 0;
     }
     return ((averageGeneration * 100) / peakGeneration).toPrecision(3);
