@@ -8,6 +8,7 @@ const Production = new Schema(
         efficiency: { type: Number, default: 0},
         carbon: {type: Number, default: 0},
         money: {type: Number, default: 0},
+        peak_power: {type: Number, default: 0},
     },
     { timestamps: true },
 )
