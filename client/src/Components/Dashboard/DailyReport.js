@@ -64,7 +64,7 @@ function DailyReport(props) {
             <Box m={3}>
               <Button dense disabled={diffOutput > 0} color="primary" classes={{ root: classes.button }}>
                 {diffOutput > 0 ? <UpIcon /> : <DownIcon />}
-                {`${diffOutput} kW`}
+                {`${Math.abs(diffOutput)} kW`}
               </Button>
             </Box>
           </ThemeProvider>

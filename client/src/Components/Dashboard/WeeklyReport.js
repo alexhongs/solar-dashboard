@@ -67,7 +67,7 @@ function WeeklyReport(props) {
                 <Box m={0}>
                   <Button dense disabled={moneySaved > 0} color="primary" classes={{ root: classes.button }}>
                     {moneySaved > 0 ? <UpIcon /> : <DownIcon />}
-                    {`$ ${moneySaved}`}
+                    {`$ ${Math.abs(moneySaved)}`}
                   </Button>
                 </Box>
               </ThemeProvider>
@@ -84,7 +84,7 @@ function WeeklyReport(props) {
                 <Box m={1}>
                   <Button dense disabled={emissionsReduced > 0} color="primary" m={1} classes={{ root: classes.button }}>
                     {emissionsReduced > 0 ? <UpIcon /> : <DownIcon />}
-                    {`${emissionsReduced} g`}
+                    {`${Math.abs(emissionsReduced)} g`}
                   </Button>
                 </Box>
               </ThemeProvider>

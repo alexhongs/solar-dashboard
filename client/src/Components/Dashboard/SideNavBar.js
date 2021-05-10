@@ -76,7 +76,9 @@ function SideNavBar() {
       <Button
         dense
         color="primary"
-        classes={{ root: classes.selectedButton, label: classes.label }}
+        classes={window.location.href.endsWith('/dashboard') ? { root: classes.selectedButton, label: classes.label } : { root: classes.button, label: classes.label }}
+        component={RouterLink}
+        to="/dashboard"
       >
         <IconDashboard />
         Dashboard
@@ -85,7 +87,7 @@ function SideNavBar() {
       <Button
         dense
         color="primary"
-        classes={{ root: classes.button, label: classes.label }}
+        classes={window.location.href.endsWith('/analytics') ? { root: classes.selectedButton, label: classes.label } : { root: classes.button, label: classes.label }}
         component={RouterLink}
         to="/analytics"
       >
