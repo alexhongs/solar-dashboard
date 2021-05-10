@@ -318,6 +318,25 @@ _getAggregate = async (id, sid) => {
     return data
 }
 
+pvoutput_getPower = async (id, sid) => {
+    let data = {
+        lifetimePower: 0,
+    }
+    const URL = `https://pvoutput.org/statistic.jsp?id=${id}&sid=${sid}`
+    const response = await axios.get(URL)
+    const dom = await new JSDOM(response.data)
+    const entries = dom.window.document.querySelectorAll('tr')
+
+    entries.forEach(element => {
+        if (element.firstChild.textContent == "Maximum Power") {
+            data.lifetimePower = _stringToMagnitude(element.children[1].textContent)
+        }
+    });
+    console.log(`data ${data.lifetimePower}`)
+    return data
+}
+
+
 _getAnalyse = async (id, sid) => {
     return 42
 }
@@ -444,7 +463,8 @@ _stringToMagnitude = (productionText) => {
     // Average   
 
 module.exports = {
-    pvoutput_region_ids,
-    pvoutput_getAllStatistic,
-    pvoutput_getStatistic,
+    // pvoutput_region_ids,
+    // pvoutput_getAllStatistic,
+    // pvoutput_getStatistic,
+    pvoutput_getPower,
 }

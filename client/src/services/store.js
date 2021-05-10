@@ -1,6 +1,9 @@
+/* eslint-disable no-unused-vars */
 import {
   createStore, action, thunk, persist,
 } from 'easy-peasy';
+
+const moment = require('moment');
 
 function compareData(data, attribute) {
   let firstHalfSum = 0;
@@ -14,8 +17,18 @@ function compareData(data, attribute) {
       secondHalfSum += data[i][attribute];
     }
   }
+  return firstHalfSum * 0 + secondHalfSum;
+}
 
-  return firstHalfSum - secondHalfSum;
+function getMax(data, attribute) {
+  let maximum = 0;
+  const n = data.length;
+  for (let i = n - 1; i > n - 8; i -= 1) {
+    if (maximum < data[i][attribute]) {
+      maximum = data[i][attribute];
+    }
+  }
+  return maximum;
 }
 
 const store = createStore(
@@ -132,11 +145,16 @@ const store = createStore(
     setLiveDataFetched: action((state, payload) => {
       state.liveDataFetched = payload;
     }),
+    setLastUpdated: action((state, payload) => {
+      state.lastUpdated = payload;
+    }),
 
     panelData: {},
     panelDataFetched: false,
     weeklyMoneySaved: 0,
     weeklyEmissionsReduced: 0,
+    weeklyEnergyProduced: 0,
+    weeklyPeakPowerOutput: 0,
     setPanelData: action((state, payload) => {
       state.panelData = payload;
     }),
@@ -148,6 +166,12 @@ const store = createStore(
     }),
     setWeeklyEmissionReduced: action((state, payload) => {
       state.weeklyEmissionsReduced = payload;
+    }),
+    setWeeklyEnergyProduced: action((state, payload) => {
+      state.weeklyEnergyProduced = payload;
+    }),
+    setWeeklyPeakPowerOutput: action((state, payload) => {
+      state.weeklyPeakPowerOutput = payload;
     }),
 
     showAllTimeData: false,
@@ -176,6 +200,9 @@ const store = createStore(
           if (response.success === true) {
             actions.setLiveData(response.data);
             actions.setLiveDataFetched(true);
+            const dataLength = response.data.productions.length;
+            const { date } = response.data.productions[dataLength - 1];
+            actions.setLastUpdated(moment(date).local().format('h:mm a z'));
           }
         });
 
@@ -192,6 +219,8 @@ const store = createStore(
             actions.setPanelData(response.data);
             actions.setWeeklyMoneySaved(compareData(response.data.slice(0, -1), 'money'));
             actions.setWeeklyEmissionReduced(compareData(response.data.slice(0, -1), 'carbon'));
+            actions.setWeeklyEnergyProduced(compareData(response.data.slice(0, -1), 'magnitude'));
+            actions.setWeeklyPeakPowerOutput(getMax(response.data.slice(0, -1), 'peak_power'));
             actions.setPanelDataFetched(true);
           }
         });

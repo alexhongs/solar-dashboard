@@ -51,6 +51,7 @@ productionCtrl_fetchLive = async (req, panel) => {
     let liveProductions = await PVOutput.pvoutput_getLiveProduction(req, panel) // [oldest .... recent]
 
     panel.live.push(moment().toISOString())
+
     for(i = 0; i < liveProductions.length; i++) {
         panel.live.push(liveProductions[i])
     }
@@ -69,6 +70,7 @@ productionCtrl_getLive = async (req, panel) => {
     // TODO: might need to make this a 30 minute interval
     for(i = 1; i < liveProductions.length - 1; i++) {
         let production = liveProductions[i]
+
         const date = moment(production.date)
         const time = `${date.hour} ${date.minutes}`
         if(production.power > peak_power) peak_power = production.power
@@ -139,6 +141,7 @@ _fetchProduction = async (req, panel, productionIds, db_productions) => {
             production.efficiency = day.efficiency
             production.carbon = day.carbon
             production.money = day.money
+            production.peak_power = day.peak_power
             await production.save()
         }
     }
@@ -151,6 +154,7 @@ _fetchProduction = async (req, panel, productionIds, db_productions) => {
         oldProduction.efficiency = 0
         oldProduction.carbon = 0
         oldProduction.money = 0
+        oldProduction.peak_power = 0
         await oldProduction.save()
     }
 

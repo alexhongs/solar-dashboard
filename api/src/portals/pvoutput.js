@@ -1,6 +1,7 @@
 const axios = require('axios')
 const moment = require('moment')
 const util = require('../util/util')
+const pvoutput_scraper = require('./pvoutput_scraper')
 
 pvoutput_getProduction = async (req, numProductions) => {
     const API_KEY = '7df3ab93a0938d4acd4a261917b392df6915d076'
@@ -93,6 +94,9 @@ pvoutput_getLiveProduction = async (req, panel) => {
         const responseData = _parseResponse(response.data)
 
         const result = []
+
+        let checkZeros = true
+
         for (i = 0; i < responseData.length; i++) {
             const output = responseData[i]
 
@@ -114,10 +118,13 @@ pvoutput_getLiveProduction = async (req, panel) => {
 
             const entry = {
                 date: obj.toISOString(),
-                power: output[3] == "NaN" ? 0 : parseInt(output[3]),
+                power: output[4] == "NaN" ? 0 : parseInt(output[4]),
                 production: output[2] == "NaN" ? 0 : parseInt(output[2]),
             }
-            result.push(entry)
+
+            if (checkZeros) checkZeros = entry.power === 0
+            // console.log(`Entry ${entry.power}`)
+            if (!checkZeros) result.push(entry)
         }
 
         const dataFormattedSorted = result.sort((a,b) => moment(a.date) - moment(b.date)) // [Oldest .... Recent]
@@ -173,6 +180,9 @@ _formatData = (req, parsedDataRecent) => {
         const magnitude = dailyQuery ? parsedDataRecent[i][1] : parsedDataRecent[i][2]
         const efficiency = dailyQuery ? parsedDataRecent[i][2] : parsedDataRecent[i][3]
         const year = moment(date).year()
+        
+        let power_str = dailyQuery ? parseInt(parsedDataRecent[i][5]) : 0
+        const peak_power = Number.isNaN(parseInt(power_str)) ? 0 : parseInt(power_str)
 
         const field = {
             date: date,
@@ -180,6 +190,7 @@ _formatData = (req, parsedDataRecent) => {
             efficiency: efficiency,
             carbon: util.getCarbon(magnitude),
             money: util.getMoney(year, magnitude),
+            peak_power: peak_power,
         }
 
         result.push(field)
@@ -252,12 +263,19 @@ _getYearlyOutput = async (period, getOutputConfig) => {
     const parsedData = data.split(',')
     const magnitude = Number(parsedData[0])
     const year =  moment(parsedData[7]).year()
+    const id = 5778
+    const sid = getOutputConfig.headers['sid1']
+
+
+    const power = await pvoutput_scraper.pvoutput_getPower(id, sid)
+
     const field = {
         date: parsedData[7],
         magnitude: magnitude,
         efficiency: parsedData[5],
         carbon: util.getCarbon(magnitude),
         money: util.getMoney(year, magnitude),
+        peak_power: power.lifetimePower
     }
 
     return [field]

@@ -21,7 +21,6 @@ function ProductionChart(props) {
   const classes = useStyles();
 
   const { data } = props;
-  console.log(data);
 
   return (
     <Paper className={classes.root}>

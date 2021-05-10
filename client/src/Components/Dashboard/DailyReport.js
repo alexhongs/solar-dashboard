@@ -21,6 +21,8 @@ const theme = createMuiTheme({
   },
 });
 
+const DOWN_COLOR = '#EFA245';
+
 const useStyles = makeStyles(() => ({
   button: {
     margin: '0 auto',
@@ -41,7 +43,7 @@ const useStyles = makeStyles(() => ({
 
 const iconStyles = {
   root: {
-    width: 42, height: 42, marginTop: 7, marginBottom: 2,
+    width: 42, height: 42, marginTop: 7, marginBottom: 2, color: DOWN_COLOR,
   },
 };
 
@@ -49,9 +51,9 @@ const UpIcon = withStyles(iconStyles)(({ classes }) => <ArrowDropUpIcon classes=
 const DownIcon = withStyles(iconStyles)(({ classes }) => <ArrowDropDownIcon classes={classes} />);
 
 function DailyReport(props) {
-  const classes = useStyles();
-
   const { currentOutput, diffOutput, efficiency } = props;
+
+  const classes = useStyles();
 
   return (
     <section id="daily-report">
