@@ -113,7 +113,7 @@ color: #5F7E69;
 
 .tagline {
   padding-top: 30px;
-padding-bottom: 50px;
+  padding-bottom: 50px;
 }
 
 /* primary navigation
@@ -180,7 +180,7 @@ margin-bottom: 2px;
 /* Nav bar links */
 ul#nav li a {
 /* 8px padding top + 8px padding bottom + 32px line-height = 48px */
-
+font: 14px "Noto Sans", sans-serif;
 display: inline-block;
 padding: 5px 42px 5px 13px;
 line-height: 32px;
@@ -209,7 +209,6 @@ ul#nav li #login-button {
   color: #fff;
   border: none;
   border-radius: 25px;
-  margin-right: 25px;
 }
 
 ul#nav li #logout-button {

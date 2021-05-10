@@ -8,7 +8,7 @@ class Header extends Component {
     return (
       <header id="home">
         <div className="row banner">
-          <div className="banner-text">
+          <div className="banner-text margin-top-neg-20">
             <h2 className="responsive-headline">Did you know in the U.S, there are</h2>
             <img className="tagline" src={tagline} alt="tagline" />
             <img className="tagline2" src={tagline2} alt="tagline" />
