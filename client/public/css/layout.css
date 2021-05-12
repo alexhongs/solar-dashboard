@@ -182,7 +182,7 @@ ul#nav li a {
 /* 8px padding top + 8px padding bottom + 32px line-height = 48px */
 font: 14px "Noto Sans", sans-serif;
 display: inline-block;
-padding: 5px 42px 5px 13px;
+padding: 5px 36px 5px 7px;
 line-height: 32px;
 text-decoration: none;
 text-align: left;
@@ -713,10 +713,8 @@ footer .social-links li:first-child {
 
 #auth .city {
   margin-top: 25px;
-  width: 25vw;
-  height: auto;
-  margin-left: auto;
-  margin-right: auto;
+  height: 12vh;
+  width: auto;
 }
 
 #auth .provider-button {

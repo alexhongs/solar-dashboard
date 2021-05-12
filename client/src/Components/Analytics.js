@@ -10,6 +10,8 @@ import weather from '../images/weather.png';
 import SideNavBar from './Dashboard/SideNavBar';
 import ProductionChart from './Analytics/ProductionChart';
 
+const moment = require('moment');
+
 const useStyles = makeStyles((theme) => ({
   root: {
     height: '100vh',
@@ -33,7 +35,79 @@ const useStyles = makeStyles((theme) => ({
 
 function Analytics() {
   const classes = useStyles();
+
+  const selectedPeriod = useStoreState((state) => state.selectedPeriod);
+  // const liveData = useStoreState((state) => state.liveData);
   const panelData = useStoreState((state) => state.panelData);
+  const weekData = useStoreState((state) => state.weekData);
+  const monthData = useStoreState((state) => state.monthData);
+  const yearData = useStoreState((state) => state.yearData);
+
+  function processData() {
+    switch (selectedPeriod) {
+      default:
+        return panelData.map((data, i) => {
+          if (i === 14) {
+            return (
+              {
+                magnitude: data.magnitude,
+                date: 'Today',
+              }
+            );
+          }
+          return (
+            {
+              magnitude: data.magnitude,
+              date: moment(data.date).local().format('MM-DD'),
+            }
+          );
+        });
+
+      case 'week':
+        return weekData.map((data, i) => {
+          if (i === 5) {
+            return (
+              {
+                magnitude: data.magnitude,
+                date: 'This week',
+              }
+            );
+          }
+          return (
+            {
+              magnitude: data.magnitude,
+              date: moment(data.date).local().format('MM-DD'),
+            }
+          );
+        });
+
+      case 'month':
+        return monthData.map((data, i) => {
+          if (i === 11) {
+            return (
+              {
+                magnitude: data.magnitude,
+                date: 'This month',
+              }
+            );
+          }
+          return (
+            {
+              magnitude: data.magnitude,
+              date: moment(data.date).local().format('YYYY-MM'),
+            }
+          );
+        });
+
+      case 'year':
+        return yearData.map((data) => (
+          {
+            magnitude: data.magnitude,
+            date: moment(data.date).local().format('YYYY-MM'),
+          }
+        ));
+    }
+  }
 
   return (
     <section id="dashboard">
@@ -50,11 +124,11 @@ function Analytics() {
             <h5>
               {' '}
               Last Updated:&nbsp;
-              {panelData[panelData.length - 1].date}
+              {moment(panelData[panelData.length - 1].date).local().format('h:mm a z')}
             </h5>
 
             <div className="chart-wrapper">
-              <ProductionChart className={classes.chart} data={panelData} />
+              <ProductionChart className={classes.chart} data={processData(selectedPeriod)} />
             </div>
           </div>
         </Grid>

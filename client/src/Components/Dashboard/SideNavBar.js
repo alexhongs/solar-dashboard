@@ -35,9 +35,13 @@ const useStyles = makeStyles((theme) => ({
   logoutButton: {
     marginTop: '60vh',
     bottom: 0,
-    color: '000',
-    backgroundColor: '#fff',
-    elevation: '0',
+    color: '#000',
+    backgroundColor: 'transparent',
+    boxShadow: 'none',
+    '&:hover': {
+      boxShadow: 'none',
+      backgroundColor: 'transparent',
+    },
   },
   label: {
     // Aligns the content of the button vertically.

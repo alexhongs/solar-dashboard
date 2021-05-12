@@ -137,6 +137,7 @@ const store = createStore(
       state.allDataFetched = false;
     }),
 
+    // LIVE
     liveData: {},
     liveDataFetched: false,
     setLiveData: action((state, payload) => {
@@ -149,6 +150,7 @@ const store = createStore(
       state.lastUpdated = payload;
     }),
 
+    // DAY
     panelData: {},
     panelDataFetched: false,
     weeklyMoneySaved: 0,
@@ -174,6 +176,37 @@ const store = createStore(
       state.weeklyPeakPowerOutput = payload;
     }),
 
+    // WEEK
+    weekData: {},
+    weekDataFetched: false,
+    setWeekData: action((state, payload) => {
+      state.weekData = payload;
+    }),
+    setWeekDataFetched: action((state, payload) => {
+      state.weekDataFetched = payload;
+    }),
+
+    // MONTH
+    monthData: {},
+    monthDataFetched: false,
+    setMonthData: action((state, payload) => {
+      state.monthData = payload;
+    }),
+    setMonthDataFetched: action((state, payload) => {
+      state.monthDataFetched = payload;
+    }),
+
+    // YEAR
+    yearData: {},
+    yearDataFetched: false,
+    setYearData: action((state, payload) => {
+      state.yearData = payload;
+    }),
+    setYearDataFetched: action((state, payload) => {
+      state.yearDataFetched = payload;
+    }),
+
+    // ALL TIME
     showAllTimeData: false,
     setShowAllTimeData: action((state, payload) => {
       state.showAllTimeData = payload;
@@ -229,6 +262,51 @@ const store = createStore(
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          period: 'w',
+        },
+      })
+        .then((value) => value.json())
+        .then((response) => {
+          if (response.success === true) {
+            actions.setWeekData(response.data);
+            actions.setWeekDataFetched(true);
+          }
+        });
+
+      await fetch('http://localhost:9000/panels/production', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          period: 'm',
+        },
+      })
+        .then((value) => value.json())
+        .then((response) => {
+          if (response.success === true) {
+            actions.setMonthData(response.data);
+            actions.setMonthDataFetched(true);
+          }
+        });
+
+      await fetch('http://localhost:9000/panels/production', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          period: 'y',
+        },
+      })
+        .then((value) => value.json())
+        .then((response) => {
+          if (response.success === true) {
+            actions.setYearData(response.data);
+            actions.setYearDataFetched(true);
+          }
+        });
+
+      await fetch('http://localhost:9000/panels/production', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
           period: 't',
         },
       })
@@ -239,6 +317,12 @@ const store = createStore(
             actions.setAllDataFetched(true);
           }
         });
+    }),
+
+    // Analytics
+    selectedPeriod: '',
+    setSelectedPeriod: action((state, payload) => {
+      state.selectedPeriod = payload;
     }),
   }),
 );
