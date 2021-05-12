@@ -64,21 +64,21 @@ productionCtrl_fetchLive = async (req, panel) => {
 productionCtrl_getLive = async (req, panel) => {
     // Make API Get request
     let liveProductions = panel.live // [oldest .... recent]
-    
     let productions = []
     let peak_power = 0
     // TODO: might need to make this a 30 minute interval
-    for(i = 1; i < liveProductions.length - 1; i++) {
+    for(i = 1; i < liveProductions.length; i++) {
         let production = liveProductions[i]
-
-        const date = moment(production.date)
-        const time = `${date.hour} ${date.minutes}`
-        if(production.power > peak_power) peak_power = production.power
-        productions.push(production)
+        if(production) {
+            const date = moment(production.date)
+            const time = `${date.hour} ${date.minutes}`
+            if(production.power > peak_power) peak_power = production.power
+            productions.push(production)
+        }
     }
-    
+
     // TODO: change this to month's peak power
-    const recentPower = productions[productions.length - 1].power
+    const recentPower = productions.length === 0 ? 0 : productions[productions.length - 1].power
     const efficiency = recentPower / peak_power
 
     // TODO: This part is subject to change based on MVP definition
