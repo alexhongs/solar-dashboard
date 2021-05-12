@@ -230,11 +230,15 @@ const store = createStore(
       })
         .then((value) => value.json())
         .then((response) => {
+          console.log(response);
           if (response.success === true) {
             actions.setLiveData(response.data);
             actions.setLiveDataFetched(true);
             const dataLength = response.data.productions.length;
-            const { date } = response.data.productions[dataLength - 1];
+            let date = Date.now();
+            if (dataLength) {
+              date = response.data.productions[dataLength - 1].date;
+            }
             actions.setLastUpdated(moment(date).local().format('h:mm a z'));
           }
         });
@@ -320,7 +324,7 @@ const store = createStore(
     }),
 
     // Analytics
-    selectedPeriod: '',
+    selectedPeriod: 'day',
     setSelectedPeriod: action((state, payload) => {
       state.selectedPeriod = payload;
     }),

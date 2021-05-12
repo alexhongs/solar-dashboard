@@ -27,10 +27,6 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'left',
   },
-  chart: {
-    padding: '0.5vh 2vw 0 2vw',
-    margin: theme.spacing(5, 4),
-  },
 }));
 
 function Analytics() {
@@ -50,14 +46,14 @@ function Analytics() {
           if (i === 14) {
             return (
               {
-                magnitude: data.magnitude,
+                magnitude: data.magnitude / 1000,
                 date: 'Today',
               }
             );
           }
           return (
             {
-              magnitude: data.magnitude,
+              magnitude: data.magnitude / 1000,
               date: moment(data.date).local().format('MM-DD'),
             }
           );
@@ -68,14 +64,14 @@ function Analytics() {
           if (i === 5) {
             return (
               {
-                magnitude: data.magnitude,
+                magnitude: data.magnitude / 1000,
                 date: 'This week',
               }
             );
           }
           return (
             {
-              magnitude: data.magnitude,
+              magnitude: data.magnitude / 1000,
               date: moment(data.date).local().format('MM-DD'),
             }
           );

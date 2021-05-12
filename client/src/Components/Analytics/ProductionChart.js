@@ -2,21 +2,23 @@ import React from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 
 import Button from '@material-ui/core/Button';
+// import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
-// import {
-//   Chart,
-//   BarSeries,
-//   ArgumentAxis,
-//   ValueAxis,
-// } from '@devexpress/dx-react-chart-material-ui';
-// import { Animation } from '@devexpress/dx-react-chart';
+import {
+  Chart,
+  BarSeries,
+  ArgumentAxis,
+  ValueAxis,
+} from '@devexpress/dx-react-chart-material-ui';
+import { Animation } from '@devexpress/dx-react-chart';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     height: 'auto',
-    padding: '2vh 5vw 0 5vw',
+    padding: '0vh 5vw 3vh 5vw',
     borderRadius: '27px',
   },
   button: {
@@ -40,11 +42,31 @@ const useStyles = makeStyles((theme) => ({
     },
     margin: theme.spacing(5, 1, 5, 0),
   },
+  legend: {
+    float: 'right',
+    margin: theme.spacing(5, 0, 0, 0),
+  },
+  legendButton: {
+    height: '24px',
+    width: '10px',
+    marginRight: '12px',
+    backgroundColor: '#FFD600',
+    borderRadius: '25px',
+    boxShadow: 'none',
+    '&:hover': {
+      boxShadow: 'none',
+      backgroundColor: '#FFD600',
+    },
+    '&:disable': {
+      boxShadow: 'none',
+      backgroundColor: '#FFD600',
+    },
+  },
 }));
 
-function ProductionChart() {
+function ProductionChart(props) {
   const classes = useStyles();
-  // const { data } = props;
+  const { data } = props;
 
   const selectedPeriod = useStoreState((state) => state.selectedPeriod);
   const setSelectedPeriod = useStoreActions((actions) => actions.setSelectedPeriod);
@@ -58,6 +80,7 @@ function ProductionChart() {
           color="primary"
           className={selectedPeriod === 'live' ? classes.selectButton : classes.button}
           onClick={() => setSelectedPeriod('live')}
+          disabled
         >
           Live
         </Button>
@@ -101,15 +124,26 @@ function ProductionChart() {
         >
           Year
         </Button>
+
+        <Typography variant="subtitle1" component="h2" className={classes.legend}>
+          <Button className={classes.legendButton} disabled />
+          Production
+        </Typography>
       </div>
 
-      {/* <Chart
-        data={data.slice(data.length - 7, data.length)}
+      <div className="fullrow">
+        <Typography variant="subtitle1" component="h2">
+          kWh
+        </Typography>
+      </div>
+
+      <Chart
+        data={selectedPeriod === 'day' ? data.slice(data.length - 7, data.length) : data}
       >
         <ArgumentAxis
           title="Axis Title"
         />
-        <ValueAxis max={7} />
+        <ValueAxis max={selectedPeriod === 'day' ? 7 : 12} />
 
         <BarSeries
           valueField="magnitude"
@@ -118,7 +152,7 @@ function ProductionChart() {
         />
 
         <Animation />
-      </Chart> */}
+      </Chart>
     </Paper>
   );
 }

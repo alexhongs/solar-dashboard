@@ -46,7 +46,7 @@ function Dashboard() {
   let currentOutput = 0;
   let diffOutput = 0;
   let efficiency = 0;
-  if (Object.keys(liveData).length) {
+  if (liveData.length > 0) {
     currentOutput = liveData.productions[liveData.productions.length - 1].power;
     diffOutput = currentOutput - liveData.productions[liveData.productions.length - 2].power;
     efficiency = liveData.peak_power === 0 ? 0 : ((currentOutput * 100) / liveData.peak_power).toFixed(0);
@@ -87,9 +87,15 @@ function Dashboard() {
 
   const showPanelActivity = () => {
     const now = moment();
-    const n = liveData.productions.length;
-    const last = moment(liveData.productions[n - 1].date);
-    const diff = now.diff(last, 'hours', true);
+    let n = 0;
+    let last = 0;
+    let diff = 0;
+
+    if (liveData.length > 0) {
+      n = liveData.productions.length;
+      last = moment(liveData.productions[n - 1].date);
+      diff = now.diff(last, 'hours', true);
+    }
 
     if (diff < 2) {
       return (
