@@ -80,7 +80,6 @@ function ProductionChart(props) {
           color="primary"
           className={selectedPeriod === 'live' ? classes.selectButton : classes.button}
           onClick={() => setSelectedPeriod('live')}
-          disabled
         >
           Live
         </Button>
@@ -138,10 +137,11 @@ function ProductionChart(props) {
       </div>
 
       <Chart
-        data={selectedPeriod === 'day' ? data.slice(data.length - 7, data.length) : data}
+        data={selectedPeriod === 'live' ? data.slice(data.length - 12, data.length) : data}
       >
         <ArgumentAxis
           title="Axis Title"
+          max={selectedPeriod === 'day' ? 7 : 12}
         />
         <ValueAxis max={selectedPeriod === 'day' ? 7 : 12} />
 

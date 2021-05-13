@@ -33,7 +33,7 @@ function Analytics() {
   const classes = useStyles();
 
   const selectedPeriod = useStoreState((state) => state.selectedPeriod);
-  // const liveData = useStoreState((state) => state.liveData);
+  const liveData = useStoreState((state) => state.liveData);
   const panelData = useStoreState((state) => state.panelData);
   const weekData = useStoreState((state) => state.weekData);
   const monthData = useStoreState((state) => state.monthData);
@@ -55,6 +55,24 @@ function Analytics() {
             {
               magnitude: data.magnitude / 1000,
               date: moment(data.date).local().format('MM-DD'),
+            }
+          );
+        });
+
+      case 'live':
+        return liveData.productions.map((data, i) => {
+          if (i === liveData.length - 1) {
+            return (
+              {
+                magnitude: data.power,
+                date: 'Current',
+              }
+            );
+          }
+          return (
+            {
+              magnitude: data.power,
+              date: moment(data.date).local().format('HH:mm'),
             }
           );
         });
