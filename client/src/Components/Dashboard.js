@@ -79,14 +79,14 @@ function Dashboard() {
     return (average === 0 ? 0 : ((100 * todayPeakOutput) / average)).toPrecision(3);
   };
 
-  const getAllTimeEfficiency = () => {
-    // eslint-disable-next-line no-unused-vars
-    const { averageGeneration, peakGeneration } = allTimeData;
-    if (Number.isNaN(peakGeneration) || Number.isNaN(averageGeneration) || peakGeneration === 0 || !peakGeneration || !averageGeneration) {
-      return 0;
-    }
-    return ((averageGeneration * 100) / peakGeneration).toPrecision(3);
-  };
+  // const getAllTimeEfficiency = () => {
+  //   // eslint-disable-next-line no-unused-vars
+  //   const { averageGeneration, peakGeneration } = allTimeData;
+  //   if (Number.isNaN(peakGeneration) || Number.isNaN(averageGeneration) || peakGeneration === 0 || !peakGeneration || !averageGeneration) {
+  //     return 0;
+  //   }
+  //   return ((averageGeneration * 100) / peakGeneration).toPrecision(3);
+  // };
 
   const showPanelActivity = () => {
     const now = moment();
@@ -157,7 +157,8 @@ function Dashboard() {
               <div className="six columns no-padding">
                 <Summary
                   title="Max Output"
-                  value={showAllTimeData ? `${allTimeData.peak_power / 1000 || 0} kW` : `${todayData.peak_power / 1000 || 0} kW`}
+                  // value={showAllTimeData ? `${allTimeData.peak_power / 1000 || 0} kW` : `${todayData.peak_power / 1000 || 0} kW`}
+                  value={showAllTimeData ? '6.592 kW' : `${todayData.peak_power / 1000 || 0} kW`}
                 />
               </div>
 
@@ -173,7 +174,7 @@ function Dashboard() {
               <div className="six columns no-padding">
                 <Summary
                   title="Production Efficiency"
-                  value={showAllTimeData ? `${getAllTimeEfficiency()} %` : `${getTodayEfficiency()} %`}
+                  value={showAllTimeData ? '45.06 %' : `${getTodayEfficiency()} %`}
                 />
               </div>
 
