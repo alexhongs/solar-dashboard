@@ -230,7 +230,6 @@ const store = createStore(
       })
         .then((value) => value.json())
         .then((response) => {
-          console.log(response);
           if (response.success === true) {
             actions.setLiveData(response.data);
             actions.setLiveDataFetched(true);

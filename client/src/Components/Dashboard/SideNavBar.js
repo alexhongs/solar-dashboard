@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import AssessmentIcon from '@material-ui/icons/Assessment';
-import ShareIcon from '@material-ui/icons/Share';
+// import ShareIcon from '@material-ui/icons/Share';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -62,7 +62,7 @@ const iconStyles = {
 
 const IconDashboard = withStyles(iconStyles)(({ classes }) => <DashboardIcon classes={classes} />);
 const IconAnalytics = withStyles(iconStyles)(({ classes }) => <AssessmentIcon classes={classes} />);
-const IconShare = withStyles(iconStyles)(({ classes }) => <ShareIcon classes={classes} />);
+// const IconShare = withStyles(iconStyles)(({ classes }) => <ShareIcon classes={classes} />);
 
 function SideNavBar() {
   const classes = useStyles();
@@ -99,10 +99,10 @@ function SideNavBar() {
         Analytics
       </Button>
 
-      <Button dense color="primary" classes={{ root: classes.button, label: classes.label }}>
+      {/* <Button dense color="primary" classes={{ root: classes.button, label: classes.label }}>
         <IconShare />
         Share
-      </Button>
+      </Button> */}
 
       <Button
         type="submit"

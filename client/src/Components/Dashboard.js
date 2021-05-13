@@ -46,7 +46,8 @@ function Dashboard() {
   let currentOutput = 0;
   let diffOutput = 0;
   let efficiency = 0;
-  if (liveData !== {}) {
+
+  if (Object.keys(liveData).length !== 0) {
     if (liveData.productions.length > 2) {
       currentOutput = liveData.productions[liveData.productions.length - 1].power;
       diffOutput = currentOutput - liveData.productions[liveData.productions.length - 3].power;
