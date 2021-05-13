@@ -99,7 +99,7 @@ function Analytics() {
         return yearData.map((data) => (
           {
             magnitude: data.magnitude,
-            date: moment(data.date).local().format('YYYY-MM'),
+            date: moment(data.date).local().format('YYYY'),
           }
         ));
     }

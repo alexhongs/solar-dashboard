@@ -46,10 +46,12 @@ function Dashboard() {
   let currentOutput = 0;
   let diffOutput = 0;
   let efficiency = 0;
-  if (liveData.length > 0) {
-    currentOutput = liveData.productions[liveData.productions.length - 1].power;
-    diffOutput = currentOutput - liveData.productions[liveData.productions.length - 2].power;
-    efficiency = liveData.peak_power === 0 ? 0 : ((currentOutput * 100) / liveData.peak_power).toFixed(0);
+  if (liveData !== {}) {
+    if (liveData.productions.length > 2) {
+      currentOutput = liveData.productions[liveData.productions.length - 1].power;
+      diffOutput = currentOutput - liveData.productions[liveData.productions.length - 3].power;
+      efficiency = liveData.peak_power === 0 ? 0 : ((currentOutput * 100) / liveData.peak_power).toFixed(0);
+    }
   }
 
   const showAllTimeData = useStoreState((state) => state.showAllTimeData);

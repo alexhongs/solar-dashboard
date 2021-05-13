@@ -66,11 +66,11 @@ function WeeklyReport(props) {
           <h3> Your Last 7 Days </h3>
 
           <div className="row">
-            <div className="eight columns no-padding">
+            <div className="six columns no-padding">
               <h6 className="left-text pad-top-24">Energy Produced</h6>
             </div>
 
-            <div className="four columns no-padding">
+            <div className="six columns no-padding">
               <ThemeProvider theme={theme}>
                 <Box m={0}>
                   <Button dense disabled={moneySaved > 0} color="primary" classes={{ root: classes.button }}>
@@ -83,13 +83,13 @@ function WeeklyReport(props) {
           </div>
 
           <div className="row">
-            <div className="seven columns no-padding">
+            <div className="six columns no-padding">
               <h6 className="left-text pad-top-24">Emissions Reduced</h6>
             </div>
 
-            <div className="five columns no-padding">
+            <div className="six columns no-padding">
               <ThemeProvider theme={theme}>
-                <Box m={1}>
+                <Box m={0}>
                   <Button dense disabled={emissionsReduced > 0} color="primary" m={1} classes={{ root: classes.button }}>
                     {emissionsReduced > 0 ? <UpIcon /> : <DownIcon />}
                     {`${convertUnit(emissionsReduced)}g`}
@@ -100,11 +100,11 @@ function WeeklyReport(props) {
           </div>
 
           <div className="row">
-            <div className="eight columns no-padding">
+            <div className="six columns no-padding">
               <h6 className="left-text pad-top-24">Max Output</h6>
             </div>
 
-            <div className="four columns no-padding">
+            <div className="six columns no-padding">
               <ThemeProvider theme={theme}>
                 <Box m={0}>
                   <Button dense disabled color="primary" classes={{ root: classes.button }}>
@@ -117,11 +117,11 @@ function WeeklyReport(props) {
           </div>
 
           <div className="row">
-            <div className="eight columns no-padding">
+            <div className="six columns no-padding">
               <h6 className="left-text pad-top-24">Estimated Money Saved</h6>
             </div>
 
-            <div className="four columns no-padding">
+            <div className="six columns no-padding">
               <ThemeProvider theme={theme}>
                 <Box m={0}>
                   <Button dense disabled color="primary" classes={{ root: classes.button }}>
