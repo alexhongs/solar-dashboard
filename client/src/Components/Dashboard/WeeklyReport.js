@@ -72,7 +72,7 @@ function WeeklyReport(props) {
 
             <div className="six columns no-padding">
               <ThemeProvider theme={theme}>
-                <Box m={0}>
+                <Box m={1}>
                   <Button dense disabled={moneySaved > 0} color="primary" classes={{ root: classes.button }}>
                     {moneySaved > 0 ? <UpIcon /> : <DownIcon />}
                     {`${convertUnit(energyProduced)}Wh`}
@@ -89,7 +89,7 @@ function WeeklyReport(props) {
 
             <div className="six columns no-padding">
               <ThemeProvider theme={theme}>
-                <Box m={0}>
+                <Box m={1}>
                   <Button dense disabled={emissionsReduced > 0} color="primary" m={1} classes={{ root: classes.button }}>
                     {emissionsReduced > 0 ? <UpIcon /> : <DownIcon />}
                     {`${convertUnit(emissionsReduced)}g`}
@@ -106,7 +106,7 @@ function WeeklyReport(props) {
 
             <div className="six columns no-padding">
               <ThemeProvider theme={theme}>
-                <Box m={0}>
+                <Box m={1}>
                   <Button dense disabled color="primary" classes={{ root: classes.button }}>
                     <UpIcon />
                     {`${powerOutput / 1000} kW`}
@@ -123,7 +123,7 @@ function WeeklyReport(props) {
 
             <div className="six columns no-padding">
               <ThemeProvider theme={theme}>
-                <Box m={0}>
+                <Box m={1}>
                   <Button dense disabled color="primary" classes={{ root: classes.button }}>
                     <UpIcon />
                     {`$ ${moneySaved}`}
