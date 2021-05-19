@@ -5,6 +5,7 @@ import { StoreProvider } from 'easy-peasy';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import store from './services/store';
+import '@devexpress/dx-react-chart-bootstrap4/dist/dx-react-chart-bootstrap4.css';
 
 ReactDOM.render(
   <React.StrictMode>

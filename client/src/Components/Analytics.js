@@ -1,59 +1,20 @@
 import React from 'react';
-// import { useStoreState, useStoreActions } from 'easy-peasy';
-import { Link as RouterLink } from 'react-router-dom';
+import { useStoreState } from 'easy-peasy';
 
-import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import AssessmentIcon from '@material-ui/icons/Assessment';
-import ShareIcon from '@material-ui/icons/Share';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
 import weather from '../images/weather.png';
+import SideNavBar from './Dashboard/SideNavBar';
+import ProductionChart from './Analytics/ProductionChart';
+
+const moment = require('moment');
 
 const useStyles = makeStyles((theme) => ({
   root: {
     height: '100vh',
-  },
-  nav: {
-    backgroundRepeat: 'no-repeat',
-    backgroundColor:
-      theme.palette.type === 'light' ? '#FFF' : '#FFF',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-  },
-  selectedButton: {
-    margin: '0 auto',
-    width: '100%',
-    minWidth: '42px',
-    color: '#fff',
-    backgroundColor: '#2E4B4B',
-    borderTopRightRadius: '15px',
-    borderBottomRightRadius: '15px',
-  },
-  button: {
-    margin: '0 auto',
-    width: '100%',
-    minWidth: '42px',
-    color: '#000',
-  },
-  logoutButton: {
-    marginTop: '62vh',
-    bottom: 0,
-    color: '000',
-    backgroundColor: '#fff',
-    elevation: '0',
-  },
-  label: {
-    // Aligns the content of the button vertically.
-    flexDirection: 'column',
-    fontSize: '14px',
-  },
-  icon: {
-    fontSize: '32px !important',
-    marginBottom: theme.spacing.unit,
   },
   dashboardGrid: {
     backgroundColor:
@@ -68,58 +29,105 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const iconStyles = {
-  root: {
-    width: 42, height: 42, marginTop: 12, marginBottom: 12,
-  },
-};
-
-const IconDashboard = withStyles(iconStyles)(({ classes }) => <DashboardIcon classes={classes} />);
-const IconAnalytics = withStyles(iconStyles)(({ classes }) => <AssessmentIcon classes={classes} />);
-const IconShare = withStyles(iconStyles)(({ classes }) => <ShareIcon classes={classes} />);
-
 function Analytics() {
   const classes = useStyles();
-  // const selectedTab = useStoreState((state) => state.selectedTab);
-  // const setSelectedTab = useStoreActions((actions) => actions.setSelectedTab);
+
+  const selectedPeriod = useStoreState((state) => state.selectedPeriod);
+  const liveData = useStoreState((state) => state.liveData);
+  const panelData = useStoreState((state) => state.panelData);
+  const weekData = useStoreState((state) => state.weekData);
+  const monthData = useStoreState((state) => state.monthData);
+  const yearData = useStoreState((state) => state.yearData);
+
+  function processData() {
+    switch (selectedPeriod) {
+      default:
+        return panelData.map((data, i) => {
+          if (i === 14) {
+            return (
+              {
+                magnitude: data.magnitude / 1000,
+                date: 'Today',
+              }
+            );
+          }
+          return (
+            {
+              magnitude: data.magnitude / 1000,
+              date: moment(data.date).local().format('MM-DD'),
+            }
+          );
+        });
+
+      case 'live':
+        return liveData.productions.map((data, i) => {
+          if (i === liveData.length - 1) {
+            return (
+              {
+                magnitude: data.power,
+                date: 'Current',
+              }
+            );
+          }
+          return (
+            {
+              magnitude: data.power,
+              date: moment(data.date).local().format('HH:mm'),
+            }
+          );
+        });
+
+      case 'week':
+        return weekData.map((data, i) => {
+          if (i === 5) {
+            return (
+              {
+                magnitude: data.magnitude / 1000,
+                date: 'This week',
+              }
+            );
+          }
+          return (
+            {
+              magnitude: data.magnitude / 1000,
+              date: moment(data.date).local().format('MM-DD'),
+            }
+          );
+        });
+
+      case 'month':
+        return monthData.map((data, i) => {
+          if (i === 11) {
+            return (
+              {
+                magnitude: data.magnitude,
+                date: 'This month',
+              }
+            );
+          }
+          return (
+            {
+              magnitude: data.magnitude,
+              date: moment(data.date).local().format('YYYY-MM'),
+            }
+          );
+        });
+
+      case 'year':
+        return yearData.map((data) => (
+          {
+            magnitude: data.magnitude,
+            date: moment(data.date).local().format('YYYY'),
+          }
+        ));
+    }
+  }
 
   return (
     <section id="dashboard">
       <Grid container component="main" className={classes.root}>
         <CssBaseline />
-        <Grid item xs={false} sm={false} md={1} className={classes.nav}>
-          <Button
-            dense
-            color="primary"
-            classes={{ root: classes.button, label: classes.label }}
-            component={RouterLink}
-            to="/dashboard"
-          >
-            <IconDashboard />
-            Dashboard
-          </Button>
-
-          <Button dense color="primary" classes={{ root: classes.selectedButton, label: classes.label }}>
-            <IconAnalytics />
-            Analytics
-          </Button>
-
-          <Button dense color="primary" classes={{ root: classes.button, label: classes.label }}>
-            <IconShare />
-            Share
-          </Button>
-
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            className={classes.logoutButton}
-            component={RouterLink}
-            to="/home"
-          >
-            Log out
-          </Button>
-        </Grid>
+        <SideNavBar />
 
         <Grid item xs={12} sm={12} md={11} component={Paper} elevation={0} square className={classes.dashboardGrid}>
           <div className={classes.dashboard}>
@@ -127,7 +135,15 @@ function Analytics() {
               <img src={weather} alt="weather" />
             </div>
             <h1>Your Energy Production</h1>
-            <h5>Last Updated: April 28, 2021</h5>
+            <h5>
+              {' '}
+              Last Updated:&nbsp;
+              {moment(panelData[panelData.length - 1].date).local().format('h:mm a z')}
+            </h5>
+
+            <div className="chart-wrapper">
+              <ProductionChart className={classes.chart} data={processData(selectedPeriod)} />
+            </div>
           </div>
         </Grid>
       </Grid>

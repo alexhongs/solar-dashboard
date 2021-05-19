@@ -18,7 +18,7 @@ position: relative;
 height: 100vh;
 min-height: 100vh;
 width: 100vw;
-background: url(../images/background.png) no-repeat top center;
+background: url(../images/background.gif) no-repeat top center;
 background-size: cover !important;
 -webkit-background-size: cover !important;
 text-align: center;
@@ -113,7 +113,7 @@ color: #5F7E69;
 
 .tagline {
   padding-top: 30px;
-padding-bottom: 50px;
+  padding-bottom: 50px;
 }
 
 /* primary navigation
@@ -180,9 +180,9 @@ margin-bottom: 2px;
 /* Nav bar links */
 ul#nav li a {
 /* 8px padding top + 8px padding bottom + 32px line-height = 48px */
-
+font: 14px "Noto Sans", sans-serif;
 display: inline-block;
-padding: 5px 42px 5px 13px;
+padding: 5px 36px 5px 7px;
 line-height: 32px;
 text-decoration: none;
 text-align: left;
@@ -209,7 +209,6 @@ ul#nav li #login-button {
   color: #fff;
   border: none;
   border-radius: 25px;
-  margin-right: 25px;
 }
 
 ul#nav li #logout-button {
@@ -714,10 +713,8 @@ footer .social-links li:first-child {
 
 #auth .city {
   margin-top: 25px;
-  width: 25vw;
-  height: auto;
-  margin-left: auto;
-  margin-right: auto;
+  height: 12vh;
+  width: auto;
 }
 
 #auth .provider-button {
@@ -783,14 +780,27 @@ footer .social-links li:first-child {
   display: block;
 }
 
-.dashboard-row {
+#dashboard .dashboard-row {
   width: 100%;
   max-width: 100vw;
   margin: 0 auto;
 }
 
+#dashboard .chart-wrapper {
+  padding-top: 24px;
+  margin-left: 120px;
+  margin-right: 120px;
+}
+
+#dashboard .toggle-scope-button-selected {
+  border: none;
+  font: 16px/30px 'opensans-bold', sans-serif;
+}
+
 #dashboard .toggle-scope-button {
   border: none;
+  font: 16px/30px 'opensans', sans-serif;
+
 }
 
 #dashboard .weather {

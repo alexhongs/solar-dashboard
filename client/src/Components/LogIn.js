@@ -88,8 +88,11 @@ const DividerWithText = ({ children }) => {
 function Login() {
   const classes = useStyles();
 
-  const panelDataFetched = useStoreState((state) => state.panelDataFetched);
   const liveDataFetched = useStoreState((state) => state.liveDataFetched);
+  const panelDataFetched = useStoreState((state) => state.panelDataFetched);
+  const weekDataFetched = useStoreState((state) => state.weekDataFetched);
+  const monthDataFetched = useStoreState((state) => state.monthDataFetched);
+  const yearDataFetched = useStoreState((state) => state.yearDataFetched);
   const allDataFetched = useStoreState((state) => state.allDataFetched);
 
   const setLoginEmail = useStoreActions((actions) => actions.setLoginEmail);
@@ -99,7 +102,7 @@ function Login() {
   async function handleLogin(event) {
     event.preventDefault();
 
-    if (panelDataFetched && liveDataFetched && allDataFetched) {
+    if (panelDataFetched && liveDataFetched && allDataFetched && weekDataFetched && monthDataFetched && yearDataFetched) {
       window.location.href = '/dashboard';
     } else {
       setPanelDataAsync();

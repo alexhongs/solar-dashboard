@@ -4,12 +4,16 @@ import Button from '@material-ui/core/Button';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import Box from '@material-ui/core/Box';
+import red from '@material-ui/core/colors/red';
 import {
   ThemeProvider, makeStyles, withStyles, createMuiTheme,
 } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
   palette: {
+    primary: {
+      main: red[500],
+    },
     action: {
       disabledBackground: '#F5F3F6',
       disabled: '#479D50',
@@ -60,7 +64,7 @@ function DailyReport(props) {
           <h3 className="margin-top-neg-20">kW</h3>
           <ThemeProvider theme={theme}>
             <Box m={3}>
-              <Button dense disabled color="primary" classes={{ root: classes.button }}>
+              <Button dense disabled={diffOutput > 0} color="primary" classes={{ root: classes.button }}>
                 {diffOutput >= 0 ? <UpIcon /> : <DownIcon />}
                 {`${Math.abs(diffOutput)} kW`}
               </Button>
