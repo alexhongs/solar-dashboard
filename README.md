@@ -19,6 +19,18 @@ This changes the admin setting for the `start_server.sh` and `start_client.sh` f
 
 Now you can close the terminal, and navigate to the project directory and double click on `start_server.sh`, and then `start_client.sh` to start the project.
 
+##### 1.1 If double clicking does not work
+If double clicking does not work, in the terminal in the project directory, run
+```bash
+bash start_server.sh
+```
+
+and then open another terminal and run
+```bash
+bash start_client.sh
+```
+
+
 ### Manual Starting
 #### 1. Start the server app
 Inside `/api` folder, delete node_modules and package-lock.json if exist (you only need to run this first time), then open terminal and run
