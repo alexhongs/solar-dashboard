@@ -4,7 +4,7 @@ BHCI x Solbridge Solar Dashboard
 After cloning the repo to your local machine:
 
 ### Installation
-#### 0. Install node modules
+#### 1. Install node modules
 First step is to install the latest node modules. You can refer to [download link](https://nodejs.org/en/download/)
 
 ### Automatic Starting
