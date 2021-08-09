@@ -7,6 +7,44 @@ After cloning the repo to your local machine:
 #### 1. Install node modules
 First step is to install the latest node modules. You can refer to [download link](https://nodejs.org/en/download/)
 
+#### 2. Install Database
+1. Install and Run MongoDB Server
+To create an account and view the dashboard we must setup the database. For more information on installation
+https://zellwk.com/blog/install-mongodb/
+
+
+2. Install HomeBrew
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+3. Install MongoDB
+```bash
+brew tap mongodb/brew
+brew install mongodb-community@4.0
+```
+
+4. Setup Permissions for Database
+```bash
+sudo mkdir -p /System/Volumes/Data/data/db
+sudo chown -R `id -un` /System/Volumes/Data/data/db
+```
+
+5. Run MongoDB
+```bash
+brew services run mongodb-community
+```
+
+
+If everything goes right, you can type 
+
+```bash
+brew services list
+```
+
+and you will see a server running
+
+
 ### Automatic Starting
 #### 1. Enabling clicking script file instead of using terminal
 Open terminal app. Navigate to the project root directory in the terminal. And paste the following code:
