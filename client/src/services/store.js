@@ -222,6 +222,7 @@ const store = createStore(
     }),
 
     setPanelDataAsync: thunk(async (actions) => {
+      console.log('querying stuff!! ');
       await fetch('http://localhost:9000/panels/live', {
         method: 'GET',
         headers: {

@@ -7,6 +7,7 @@ const panelsRouter = require('./src/routes/panels-router')
 const usersRouter = require('./src/routes/users-router')
 
 const PVOutputScraper = require('./src/portals/pvoutput_scraper')
+const User = require('./src/api/models/users')
 
 const app = express()
 const apiPort = 9000
@@ -22,10 +23,12 @@ app.get('/', (req, res) => {
 })
 
 app.get('/testAPI', async (req, res) => {
-    const panel = {id: `5778`, sid: `4612`}
-    const data = await PVOutputScraper.pvoutput_getAllStatistic('Pennsylvania')
+    // const panel = {id: `5778`, sid: `4612`}
+    // const data = await PVOutputScraper.pvoutput_getAllStatistic('Pennsylvania')
+    // ({username:req.headers.username})
+    const user = await User.find();
 
-    res.status(200).json({success: true, data: data})
+    res.status(200).json({success: true, data: user})
 })
 
 app.use('/panels', panelsRouter)

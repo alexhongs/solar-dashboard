@@ -81,6 +81,7 @@ createUser = async (req, res) => {
         newUser.password = hash
         await newUser.save()
     
+        panel._id = '6075363f5f4ba77cd92828d0';
         panel.userId = newUser._id
         await panel.save()
 

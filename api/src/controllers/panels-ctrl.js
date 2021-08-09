@@ -36,7 +36,7 @@ createPanel = async (data) => {
 }
 
 panelsCtrl_getPanel = async (req, res) => {
-    console.log('Get Panel Called!');
+    console.log(`Get Panel Called! ${req.para}`);
     // THIS IS ONLY TEMPORARY USE
 
     await Panel.find({}, (err, panels) => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
-// import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -158,8 +158,8 @@ function Login() {
                 color="primary"
                 className={classes.submit}
                 onClick={handleLogin}
-                // component={RouterLink}
-                // to="/dashboard"
+                component={RouterLink}
+                to="/dashboard"
               >
                 Sign In
               </Button>
